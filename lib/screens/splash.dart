@@ -3,8 +3,10 @@ import 'dart:async';
 
 import 'package:doctoworld_doctor/Auth/Login/UI/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/Registration/UI/registration_ui.dart';
+import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
+import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
@@ -26,8 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
   route() {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) =>
-               storageBox!.hasData('session') ? BottomNavigation()
-               : RegistrationUI()));
+               storageBox!.hasData('session') ? Dashboard()
+               : PhoneAuthUI()));
   }
 
   @override

@@ -21,7 +21,7 @@ checkStatusData(bool responseCheck, Map<String, dynamic> response, BuildContext 
       postMethod(
 
           context,
-          doctorSignupService,
+          customerSignUpService,
           {
             'owner_name': nameController.text,
             'user_name': usernameController.text,

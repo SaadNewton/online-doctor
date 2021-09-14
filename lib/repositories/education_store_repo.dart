@@ -7,15 +7,21 @@ import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-///-------- get-Sign up-data-API-call
+///-------- get-getEducationStoreData-data-API-call
 getEducationStoreData(bool responseCheck, Map<String, dynamic> response, BuildContext context) {
   if (responseCheck) {
     Get.find<AuthController>().changeSignUpCheckerState(true);
     educationModel = EducationModel.fromJson(response);
     print('Ahmad');
     print('getEducationStoreData ------>> ${educationModel.success}');
-    Get.to(LoginUI());
   } else if (responseCheck && response == null) {
+    print('Exception........................');
+    // Get.find<AppController>().changeServerErrorCheck(true);
+  }
+}
+///-------- get-deleteEducationStoreData-data-API-call
+deleteEducationStoreData(bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+  if (responseCheck) {} else if (responseCheck && response == null) {
     print('Exception........................');
     // Get.find<AppController>().changeServerErrorCheck(true);
   }

@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'Locale/language_cubit.dart';
 import 'Locale/locale.dart';
 import 'Theme/style.dart';
@@ -18,6 +19,7 @@ import 'Theme/style.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init();
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: transparentColor));
   Get.put(AuthController());
@@ -53,9 +55,9 @@ class DoctoWorldDoctor extends StatelessWidget {
             ],
            locale: locale,
             theme: lightTheme,
-            home: ProfileWizard(),
+            // home: ProfileWizard(),
             // home: EducationForm(),
-            // home: SplashScreen(),
+            home: SplashScreen(),
           //  routes: PageRoutes().routes(),
           );
         },

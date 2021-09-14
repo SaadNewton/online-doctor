@@ -6,23 +6,21 @@ String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 
 ///  Doctor login
 
-String doctorLoginService = baseUrl + 'login';
-
+String loginService = baseUrl + 'login';
 
 ///   Doctor signup
 
-String doctorSignupService = baseUrl + 'user-signup';
-
+String customerSignUpService = baseUrl + 'user-signup';
 
 ///  check email and phone status
 
-String checkStatusService = baseUrl + 'check-phone-status';
-
+String phoneEmailCheckService = baseUrl + 'check-phone-status';
 
 ///  Education store
 
 String educationStoreService = baseUrl + 'education-store';
 String educationStoreUpdateService = baseUrl + 'education-update';
+String educationStoreDeleteService = baseUrl + 'delete-education';
 
 
 ///  Experience store
@@ -33,3 +31,7 @@ String experienceStoreService = baseUrl + 'experience-store';
 ///  speciality store
 
 String specialityStoreService = baseUrl + 'speciality-update';
+
+/// get_all_Appointments
+
+String getAllAppointmentsService = baseUrl + 'get-all-apointment';

@@ -13,7 +13,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _currentIndex = 0;
   double start = 0;
   final List<Widget> _children = [
-    MyAppointmentsPage(),
+    MyAppointmentsBody(),
     ReviewsPage(),
     AccountPage(),
   ];

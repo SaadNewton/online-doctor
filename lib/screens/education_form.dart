@@ -69,8 +69,10 @@ import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/repositories/education_store_repo.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
+import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -325,6 +327,7 @@ class _EducationFormState extends State<EducationForm> {
                                               ),
                                             ),
                                           ),
+                                          Icon(Icons.arrow_back,size: 13,color: Colors.white,)
                                         ],
                                       )),
                                   Divider(color: Colors.grey.withOpacity(0.8),),
@@ -362,6 +365,13 @@ class _EducationFormState extends State<EducationForm> {
                                                 color: Colors.red,
                                                 icon: Icons.delete,
                                                 onTap: () {
+                                                  // postMethod(
+                                                  //     context,
+                                                  //     '$educationStoreDeleteService',
+                                                  //     null,
+                                                  //     true,
+                                                  //     deleteEducationStoreData
+                                                  // );
                                                   setState(() {
                                                     educationList.removeAt(index);
                                                   });
@@ -429,6 +439,8 @@ class _EducationFormState extends State<EducationForm> {
                                                                 )
                                                             ),
                                                           ),
+
+                                                          Icon(Icons.arrow_back,size: 13,color: primaryColor,)
                                                         ],
                                                       ),
                                                     ),
@@ -506,9 +518,10 @@ class _EducationFormState extends State<EducationForm> {
         setState(() {
           educationList.add(
               {
-                'institution': _instituteController.text,
-                'discipline': _disciplineController.text,
-                'period': _periodController.text,
+                'id':response.data['data']['id'],
+                'institution': response.data['data']['institution'],
+                'discipline': response.data['data']['discipline'],
+                'period': response.data['data']['period'],
                 'image': _image
               }
           );

@@ -7,9 +7,11 @@ import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
+import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class ScheduleForm extends StatefulWidget {
@@ -540,6 +542,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                     text: 'Ok',
                     functionCall: () {
                       Navigator.pop(context);
+                      Get.offAll(Dashboard());
                     },
                     img: 'assets/dialog_success.svg',
                   );
