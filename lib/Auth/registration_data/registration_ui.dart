@@ -231,10 +231,9 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                                         'role': 'doctor'
                                       },
                                       false,
-                                      phoneEmailCheckRepo);
+                                      phoneEmailCheckRepo
+                                  );
                                 }
-                                // otpFunction(_phoneController.text, context);
-                                // Get.to(VerificationUI());
                               },
                             ),
                             SizedBox(height: 10.0),
