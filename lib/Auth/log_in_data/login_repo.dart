@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 
 ///-------- get-login-data-API-call
 getLoginData(
-    bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+    bool responseCheck, Map<String, dynamic> response, BuildContext context,) {
   if (responseCheck) {
     Get.find<LoaderController>().updateFormController(false);
     userDetailModel = UserDetailModel.fromJson(response);
@@ -24,6 +24,9 @@ getLoginData(
 
       Get.offAll(Dashboard());
       print('getLogin UserData ------>> ${userDetailModel.data.email}');
+      storageBox.write('doctor_id', userDetailModel.data.id);
+      print(storageBox.read('doctor_id'));
+
     } else {
       log('data ' + response.toString());
       showDialog(

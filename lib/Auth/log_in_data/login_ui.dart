@@ -156,7 +156,8 @@ class _LoginUIState extends State<LoginUI> {
                                         {
                                           'email': _emailController.text,
                                           'password': _passController.text,
-                                          'role': 'doctor'
+                                          'role': 'doctor',
+                                          'login_type': 'login_email'
                                         },
                                         false,
                                         getLoginData);

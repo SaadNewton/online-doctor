@@ -1,13 +1,11 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
-import 'package:doctoworld_doctor/Auth/Login/UI/login_ui.dart';
-import 'package:doctoworld_doctor/Auth/Verification/UI/verification_ui.dart';
-import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/phone_email_check_repo.dart';
+import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:flutter/cupertino.dart';
@@ -182,35 +180,35 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                             SizedBox(height: 20.0),
 
                             ///  Location
-                            TextFormField(
-                              controller: locationController,
-                              decoration: InputDecoration(
-                                suffixIcon: InkWell(
-                                  child: Icon(
-                                    Icons.add_location,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  onTap: () {
-                                    getCurrentLocation(context);
-                                  },
-                                ),
-                                hintText: 'Location',
-                                filled: true,
-                                fillColor: Theme.of(context).scaffoldBackgroundColor,
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                  borderSide: BorderSide.none,
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Field is Required';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            SizedBox(height: 20.0),
+                            // TextFormField(
+                            //   controller: locationController,
+                            //   decoration: InputDecoration(
+                            //     suffixIcon: InkWell(
+                            //       child: Icon(
+                            //         Icons.add_location,
+                            //         color: Theme.of(context).primaryColor,
+                            //       ),
+                            //       onTap: () {
+                            //         getCurrentLocation(context);
+                            //       },
+                            //     ),
+                            //     hintText: 'Location',
+                            //     filled: true,
+                            //     fillColor: Theme.of(context).scaffoldBackgroundColor,
+                            //     border: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(4),
+                            //       borderSide: BorderSide.none,
+                            //     ),
+                            //   ),
+                            //   validator: (value) {
+                            //     if (value!.isEmpty) {
+                            //       return 'Field is Required';
+                            //     } else {
+                            //       return null;
+                            //     }
+                            //   },
+                            // ),
+                            SizedBox(height: 10.0),
 
                             CustomButton(
                               onTap: () {
@@ -280,49 +278,49 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
     );
   }
 
-  getCurrentLocation(BuildContext context) {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        currentPosition = position;
-        longitude = currentPosition!.longitude;
-        latitude = currentPosition!.latitude;
-
-        print("longitude : $longitude");
-        print("latitude : $latitude");
-        print("address : $currentPosition");
-      });
-
-      getAddressFromLatLng();
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  getAddressFromLatLng() async {
-    try {
-      // var currentPosition;
-      List<Placemark> p = await GeocodingPlatform.instance
-          .placemarkFromCoordinates(
-              currentPosition!.latitude, currentPosition!.longitude);
-      Placemark place = p[0];
-      setState(() {
-        currentAddress =
-            '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
-        // var signUpAddressController;
-        // if (signUpAddressController.text.isEmpty) {
-        //   signUpAddressController.text = currentAddress;
-        // }
-        print(currentAddress + ' yes');
-        print(place.administrativeArea.toString());
-        print(place.subAdministrativeArea.toString());
-        print(place.thoroughfare.toString());
-        print(place.toJson().toString());
-        // FocusScope.of(context).unfocus();
-        locationController.text = place.name.toString();
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
+  // getCurrentLocation(BuildContext context) {
+  //   Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+  //       .then((Position position) {
+  //     setState(() {
+  //       currentPosition = position;
+  //       longitude = currentPosition!.longitude;
+  //       latitude = currentPosition!.latitude;
+  //
+  //       print("longitude : $longitude");
+  //       print("latitude : $latitude");
+  //       print("address : $currentPosition");
+  //     });
+  //
+  //     getAddressFromLatLng();
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
+  //
+  // getAddressFromLatLng() async {
+  //   try {
+  //     // var currentPosition;
+  //     List<Placemark> p = await GeocodingPlatform.instance
+  //         .placemarkFromCoordinates(
+  //             currentPosition!.latitude, currentPosition!.longitude);
+  //     Placemark place = p[0];
+  //     setState(() {
+  //       currentAddress =
+  //           '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
+  //       // var signUpAddressController;
+  //       // if (signUpAddressController.text.isEmpty) {
+  //       //   signUpAddressController.text = currentAddress;
+  //       // }
+  //       print(currentAddress + ' yes');
+  //       print(place.administrativeArea.toString());
+  //       print(place.subAdministrativeArea.toString());
+  //       print(place.thoroughfare.toString());
+  //       print(place.toJson().toString());
+  //       // FocusScope.of(context).unfocus();
+  //       locationController.text = place.name.toString();
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 }

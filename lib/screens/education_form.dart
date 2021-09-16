@@ -1,67 +1,3 @@
-// import 'package:doctoworld_doctor/Components/entry_field.dart';
-// import 'package:doctoworld_doctor/Theme/colors.dart';
-// import 'package:flutter/material.dart';
-//
-// class EducationForm extends StatefulWidget {
-//   const EducationForm({Key? key}) : super(key: key);
-//
-//   @override
-//   _EducationFormState createState() => _EducationFormState();
-// }
-//
-// class _EducationFormState extends State<EducationForm> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//
-//       ),
-//       body: Container(
-//         color: secondaryBackgroundColor,
-//         height: MediaQuery.of(context).size.height,
-//         child: Padding(
-//           padding: const EdgeInsets.all(20.0),
-//           child: Column(
-//             children: [
-//            Text('Education',
-//            style: TextStyle(fontSize: 24, color: Colors.black),
-//            ),
-//           SizedBox(height: 20.0,),
-//
-//               /// institite
-//               Row(
-//                 children: [
-//                   Text('Institution',
-//                   style: TextStyle(fontSize: 16),
-//                   ),
-//                 ],
-//               ),
-//               SizedBox(height: 10.0,),
-//               EntryField(
-//                 color: Colors.grey.withOpacity(0.2),
-//                 hint: "Institution",
-//               ),
-//               SizedBox(height: 20.0),
-//                  /// Discipline
-//               EntryField(
-//                 color: Colors.grey.withOpacity(0.2),
-//                 hint: "Discipline",
-//               ),
-//               SizedBox(height: 20.0),
-//             /// period
-//               EntryField(
-//                 color: Colors.grey.withOpacity(0.2),
-//                 hint: "Period",
-//               ),
-//               SizedBox(height: 20.0),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-// @dart = 2.9
 // @dart=2.9
 import 'dart:io';
 import 'package:animation_wrappers/animation_wrappers.dart';
@@ -212,6 +148,7 @@ class _EducationFormState extends State<EducationForm> {
                               SizedBox(height: 20.0),
 
                               ///..........period................///
+
                               EntryField(
                                 color: Colors.grey.withOpacity(0.2),
                                 controller: _periodController,

@@ -1,5 +1,6 @@
 // @dart=2.9
 import 'package:doctoworld_doctor/Theme/colors.dart';
+import 'package:doctoworld_doctor/screens/doctor_profile-form.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/schedule_form.dart';
@@ -24,7 +25,7 @@ class _ProfileWizardState extends State<ProfileWizard> with SingleTickerProvider
   @override
   void initState() {
     // TODO: implement initState
-    profileWizardTabController = new TabController(length: 4, vsync: this);
+    profileWizardTabController = new TabController(length: 5, vsync: this);
 
     super.initState();
   }
@@ -81,6 +82,16 @@ class _ProfileWizardState extends State<ProfileWizard> with SingleTickerProvider
                         borderRadius: BorderRadius.all( Radius.circular(5)),
                         color: primaryColor),
                     tabs: [
+
+                      Center(
+                        child: new Text(
+                          'Doctor Profile',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
                       Center(
                         child: new Text(
                           'Education',
@@ -116,7 +127,7 @@ class _ProfileWizardState extends State<ProfileWizard> with SingleTickerProvider
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                      )
+                      ),
                     ],
                     onTap: (v){
                       print(v.toString());
@@ -162,23 +173,29 @@ class _ProfileWizardState extends State<ProfileWizard> with SingleTickerProvider
     switch (profileTab) {
       case 0:
         {
-          return EducationForm(changeView: changeView,);
+          return DoctorProfile(changeView: changeView,);
         }
         break;
       case 1:
         {
-          return ExperienceForm(changeView: changeView);
+          return EducationForm(changeView: changeView,);
         }
         break;
       case 2:
         {
-          return SpecialityForm(changeView: changeView);
+          return ExperienceForm(changeView: changeView);
         }
         break;
       case 3:
         {
+          return SpecialityForm(changeView: changeView);
+        }
+        break;
+      case 4:
+        {
           return ScheduleForm();
         }
+        break;
     }
   }
 

@@ -1,8 +1,11 @@
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart' as dio_instance;
+import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/services/headers.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 postMethod(
     BuildContext context,
@@ -30,8 +33,11 @@ postMethod(
         log('$apiUrl--->> ${response.statusCode}');
         log('$apiUrl--->> ${response.data}');
         if (response.statusCode == 200) {
+
           print('true');
+
           executionMethod(true, response.data, context);
+
         } else {
           print(response.data.toString());
           executionMethod(false, null, context);

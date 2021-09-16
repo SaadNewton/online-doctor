@@ -1,4 +1,5 @@
 //@dart=2.9
+import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/BottomNavigation/Appointment/my_appointments.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
@@ -98,7 +99,7 @@ class _DashboardState extends State<Dashboard> {
       case 7:
         return {
           storageBox.remove('session'),
-          Get.offAll(PhoneAuthUI()),
+          Get.offAll(LoginUI()),
         };
         break;
     }

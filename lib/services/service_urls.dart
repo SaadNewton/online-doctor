@@ -34,4 +34,17 @@ String specialityStoreService = baseUrl + 'speciality-update';
 
 /// get_all_Appointments
 
-String getAllAppointmentsService = baseUrl + 'get-all-apointment';
+String getAllAppointmentsService = baseUrl + 'get-appointment-request';
+
+
+///   Doctor update profile
+
+String getDoctorUpdateProfileService = baseUrl + 'update-profile';
+
+///  Approve Appointment
+
+String approveAppointmentService = baseUrl + 'approve-appointment';
+
+///  RemoveAppointment
+
+String removeAppointmentService = baseUrl + 'appointment-remove';
