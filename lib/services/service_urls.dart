@@ -48,3 +48,7 @@ String approveAppointmentService = baseUrl + 'approve-appointment';
 ///  RemoveAppointment
 
 String removeAppointmentService = baseUrl + 'appointment-remove';
+
+///  checkDoctorStatusService
+
+String checkDoctorStatusService = baseUrl + 'get-doctor-status';

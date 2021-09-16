@@ -8,6 +8,7 @@ import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
 import 'package:doctoworld_doctor/Model/user_detail_model.dart';
+import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,6 +19,7 @@ GetAllAppointmentsModel getAllAppointmentsModel = GetAllAppointmentsModel();
 CheckStatusModel checkStatusModel = CheckStatusModel();
 ApproveAppointmentModel approveAppointmentModel = ApproveAppointmentModel();
 RemoveAppointmentModel removeAppointmentModel = RemoveAppointmentModel();
+DoctorStatusModel doctorStatusModel = DoctorStatusModel();
 final TextEditingController nameController = TextEditingController();
 final TextEditingController usernameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();

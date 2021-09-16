@@ -10,7 +10,10 @@ import 'package:doctoworld_doctor/Model/user_detail_model.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
+import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
 import 'package:doctoworld_doctor/screens/splash.dart';
+import 'package:doctoworld_doctor/services/get_method_call.dart';
+import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +30,12 @@ approveAppointments(
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);
       // Get.offAll(BottomNavigation());
       print('Approve Appointment Message------>> ${approveAppointmentModel.message}');
-      Get.to(MyAppointmentsBody());
+      getMethod(
+          context,
+          getAllAppointmentsService,
+          {'doctor_id': 49},
+          true,
+          getAllLAppointmentRepo);
     } else {
       log('data ' + response.toString());
       showDialog(

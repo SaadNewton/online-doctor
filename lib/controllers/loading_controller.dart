@@ -18,4 +18,10 @@ class LoaderController extends GetxController {
     timeOutLoader = value;
     update();
   }
+
+  bool checkDoctorStatusLoader = false;
+  updateCheckDoctorStatusLoader(bool value) {
+    checkDoctorStatusLoader = value;
+    update();
+  }
 }

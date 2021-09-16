@@ -1,11 +1,18 @@
 //@dart=2.9
+import 'dart:async';
+
+import 'package:dio/dio.dart' as dio_instance;
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/BottomNavigation/Appointment/my_appointments.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
+import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/speciality_form.dart';
+import 'package:doctoworld_doctor/services/get_method_call.dart';
+import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -105,181 +112,218 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
+  checkDoctorStatus() {
+    if (!Get.find<LoaderController>().checkDoctorStatusLoader)  {
+      print('aaa');
+      getMethod(
+          context,
+          checkDoctorStatusService,
+          {'doctor_id': storageBox.read('doctor_id')},
+          true,
+          doctorStatusRepo);
+    }
+  }
+  @override
+  void initState() {
+    // storageBox.remove('approved');
+    // TODO: implement initState
+    super.initState();
+    if (!storageBox.hasData('approved')){
+      Timer.periodic(
+          Duration(seconds: 2),
+              (Timer t){
+            checkDoctorStatus();
+          });
+    }else{
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        Get.find<LoaderController>().updateCheckDoctorStatusLoader(true);
+
+      });
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: primaryColor,
-        ),
-        title: Text('Dashboard',
-          style: TextStyle(
-              color: primaryColor,
-              fontSize: 18,
-              fontWeight: FontWeight.bold
+    return GetBuilder<LoaderController>(
+      builder: (loaderController)=> !loaderController.checkDoctorStatusLoader
+          ? Scaffold(
+          body: Center(child: Text('Your Approval is pending'))
+      )
+          :Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(
+            color: primaryColor,
           ),
+          title: Text('Dashboard',
+            style: TextStyle(
+                color: primaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.bold
+            ),
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
         ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-      ),
-      drawer: Drawer(
-        child: Container(
-          width: 250,
-          child: Column(
-            children: [
-              Container(
-                height: 160,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomLeft,
-                    colors: [
-                      Color(0xff8E54E9),
-                      Color(0xff4776E6),
+        drawer: Drawer(
+          child: Container(
+            width: 250,
+            child: Column(
+              children: [
+                Container(
+                  height: 160,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: [
+                        Color(0xff8E54E9),
+                        Color(0xff4776E6),
 
-                    ],
-                  ),
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
-                ),
-                child: Image.asset('assets/splash-logo.png'),
-              ),
-              ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: drawerDetail.length,
-                itemBuilder: (context, index){
-                  return  ListTile(
-                    leading: Icon(drawerDetail[index]['leading']),
-                    title: InkWell(child: Text(drawerDetail[index]['title']),
-                      onTap: (){
-                        viewChangeOfDrawer(index);
-                      },
+                      ],
                     ),
-
-                  );
-
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Divider(
-                  thickness: 1.0,
-                  color: Colors.black.withOpacity(0.2),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
+                  ),
+                  child: Image.asset('assets/splash-logo.png'),
                 ),
-              ),
-            ],
+                ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: drawerDetail.length,
+                  itemBuilder: (context, index){
+                    return  ListTile(
+                      leading: Icon(drawerDetail[index]['leading']),
+                      title: InkWell(child: Text(drawerDetail[index]['title']),
+                        onTap: (){
+                          viewChangeOfDrawer(index);
+                        },
+                      ),
+
+                    );
+
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Divider(
+                    thickness: 1.0,
+                    color: Colors.black.withOpacity(0.2),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: Container(
-        color: Color(0xffF4F7F8),
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        child:  Container(
-          child: ListView.builder(
-            itemCount: dashboard.length ,
-            itemBuilder: (BuildContext context, index) {
-              return InkWell(
-                onTap: (){
-                  viewChange(index);
-                },
-                child: Container(
-                  child:  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: SizedBox(
-                      height: 159,
-                      child: Column(
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(20),
-                                      boxShadow: [BoxShadow(
-                                          color: Colors.grey.withOpacity(0.2),
-                                          spreadRadius: 2,
-                                          blurRadius: 5
-                                      )]
-                                  ),
+        body: Container(
+          color: Color(0xffF4F7F8),
+          height: MediaQuery.of(context).size.height,
+          width: double.infinity,
+          child:  Container(
+            child: ListView.builder(
+              itemCount: dashboard.length ,
+              itemBuilder: (BuildContext context, index) {
+                return InkWell(
+                  onTap: (){
+                    viewChange(index);
+                  },
+                  child: Container(
+                    child:  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                      child: SizedBox(
+                        height: 159,
+                        child: Column(
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
                                   child: Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    height: double.infinity,
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        image: DecorationImage(image: AssetImage(dashboard[index]['image']),
-                                            fit: BoxFit.fill),
-                                        //  color: Colors.white,
+                                        color: Colors.white,
                                         borderRadius: BorderRadius.circular(20),
                                         boxShadow: [BoxShadow(
                                             color: Colors.grey.withOpacity(0.2),
                                             spreadRadius: 2,
                                             blurRadius: 5
-                                        )],
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topRight,
-                                          end: Alignment.bottomLeft,
-                                          colors: [
-                                            color1[index],
-                                            color2[index],
-                                          ],
-                                        )
+                                        )]
                                     ),
-                                    child:Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          //   SvgPicture.asset('assets/doctor icon.svg',
-                                          // height: 40,),
-                                          Row(
+                                    child: Container(
+                                      margin: EdgeInsets.only(bottom: 10),
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(image: AssetImage(dashboard[index]['image']),
+                                              fit: BoxFit.fill),
+                                          //  color: Colors.white,
+                                          borderRadius: BorderRadius.circular(20),
+                                          boxShadow: [BoxShadow(
+                                              color: Colors.grey.withOpacity(0.2),
+                                              spreadRadius: 2,
+                                              blurRadius: 5
+                                          )],
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              color1[index],
+                                              color2[index],
+                                            ],
+                                          )
+                                      ),
+                                      child:Padding(
+                                        padding: const EdgeInsets.all(15.0),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            //   SvgPicture.asset('assets/doctor icon.svg',
+                                            // height: 40,),
+                                            Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                children: [
+
+                                                  Icon(dashboard[index]['icon'],
+                                                    color: Colors.white38,
+                                                    size: 65,
+                                                  ),
+                                                ]
+                                            ),
+
+                                            Row(
                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-
-                                                Icon(dashboard[index]['icon'],
-                                                  color: Colors.white38,
-                                                  size: 65,
+                                                Text(dashboard[index]['text2'],
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
                                                 ),
-                                              ]
-                                          ),
-
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(dashboard[index]['text2'],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold
+                                                Text(dashboard[index]['text1'],
+                                                  style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight: FontWeight.bold
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(dashboard[index]['text1'],
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 16,
-                                                    fontWeight: FontWeight.bold
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                              ],
+                                            ),
 
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ]
+                            ]
+                        ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ),
