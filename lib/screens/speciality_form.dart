@@ -28,7 +28,11 @@ class _SpecialityFormState extends State<SpecialityForm> {
 
   GlobalKey<FormState> specialityKey  = GlobalKey();
   final TextEditingController _specialityController = TextEditingController();
-
+  String specialityType;
+  List<String> scheduleTypeList = [
+    'Time',
+    'Serial'
+  ];
   final slidableController = SlidableController();
   final _scrollController = ScrollController();
   @override
@@ -60,17 +64,65 @@ class _SpecialityFormState extends State<SpecialityForm> {
                           child: Column(
                             children: [
                               /// speciality
-                              EntryField(
-                                color: Colors.grey.withOpacity(0.2),
-                                controller: _specialityController,
-                                hint: 'Speciality',
-                                validator: (value){
-                                  if(value.isEmpty){
-                                    return 'Field is Required';
-                                  }else{
-                                    return null;
-                                  }
-                                },
+                              ButtonTheme(
+                                alignedDropdown: true,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButtonFormField<String>(
+                                    decoration: InputDecoration(
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 17.0, horizontal: 10.0),
+                                      fillColor: Colors.grey.withOpacity(0.2),
+                                      filled: true,
+                                      hintText: 'Select one',
+                                      hintStyle: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 17
+                                      ),
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide.none,
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(4))),
+                                    ),
+                                    // isExpanded: true,
+                                    focusColor: Colors.white,
+                                    // dropdownColor: Colors.grey.withOpacity(0.2),
+                                    // iconSize: 10,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17
+                                    ),
+                                    iconEnabledColor: Colors.black,
+                                    value: specialityType,
+                                    items: scheduleTypeList
+                                        .map<DropdownMenuItem<String>>(
+                                            (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style:
+                                              TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 17
+                                              ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                    onChanged: (String value) {
+                                      print(value);
+                                      setState(() {
+                                        specialityType = value;
+                                      });
+                                    },
+                                    validator: (String value) {
+                                      if (value == null) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                ),
                               ),
                               SizedBox(height: 20.0),
 

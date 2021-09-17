@@ -106,6 +106,7 @@ class _DashboardState extends State<Dashboard> {
       case 7:
         return {
           storageBox.remove('session'),
+          storageBox.remove('approved'),
           Get.offAll(LoginUI()),
         };
         break;
@@ -148,7 +149,31 @@ class _DashboardState extends State<Dashboard> {
     return GetBuilder<LoaderController>(
       builder: (loaderController)=> !loaderController.checkDoctorStatusLoader
           ? Scaffold(
-          body: Center(child: Text('Your Approval is pending'))
+        backgroundColor: backgroundColor,
+          body: SafeArea(
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset('assets/icons/doctor_logo.png',width: MediaQuery.of(context).size.width*.4,),
+                  SizedBox(height: 30,),
+                  CircleAvatar(
+                    backgroundColor: primaryColor,
+                    radius: 150,
+                    child: Text(
+                      'Please wait\n Your request has been sent for approval.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18
+                      ),
+                    )
+                  ),
+                ],
+              )
+            ),
+          )
       )
           :Scaffold(
         appBar: AppBar(

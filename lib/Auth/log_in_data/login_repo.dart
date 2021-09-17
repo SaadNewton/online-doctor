@@ -22,6 +22,9 @@ getLoginData(
       storeDataLocally('session', 'active');
       storeDataLocally('authToken', userDetailModel.data.auth.token);
 
+      if(userDetailModel.data.status == 1){
+        storageBox.write('approved', 'true');
+      }
       Get.offAll(Dashboard());
       print('getLogin UserData ------>> ${userDetailModel.data.email}');
       storageBox.write('doctor_id', userDetailModel.data.id);
