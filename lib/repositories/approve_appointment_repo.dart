@@ -1,8 +1,6 @@
-
-
 import 'dart:developer';
 
-import 'package:doctoworld_doctor/BottomNavigation/Appointment/my_appointments.dart';
+import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
@@ -29,12 +27,9 @@ approveAppointments(
       // storeDataLocally('session', 'active');
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);
       // Get.offAll(BottomNavigation());
-      print('Approve Appointment Message------>> ${approveAppointmentModel.message}');
-      getMethod(
-          context,
-          getAllAppointmentsService,
-          {'doctor_id': 49},
-          true,
+      print(
+          'Approve Appointment Message------>> ${approveAppointmentModel.message}');
+      getMethod(context, getAllAppointmentsService, {'doctor_id': 49}, true,
           getAllLAppointmentRepo);
     } else {
       log('data ' + response.toString());

@@ -16,7 +16,7 @@ import 'Locale/language_cubit.dart';
 import 'Locale/locale.dart';
 import 'Theme/style.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
@@ -53,12 +53,12 @@ class DoctoWorldDoctor extends StatelessWidget {
               const Locale('tr'),
               const Locale('sw'),
             ],
-           locale: locale,
+            locale: locale,
             theme: lightTheme,
-            home: ProfileWizard(),
+            // home: ProfileWizard(),
             // home: EducationForm(),
-            // home: SplashScreen(),
-          //  routes: PageRoutes().routes(),
+            home: SplashScreen(),
+            //  routes: PageRoutes().routes(),
           );
         },
       ),

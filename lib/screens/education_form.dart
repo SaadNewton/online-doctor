@@ -30,7 +30,7 @@ class EducationForm extends StatefulWidget {
 }
 
 class _EducationFormState extends State<EducationForm> {
-  GlobalKey<FormState> educationKey  = GlobalKey();
+  GlobalKey<FormState> educationKey = GlobalKey();
   final TextEditingController _instituteController = TextEditingController();
   final TextEditingController _disciplineController = TextEditingController();
   final TextEditingController _periodController = TextEditingController();
@@ -38,7 +38,7 @@ class _EducationFormState extends State<EducationForm> {
   File _image;
   bool _imageChecker = false;
 
-  Future getImage() async{
+  Future getImage() async {
     final photo = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (photo != null) {
@@ -58,11 +58,12 @@ class _EducationFormState extends State<EducationForm> {
     // _emailController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoaderController>(
       init: LoaderController(),
-      builder:(loaderController)=> ModalProgressHUD(
+      builder: (loaderController) => ModalProgressHUD(
         inAsyncCall: loaderController.formLoader,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -74,8 +75,8 @@ class _EducationFormState extends State<EducationForm> {
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Padding(
-
-                    padding:  EdgeInsets.only(bottom:MediaQuery.of(context).viewInsets.bottom),
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       children: [
                         Padding(
@@ -85,36 +86,62 @@ class _EducationFormState extends State<EducationForm> {
                               ///............. image.............///
                               _image == null
                                   ? InkWell(
-                                    onTap: (){
-                                      getImage();
-                                    },
-                                    child: Container(
-                                    height: 60,
-                                    width: 60,
-                                    child: Image.asset('assets/image_picker.png')
-                              ),
-                                  )
+                                      onTap: () {
+                                        getImage();
+                                      },
+                                      child: Container(
+                                        height: 80,
+                                        width: 80,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            shape: BoxShape.circle),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.photo,
+                                                size: 18,
+                                              ),
+                                              Text(
+                                                'Upload Certificate',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.black),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
                                   : InkWell(
-                                onTap: (){},
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(8),
+                                      onTap: () {},
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.withOpacity(0.2),
+                                            shape: BoxShape.circle),
+                                        height: 80,
+                                        width: 80,
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(80),
+                                            child: Image.file(
+                                              _image,
+                                            )),
+                                      ),
                                     ),
-                                    height: 60,
-                                    width: 60,
-                                    child: Center(child: Image.file(_image) ),
-                                  ),
-                                ),
                               _imageChecker
-                                  ?Text(
-                                'Image Required',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.red
-                                ),
-                              )
-                                  :SizedBox(),
+                                  ? Text(
+                                      'Image Required',
+                                      style: TextStyle(
+                                          fontSize: 11, color: Colors.red),
+                                    )
+                                  : SizedBox(),
                               SizedBox(height: 20),
 
                               ///...........institute....................///
@@ -122,10 +149,10 @@ class _EducationFormState extends State<EducationForm> {
                                 color: Colors.grey.withOpacity(0.2),
                                 controller: _instituteController,
                                 hint: 'Institution',
-                                validator: (value){
-                                  if(value.isEmpty){
+                                validator: (value) {
+                                  if (value.isEmpty) {
                                     return 'Field is Required';
-                                  }else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -137,10 +164,10 @@ class _EducationFormState extends State<EducationForm> {
                                 color: Colors.grey.withOpacity(0.2),
                                 controller: _disciplineController,
                                 hint: 'Discipline',
-                                validator: (value){
-                                  if(value.isEmpty){
+                                validator: (value) {
+                                  if (value.isEmpty) {
                                     return 'Field is Required';
-                                  }else{
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -153,174 +180,200 @@ class _EducationFormState extends State<EducationForm> {
                                 color: Colors.grey.withOpacity(0.2),
                                 controller: _periodController,
                                 hint: 'Period',
-                                validator: (value){
-                                  if(value.isEmpty){
+                                validator: (value) {
+                                  if (value.isEmpty) {
                                     return 'Field is Required';
-                                  }else{
+                                  } else {
                                     return null;
                                   }
                                 },
                               ),
                               SizedBox(height: 20.0),
 
-
                               CustomButton(
                                 label: 'Submit',
                                 onTap: () {
-                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
                                   if (!currentFocus.hasPrimaryFocus) {
                                     currentFocus.unfocus();
-
                                   }
-                                  if(educationKey.currentState.validate() && _image != null) {
+                                  if (educationKey.currentState.validate() &&
+                                      _image != null) {
                                     setState(() {
                                       _imageChecker = false;
                                     });
-                                    Get.find<LoaderController>().updateFormController(true);
+                                    Get.find<LoaderController>()
+                                        .updateFormController(true);
                                     uploadImage(_image);
-                                    }else{
+                                  } else {
                                     setState(() {
                                       _imageChecker = true;
                                     });
                                   }
-
                                 },
                               ),
                               SizedBox(height: 20.0),
                             ],
                           ),
                         ),
-                        if (educationList.length == 0) SizedBox() else Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                              child: Container(
-                          decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      offset: Offset(0,1),
-                                      blurRadius: 9,
-                                      spreadRadius: 3
-                                  )
-                                ]
-                          ),
-                          child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 8,),
-                                  Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Certificate',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor
+                        if (educationList.length == 0)
+                          SizedBox()
+                        else
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.grey.withOpacity(0.4),
+                                        offset: Offset(0, 1),
+                                        blurRadius: 9,
+                                        spreadRadius: 3)
+                                  ]),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    Container(
+                                        decoration:
+                                            BoxDecoration(color: Colors.white),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Certificate',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: primaryColor),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Institution',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Institution',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: primaryColor),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Discipline',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Discipline',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: primaryColor),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Period',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Period',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: primaryColor),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Icon(Icons.arrow_back,size: 13,color: Colors.white,)
-                                        ],
-                                      )),
-                                  Divider(color: Colors.grey.withOpacity(0.8),),
-                                  Wrap(
-                                    children: List.generate(educationList.length, (index) {
-                                      return Column(
-                                        children: [
-                                          Slidable(
-                                            closeOnScroll: true,
-                                            controller: slidableController,
-                                            actionPane: SlidableDrawerActionPane(),
-                                            actionExtentRatio: 0.2,
-                                            secondaryActions: <Widget>[
-                                              IconSlideAction(
-                                                color: Colors.blue,
-                                                icon: Icons.edit,
-                                                onTap: () {
-                                                  setState(() {
-                                                    _instituteController.text = educationList[index]['institution'];
-                                                    _disciplineController.text = educationList[index]['discipline'];
-                                                    _periodController.text = educationList[index]['period'];
-                                                    _image = educationList[index]['image'];
+                                            Icon(
+                                              Icons.arrow_back,
+                                              size: 13,
+                                              color: Colors.white,
+                                            )
+                                          ],
+                                        )),
+                                    Divider(
+                                      color: Colors.grey.withOpacity(0.8),
+                                    ),
+                                    Wrap(
+                                      children: List.generate(
+                                          educationList.length, (index) {
+                                        return Column(
+                                          children: [
+                                            Slidable(
+                                                closeOnScroll: true,
+                                                controller: slidableController,
+                                                actionPane:
+                                                    SlidableDrawerActionPane(),
+                                                actionExtentRatio: 0.2,
+                                                secondaryActions: <Widget>[
+                                                  IconSlideAction(
+                                                    color: Colors.blue,
+                                                    icon: Icons.edit,
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _instituteController
+                                                                .text =
+                                                            educationList[index]
+                                                                ['institution'];
+                                                        _disciplineController
+                                                                .text =
+                                                            educationList[index]
+                                                                ['discipline'];
+                                                        _periodController.text =
+                                                            educationList[index]
+                                                                ['period'];
+                                                        _image =
+                                                            educationList[index]
+                                                                ['image'];
 
-                                                    _scrollController.animateTo(
-                                                      _scrollController.position.minScrollExtent,
-                                                      curve: Curves.easeOut,
-                                                      duration: const Duration(milliseconds: 500),
-                                                    );
+                                                        _scrollController
+                                                            .animateTo(
+                                                          _scrollController
+                                                              .position
+                                                              .minScrollExtent,
+                                                          curve: Curves.easeOut,
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                        );
 
-                                                    educationList.removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                              IconSlideAction(
-                                                color: Colors.red,
-                                                icon: Icons.delete,
-                                                onTap: () {
-                                                  // postMethod(
-                                                  //     context,
-                                                  //     '$educationStoreDeleteService',
-                                                  //     null,
-                                                  //     true,
-                                                  //     deleteEducationStoreData
-                                                  // );
-                                                  setState(() {
-                                                    educationList.removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                            child: Builder(
-                                              builder: (BuildContext contextS)=>
-                                                  InkWell(
-                                                    onTap: (){
+                                                        educationList
+                                                            .removeAt(index);
+                                                      });
+                                                    },
+                                                  ),
+                                                  IconSlideAction(
+                                                    color: Colors.red,
+                                                    icon: Icons.delete,
+                                                    onTap: () {
+                                                      // postMethod(
+                                                      //     context,
+                                                      //     '$educationStoreDeleteService',
+                                                      //     null,
+                                                      //     true,
+                                                      //     deleteEducationStoreData
+                                                      // );
+                                                      setState(() {
+                                                        educationList
+                                                            .removeAt(index);
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                                child: Builder(
+                                                  builder:
+                                                      (BuildContext contextS) =>
+                                                          InkWell(
+                                                    onTap: () {
                                                       print('CLICK ${index}');
-                                                      Slidable.of(contextS).open();
+                                                      Slidable.of(contextS)
+                                                          .open();
                                                     },
                                                     child: Container(
                                                       color: Colors.white,
@@ -329,75 +382,100 @@ class _EducationFormState extends State<EducationForm> {
                                                         children: [
                                                           Expanded(
                                                             child: Align(
-                                                              alignment: Alignment.center,
-                                                              child: Image.file(educationList[index]['image'],
-                                                                width: 20,),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              child: Image.file(
+                                                                educationList[
+                                                                        index]
+                                                                    ['image'],
+                                                                width: 20,
+                                                              ),
                                                             ),
                                                           ),
                                                           Expanded(
                                                             child: Align(
-                                                                alignment: Alignment.center,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
                                                                 child: Text(
                                                                   '${educationList[index]['institution']}',
-                                                                  softWrap: true,
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  softWrap:
+                                                                      true,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
-                                                                      fontSize: 11,
-                                                                      color: Colors.black
-                                                                  ),
-                                                                )
-                                                            ),
+                                                                      fontSize:
+                                                                          11,
+                                                                      color: Colors
+                                                                          .black),
+                                                                )),
                                                           ),
                                                           Expanded(
                                                             child: Align(
-                                                                alignment: Alignment.center,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
                                                                 child: Text(
                                                                   '${educationList[index]['discipline']}',
-                                                                  softWrap: true,
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  softWrap:
+                                                                      true,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
-                                                                      fontSize: 11,
-                                                                      color: Colors.black
-                                                                  ),
-                                                                )
-                                                            ),
+                                                                      fontSize:
+                                                                          11,
+                                                                      color: Colors
+                                                                          .black),
+                                                                )),
                                                           ),
                                                           Expanded(
                                                             child: Align(
-                                                                alignment: Alignment.center,
+                                                                alignment:
+                                                                    Alignment
+                                                                        .center,
                                                                 child: Text(
                                                                   '${educationList[index]['period']}',
-                                                                  softWrap: true,
-                                                                  overflow: TextOverflow.ellipsis,
+                                                                  softWrap:
+                                                                      true,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: TextStyle(
-                                                                      fontSize: 11,
-                                                                      color: Colors.black
-                                                                  ),
-                                                                )
-                                                            ),
+                                                                      fontSize:
+                                                                          11,
+                                                                      color: Colors
+                                                                          .black),
+                                                                )),
                                                           ),
-
-                                                          Icon(Icons.arrow_back,size: 13,color: primaryColor,)
+                                                          Icon(
+                                                            Icons.arrow_back,
+                                                            size: 13,
+                                                            color: primaryColor,
+                                                          )
                                                         ],
                                                       ),
                                                     ),
                                                   ),
                                                   // ExperienceListShow(context: context,index: index,),
-                                            )
-                                          ),
-                                          index == (educationList.length-1)
-                                              ?SizedBox()
-                                              :Divider(color: Colors.grey.withOpacity(0.3),),
-                                        ],
-                                      );
-                                    }),
-                                  )
-                                ],
+                                                )),
+                                            index == (educationList.length - 1)
+                                                ? SizedBox()
+                                                : Divider(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.3),
+                                                  ),
+                                          ],
+                                        );
+                                      }),
+                                    )
+                                  ],
+                                ),
                               ),
-                          ),
-                        ),
                             ),
-
+                          ),
                         SizedBox(height: 80.0),
                       ],
                     ),
@@ -410,19 +488,19 @@ class _EducationFormState extends State<EducationForm> {
             slideCurve: Curves.linearToEaseOut,
           ),
           floatingActionButton: educationList.length == 0
-              ?SizedBox()
-              :FloatingActionButton(
-            backgroundColor: primaryColor,
-            child: Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
-            ),
-            onPressed: (){
-              setState(() {
-                widget.changeView(1);
-              });
-            },
-          ),
+              ? SizedBox()
+              : FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget.changeView(2);
+                    });
+                  },
+                ),
         ),
       ),
     );
@@ -431,7 +509,7 @@ class _EducationFormState extends State<EducationForm> {
   uploadImage(File file) async {
     String fileName = file.path.split('/').last;
     dio_instance.FormData formData =
-    dio_instance.FormData.fromMap(<String, dynamic>{
+        dio_instance.FormData.fromMap(<String, dynamic>{
       'doctor_id': 46,
       'institution': _instituteController.text,
       'discipline': _disciplineController.text,
@@ -446,22 +524,18 @@ class _EducationFormState extends State<EducationForm> {
     // setCustomHeader(dio, 'Authorization', 'Bearer ${storageBox.read('accessToken')}');
     dio_instance.Response<dynamic> response;
     try {
-      response = await dio.post(
-          educationStoreService,
-          data: formData);
+      response = await dio.post(educationStoreService, data: formData);
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
         setState(() {
-          educationList.add(
-              {
-                'id':response.data['data']['id'],
-                'institution': response.data['data']['institution'],
-                'discipline': response.data['data']['discipline'],
-                'period': response.data['data']['period'],
-                'image': _image
-              }
-          );
+          educationList.add({
+            'id': response.data['data']['id'],
+            'institution': response.data['data']['institution'],
+            'discipline': response.data['data']['discipline'],
+            'period': response.data['data']['period'],
+            'image': _image
+          });
         });
         Get.find<LoaderController>().updateFormController(false);
 
@@ -473,15 +547,9 @@ class _EducationFormState extends State<EducationForm> {
 
         setState(() {});
       }
-
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
       log('putResponseError---->> ${e}');
     }
   }
-
 }
-
-
-
-

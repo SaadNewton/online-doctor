@@ -1,5 +1,5 @@
 import 'package:doctoworld_doctor/BottomNavigation/Account/account_page.dart';
-import 'package:doctoworld_doctor/BottomNavigation/Appointment/my_appointments.dart';
+import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/BottomNavigation/Reviews/reviews_page.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
 import 'package:flutter/material.dart';

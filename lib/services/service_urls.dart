@@ -22,20 +22,18 @@ String educationStoreService = baseUrl + 'education-store';
 String educationStoreUpdateService = baseUrl + 'education-update';
 String educationStoreDeleteService = baseUrl + 'delete-education';
 
-
 ///  Experience store
 
 String experienceStoreService = baseUrl + 'experience-store';
 
-
 ///  speciality store
 
 String specialityStoreService = baseUrl + 'speciality-update';
+String specialitiesListService = baseUrl + 'get-list-speciality';
 
 /// get_all_Appointments
 
 String getAllAppointmentsService = baseUrl + 'get-appointment-request';
-
 
 ///   Doctor update profile
 

@@ -1,4 +1,3 @@
-
 // @dart = 2.9
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
@@ -25,26 +24,22 @@ class SpecialityForm extends StatefulWidget {
 }
 
 class _SpecialityFormState extends State<SpecialityForm> {
-
-  GlobalKey<FormState> specialityKey  = GlobalKey();
+  GlobalKey<FormState> specialityKey = GlobalKey();
   final TextEditingController _specialityController = TextEditingController();
   String specialityType;
-  List<String> scheduleTypeList = [
-    'Time',
-    'Serial'
-  ];
   final slidableController = SlidableController();
   final _scrollController = ScrollController();
   @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context);
     return GetBuilder<LoaderController>(
       init: LoaderController(),
-      builder:(loaderController)=> ModalProgressHUD(
+      builder: (loaderController) => ModalProgressHUD(
         inAsyncCall: loaderController.formLoader,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -56,7 +51,8 @@ class _SpecialityFormState extends State<SpecialityForm> {
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Padding(
-                    padding:  EdgeInsets.only(bottom:MediaQuery.of(context).viewInsets.bottom),
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       children: [
                         Padding(
@@ -73,11 +69,9 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                           vertical: 17.0, horizontal: 10.0),
                                       fillColor: Colors.grey.withOpacity(0.2),
                                       filled: true,
-                                      hintText: 'Select one',
+                                      hintText: 'Select',
                                       hintStyle: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 17
-                                      ),
+                                          color: Colors.black, fontSize: 17),
                                       border: OutlineInputBorder(
                                           borderSide: BorderSide.none,
                                           borderRadius: BorderRadius.all(
@@ -88,26 +82,22 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                     // dropdownColor: Colors.grey.withOpacity(0.2),
                                     // iconSize: 10,
                                     style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 17
-                                    ),
+                                        color: Colors.black, fontSize: 17),
                                     iconEnabledColor: Colors.black,
                                     value: specialityType,
-                                    items: scheduleTypeList
+                                    items: getSpecialitiesList
                                         .map<DropdownMenuItem<String>>(
                                             (String value) {
-                                          return DropdownMenuItem<String>(
-                                            value: value,
-                                            child: Text(
-                                              value,
-                                              style:
-                                              TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 17
-                                              ),
-                                            ),
-                                          );
-                                        }).toList(),
+                                      return DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17),
+                                        ),
+                                      );
+                                    }).toList(),
                                     onChanged: (String value) {
                                       print(value);
                                       setState(() {
@@ -128,154 +118,190 @@ class _SpecialityFormState extends State<SpecialityForm> {
 
                               CustomButton(
                                 label: 'Submit',
-                                onTap: (){
-                                  if(specialityKey.currentState.validate()){
-                                    Get.find<LoaderController>().updateFormController(true);
+                                onTap: () {
+                                  if (specialityKey.currentState.validate()) {
+                                    Get.find<LoaderController>()
+                                        .updateFormController(true);
 
                                     postMethod(
                                         context,
                                         specialityStoreService,
                                         {
                                           'doctor_id': 46,
-                                          'speciality': List.generate(specialityList.length, (index){
-                                            return specialityList[index]['speciality'];
-                                          })
+                                          'speciality': specialityList.length ==
+                                                  0
+                                              ? [specialityType]
+                                              : List.generate(
+                                                  specialityList.length,
+                                                  (index) {
+                                                  return specialityList[index]
+                                                      ['speciality'];
+                                                })
                                         },
                                         true,
-                                        getSpeciality
-                                    );
+                                        getSpeciality);
                                     setState(() {
-                                      specialityList.add(
-                                          {'speciality':_specialityController.text}
-                                      );
+                                      specialityList
+                                          .add({'speciality': specialityType});
                                     });
                                     print(specialityList);
                                     _specialityController.clear();
                                   }
                                 },
                               ),
-                             SizedBox(height: 20.0),
-
+                              SizedBox(height: 20.0),
                             ],
                           ),
                         ),
                         specialityList.length == 0
-                            ?SizedBox()
-                            :Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      offset: Offset(0,1),
-                                      blurRadius: 9,
-                                      spreadRadius: 3
-                                  )
-                                ]
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: [
-                                  Wrap(
-                                    children: List.generate(specialityList.length, (index) {
-                                      return Column(
-                                        children: [
-                                          Slidable(
-                                            closeOnScroll: true,
-                                            controller: slidableController,
-                                            actionPane: SlidableDrawerActionPane(),
-                                            actionExtentRatio: 0.2,
-                                            secondaryActions: <Widget>[
-                                              IconSlideAction(
-                                                color: Colors.blue,
-                                                icon: Icons.edit,
-                                                onTap: () {
-                                                  setState(() {
-                                                    _specialityController.text = specialityList[index]['speciality'];
+                            ? SizedBox()
+                            : Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Colors.grey.withOpacity(0.4),
+                                            offset: Offset(0, 1),
+                                            blurRadius: 9,
+                                            spreadRadius: 3)
+                                      ]),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Column(
+                                      children: [
+                                        Wrap(
+                                          children: List.generate(
+                                              specialityList.length, (index) {
+                                            return Column(
+                                              children: [
+                                                Slidable(
+                                                  closeOnScroll: true,
+                                                  controller:
+                                                      slidableController,
+                                                  actionPane:
+                                                      SlidableDrawerActionPane(),
+                                                  actionExtentRatio: 0.2,
+                                                  secondaryActions: <Widget>[
+                                                    IconSlideAction(
+                                                      color: Colors.blue,
+                                                      icon: Icons.edit,
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _specialityController
+                                                                  .text =
+                                                              specialityList[
+                                                                      index][
+                                                                  'speciality'];
 
-                                                    _scrollController.animateTo(
-                                                      _scrollController.position.minScrollExtent,
-                                                      curve: Curves.easeOut,
-                                                      duration: const Duration(milliseconds: 500),
-                                                    );
+                                                          _scrollController
+                                                              .animateTo(
+                                                            _scrollController
+                                                                .position
+                                                                .minScrollExtent,
+                                                            curve:
+                                                                Curves.easeOut,
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        500),
+                                                          );
 
-                                                    specialityList.removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                              IconSlideAction(
-                                                color: Colors.red,
-                                                icon: Icons.delete,
-                                                onTap: () {
-                                                  setState(() {
-                                                    specialityList.removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                            child: Builder(
-                                              builder:(BuildContext contextS)=>
-                                                  InkWell(
-                                                onTap: (){
-                                                  print('CLICK ${index}');
-                                                  Slidable.of(contextS).open();
-                                                },
-                                                child: Container(
-                                                  height: 30,
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 10),
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                          child: Align(
-                                                            alignment: Alignment.centerLeft,
-                                                            child: Text(
-                                                              'Speciality',
-                                                              style: TextStyle(
-                                                                  fontSize: 11,
-                                                                  color: primaryColor
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Expanded(
-                                                          child: Align(
-                                                              alignment: Alignment.centerLeft,
-                                                              child: Text(
-                                                                '${specialityList[index]['speciality']}',
-                                                                softWrap: true,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: TextStyle(
-                                                                    fontSize: 11,
-                                                                    color: Colors.black
+                                                          specialityList
+                                                              .removeAt(index);
+                                                        });
+                                                      },
+                                                    ),
+                                                    IconSlideAction(
+                                                      color: Colors.red,
+                                                      icon: Icons.delete,
+                                                      onTap: () {
+                                                        setState(() {
+                                                          specialityList
+                                                              .removeAt(index);
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                  child: Builder(
+                                                    builder: (BuildContext
+                                                            contextS) =>
+                                                        InkWell(
+                                                      onTap: () {
+                                                        print('CLICK ${index}');
+                                                        Slidable.of(contextS)
+                                                            .open();
+                                                      },
+                                                      child: Container(
+                                                        height: 30,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    'Speciality',
+                                                                    style: TextStyle(
+                                                                        fontSize:
+                                                                            11,
+                                                                        color:
+                                                                            primaryColor),
+                                                                  ),
                                                                 ),
-                                                              )
+                                                              ),
+                                                              Expanded(
+                                                                child: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .centerLeft,
+                                                                    child: Text(
+                                                                      '${specialityList[index]['speciality']}',
+                                                                      softWrap:
+                                                                          true,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              11,
+                                                                          color:
+                                                                              Colors.black),
+                                                                    )),
+                                                              ),
+                                                            ],
                                                           ),
                                                         ),
-                                                      ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                          index == (specialityList.length-1)
-                                              ?SizedBox()
-                                              :Divider(color: Colors.grey.withOpacity(0.3),),
-                                        ],
-                                      );
-                                    }),
-                                  )
-                                ],
+                                                index ==
+                                                        (specialityList.length -
+                                                            1)
+                                                    ? SizedBox()
+                                                    : Divider(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.3),
+                                                      ),
+                                              ],
+                                            );
+                                          }),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-
                         SizedBox(height: 80.0),
                       ],
                     ),
@@ -288,24 +314,21 @@ class _SpecialityFormState extends State<SpecialityForm> {
             slideCurve: Curves.linearToEaseOut,
           ),
           floatingActionButton: specialityList.length == 0
-              ?SizedBox()
-              :FloatingActionButton(
-            backgroundColor: primaryColor,
-            child: Icon(
-              Icons.arrow_forward,
-              color: Colors.white,
-            ),
-            onPressed: (){
-              setState(() {
-                widget.changeView(3);
-              });
-            },
-          ),
+              ? SizedBox()
+              : FloatingActionButton(
+                  backgroundColor: primaryColor,
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      widget.changeView(4);
+                    });
+                  },
+                ),
         ),
       ),
     );
   }
 }
-
-
-

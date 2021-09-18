@@ -2,7 +2,7 @@
 
 import 'dart:developer';
 
-import 'package:doctoworld_doctor/BottomNavigation/Appointment/my_appointments.dart';
+import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
@@ -24,7 +24,7 @@ doctorStatusRepo(
   if (responseCheck) {
     Get.find<LoaderController>().updateDataController(false);
     doctorStatusModel = DoctorStatusModel.fromJson(response);
-    if(doctorStatusModel.active){
+    if (doctorStatusModel.active) {
       storageBox.write('approved', 'true');
       Get.find<LoaderController>().updateCheckDoctorStatusLoader(true);
     }
@@ -36,6 +36,7 @@ doctorStatusRepo(
     print('Exception........................ ' + response.toString());
   }
 }
+
 /// active : true
 
 class DoctorStatusModel {
@@ -43,8 +44,7 @@ class DoctorStatusModel {
 
   bool get active => _active;
 
-  DoctorStatusModel({
-    bool active}){
+  DoctorStatusModel({bool active}) {
     _active = active;
   }
 
@@ -57,5 +57,4 @@ class DoctorStatusModel {
     map["active"] = _active;
     return map;
   }
-
 }

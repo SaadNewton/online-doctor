@@ -5,20 +5,21 @@ import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/check_status_model.dart';
 import 'package:doctoworld_doctor/Model/education_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
+import 'package:doctoworld_doctor/Model/get_speciality_list_model.dart';
 import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
 import 'package:doctoworld_doctor/Model/user_detail_model.dart';
 import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
 import 'package:flutter/material.dart';
 
-
-UserDetailModel userDetailModel = UserDetailModel() ;
+UserDetailModel userDetailModel = UserDetailModel();
 SignUpModel signUpModel = SignUpModel();
 EducationModel educationModel = EducationModel();
 GetAllAppointmentsModel getAllAppointmentsModel = GetAllAppointmentsModel();
 CheckStatusModel checkStatusModel = CheckStatusModel();
 ApproveAppointmentModel approveAppointmentModel = ApproveAppointmentModel();
 RemoveAppointmentModel removeAppointmentModel = RemoveAppointmentModel();
+GetSpecialityListModel getSpecialityListModel = GetSpecialityListModel();
 DoctorStatusModel doctorStatusModel = DoctorStatusModel();
 final TextEditingController nameController = TextEditingController();
 final TextEditingController usernameController = TextEditingController();
