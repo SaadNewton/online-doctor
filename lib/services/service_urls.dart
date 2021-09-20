@@ -2,6 +2,7 @@ import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 
 ///  Base Url
 
+// String baseUrl = 'http://192.168.88.43:8000/api/';
 String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 
 ///  Doctor login

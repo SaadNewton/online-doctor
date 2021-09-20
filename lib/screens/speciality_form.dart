@@ -9,6 +9,7 @@ import 'package:doctoworld_doctor/repositories/speciality_repo.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
+import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -127,7 +128,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                         context,
                                         specialityStoreService,
                                         {
-                                          'doctor_id': 46,
+                                          'doctor_id': storageBox.read('doctor_id'),
                                           'speciality': specialityList.length ==
                                                   0
                                               ? [specialityType]

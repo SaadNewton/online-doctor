@@ -71,32 +71,6 @@ class _DashboardState extends State<Dashboard> {
     Color(0xff11998E)
   ];
 
-  List<dynamic> drawerDetail = [
-    {'leading': Icons.home, 'title': 'Dashboard', 'go': Dashboard()},
-    {
-      'leading': Icons.assignment,
-      'title': 'Appointments',
-      'go': MyAppointmentsBody()
-    },
-    {
-      'leading': Icons.person_rounded,
-      'title': 'Speciality',
-      'go': SpecialityForm()
-    },
-    {
-      'leading': Icons.account_circle_outlined,
-      'title': 'Profile',
-      'go': Dashboard()
-    },
-    {'leading': Icons.announcement, 'title': 'About You', 'go': Dashboard()},
-    {'leading': Icons.school, 'title': 'Education', 'go': Dashboard()},
-    {
-      'leading': Icons.format_align_center,
-      'title': 'Experience',
-      'go': Dashboard()
-    },
-    {'leading': Icons.logout, 'title': 'Logout', 'go': Dashboard()},
-  ];
 
   viewChange(int index) {
     switch (index) {
@@ -115,38 +89,38 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  viewChangeOfDrawer(int index) {
-    switch (index) {
-      case 0:
-        return {Navigator.pop(context)};
-        break;
-      case 1:
-        return {Get.to(MyAppointmentsBody())};
-        break;
-      case 2:
-        return {Navigator.pop(context)};
-        break;
-      case 3:
-        return {Navigator.pop(context)};
-        break;
-      case 4:
-        return {Navigator.pop(context)};
-        break;
-      case 5:
-        return {Navigator.pop(context)};
-        break;
-      case 6:
-        return {Navigator.pop(context)};
-        break;
-      case 7:
-        return {
-          storageBox.remove('session'),
-          storageBox.remove('approved'),
-          Get.offAll(LoginUI()),
-        };
-        break;
-    }
-  }
+  // viewChangeOfDrawer(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 1:
+  //       return {Get.to(MyAppointmentsBody())};
+  //       break;
+  //     case 2:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 3:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 4:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 5:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 6:
+  //       return {Navigator.pop(context)};
+  //       break;
+  //     case 7:
+  //       return {
+  //         storageBox.remove('session'),
+  //         storageBox.remove('approved'),
+  //         Get.offAll(LoginUI()),
+  //       };
+  //       break;
+  //   }
+  // }
 
   checkDoctorStatus() {
     if (!Get.find<LoaderController>().checkDoctorStatusLoader) {
@@ -363,18 +337,20 @@ class _DashboardState extends State<Dashboard> {
                                                                 FontWeight
                                                                     .bold),
                                                       ),
-                                                      Text(
-                                                        index == 2
-                                                            ? '${getAllAppointmentsModel.data.length}'
-                                                            : dashboard[index]
-                                                                ['text1'],
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
+                                                      // getAllAppointmentsModel.data == null
+                                                      //     ?SizedBox()
+                                                      //     :Text(
+                                                      //   index == 2
+                                                      //       ? '${getAllAppointmentsModel.data.length}'
+                                                      //       : dashboard[index]
+                                                      //           ['text1'],
+                                                      //   style: TextStyle(
+                                                      //       color: Colors.white,
+                                                      //       fontSize: 16,
+                                                      //       fontWeight:
+                                                      //           FontWeight
+                                                      //               .bold),
+                                                      // ),
                                                     ],
                                                   ),
                                                 ],

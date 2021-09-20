@@ -29,7 +29,7 @@ approveAppointments(
       // Get.offAll(BottomNavigation());
       print(
           'Approve Appointment Message------>> ${approveAppointmentModel.message}');
-      getMethod(context, getAllAppointmentsService, {'doctor_id': 49}, true,
+      getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox!.read('doctor_id')}, true,
           getAllLAppointmentRepo);
     } else {
       log('data ' + response.toString());

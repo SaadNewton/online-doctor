@@ -32,7 +32,7 @@ removeAppointments(
       // Get.offAll(BottomNavigation());
       print(
           'Remove Appointment Message------>> ${removeAppointmentModel.message}');
-      getMethod(context, getAllAppointmentsService, {'doctor_id': 49}, true,
+      getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox.read('doctor_id')}, true,
           getAllLAppointmentRepo);
     } else {
       log('data ' + response.toString());

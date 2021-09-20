@@ -10,6 +10,7 @@ import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/screens/speciality_form.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
+import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -495,7 +496,7 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
     String fileName = file.path.split('/').last;
     dio_instance.FormData formData =
     dio_instance.FormData.fromMap(<String, dynamic>{
-      'doctor_id': 46,
+      'doctor_id': storageBox.read('doctor_id'),
       'institution': _instituteExperienceController.text,
       'discipline': _disciplineExperienceController.text,
       'period': _periodExperienceController.text,

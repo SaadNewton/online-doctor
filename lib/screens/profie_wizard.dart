@@ -89,7 +89,7 @@ class _ProfileWizardState extends State<ProfileWizard>
                   tabs: [
                     Center(
                       child: new Text(
-                        'Doctor Profile',
+                        'Personal',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
