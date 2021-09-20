@@ -79,7 +79,7 @@ verifyOTP(BuildContext context,var otp, bool fromSignUpForm) async {
               'lat': latitude,
               'long': longitude,
               'address': locationController.text,
-              'role': 'pharmacy_owner',
+              'role': 'doctor',
             },
             false,
             getSignupData

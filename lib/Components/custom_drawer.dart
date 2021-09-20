@@ -4,6 +4,12 @@ import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
 import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
+import 'package:doctoworld_doctor/screens/drawer_education_form.dart';
+import 'package:doctoworld_doctor/screens/drawer_experience_form.dart';
+import 'package:doctoworld_doctor/screens/drawer_profile.dart';
+import 'package:doctoworld_doctor/screens/drawer_schedule_form.dart';
+import 'package:doctoworld_doctor/screens/drawer_speciality_form.dart';
+import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -89,7 +95,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         ListTile(
                           onTap: () {
-                            Get.to(ProfileWizard());
+                            Get.to(DrawerDoctorProfile());
                           },
                           leading: Icon(
                             Icons.person_outline,
@@ -97,6 +103,86 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                           title: Text(
                             'Profile',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          height: 0.5,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Get.to(DrawerEducationForm());
+                          },
+                          leading: Icon(
+                            Icons.school_outlined,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Education',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          height: 0.5,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Get.to(DrawerExperienceForm());
+                          },
+                          leading: Icon(
+                            Icons.assignment_ind_outlined,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Experience',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          height: 0.5,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Get.to(DrawerSpecialityForm());
+                          },
+                          leading: Icon(
+                            Icons.assignment_outlined,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Speciality',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          height: 0.5,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Get.to(DrawerScheduleForm());
+                          },
+                          leading: Icon(
+                            Icons.access_time_outlined,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Schedule',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,
