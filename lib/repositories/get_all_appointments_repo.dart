@@ -39,3 +39,19 @@ getAllLAppointmentRepo(
     // Get.find<AppController>().changeServerErrorCheck(true);
   }
 }
+
+getDoneAppointmentRepo(
+    bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+  if (responseCheck) {
+    Get.find<LoaderController>().updateDataController(false);
+    getDoneAppointmentsModel = GetAllAppointmentsModel.fromJson(response);
+    if (getDoneAppointmentsModel.status == true) {
+      print('get-done_Appointments_data ------>> ${getDoneAppointmentsModel.data}');
+    } else {}
+  } else if (!responseCheck && response == null) {
+    Get.find<LoaderController>().updateDataController(false);
+
+    print('Exception........................');
+    // Get.find<AppController>().changeServerErrorCheck(true);
+  }
+}

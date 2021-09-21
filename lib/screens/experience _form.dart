@@ -529,10 +529,10 @@ class _ExperienceFormState extends State<ExperienceForm> {
         });
         Get.find<LoaderController>().updateFormController(false);
 
-        // _instituteExperienceController.clear();
-        // _disciplineExperienceController.clear();
-        // _periodExperienceController.clear();
-        // _image = null;
+        _instituteExperienceController.clear();
+        _disciplineExperienceController.clear();
+        _periodExperienceController.clear();
+        _image = null;
         log('LocalList---->> ${experienceList}');
         setState(() {});
       }

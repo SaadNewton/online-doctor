@@ -75,6 +75,7 @@ class _EntryFieldState extends State<EntryField> {
                 textAlign: widget.textAlign ?? TextAlign.left,
                 keyboardType: widget.textInputType,
                 decoration: InputDecoration(
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
                   // prefixIcon: Icon(widget.prefixIcon,
                   //     color: Theme.of(context).primaryColor),
                   suffixIcon: InkWell(
@@ -87,7 +88,7 @@ class _EntryFieldState extends State<EntryField> {
                       }
                     },
                   ),
-                  hintText: widget.hint,
+                  labelText: widget.hint,
                   filled: true,
                   fillColor: widget.color ?? Theme.of(context).backgroundColor,
                   border: OutlineInputBorder(

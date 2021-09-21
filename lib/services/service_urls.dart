@@ -4,6 +4,7 @@ import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 
 // String baseUrl = 'http://192.168.88.43:8000/api/';
 String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
+String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
 
 ///  Doctor login
 
@@ -35,10 +36,12 @@ String specialitiesListService = baseUrl + 'get-list-speciality';
 /// get_all_Appointments
 
 String getAllAppointmentsService = baseUrl + 'get-appointment-request';
+String getDoneAppointmentsService = baseUrl + 'get-appointment-done';
 
-///   Doctor update profile
+///   Doctor profile
 
 String getDoctorUpdateProfileService = baseUrl + 'update-profile';
+String getDoctorProfileService = baseUrl + 'get-doctor-profile';
 
 ///  Approve Appointment
 
@@ -51,3 +54,14 @@ String removeAppointmentService = baseUrl + 'appointment-remove';
 ///  checkDoctorStatusService
 
 String checkDoctorStatusService = baseUrl + 'get-doctor-status';
+
+///  scheduleStatusService
+
+String scheduleSetService = baseUrl + 'schedule-manage';
+
+///  doctorArticles
+
+String getAllArticlesService = baseUrl + 'get-all-article';
+String addArticlesService = baseUrl + 'article-store';
+String deleteArticlesService = baseUrl + 'article-delete';
+String updateArticlesService = baseUrl + 'article-update';

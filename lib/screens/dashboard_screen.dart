@@ -6,6 +6,7 @@ import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_drawer.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
+import 'package:doctoworld_doctor/screens/articles_screen.dart';
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
@@ -89,39 +90,6 @@ class _DashboardState extends State<Dashboard> {
     }
   }
 
-  // viewChangeOfDrawer(int index) {
-  //   switch (index) {
-  //     case 0:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 1:
-  //       return {Get.to(MyAppointmentsBody())};
-  //       break;
-  //     case 2:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 3:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 4:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 5:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 6:
-  //       return {Navigator.pop(context)};
-  //       break;
-  //     case 7:
-  //       return {
-  //         storageBox.remove('session'),
-  //         storageBox.remove('approved'),
-  //         Get.offAll(LoginUI()),
-  //       };
-  //       break;
-  //   }
-  // }
-
   checkDoctorStatus() {
     if (!Get.find<LoaderController>().checkDoctorStatusLoader) {
       print('aaa');
@@ -196,177 +164,269 @@ class _DashboardState extends State<Dashboard> {
                 backgroundColor: Colors.transparent,
               ),
               drawer: CustomDrawer(),
-              // drawer: Drawer(
-              //   child: Container(
-              //     width: 250,
-              //     child: Column(
-              //       children: [
-              //         Container(
-              //           height: 160,
-              //           decoration: BoxDecoration(
-              //             gradient: LinearGradient(
-              //               begin: Alignment.topRight,
-              //               end: Alignment.bottomLeft,
-              //               colors: [
-              //                 Color(0xff8E54E9),
-              //                 Color(0xff4776E6),
-              //               ],
-              //             ),
-              //             borderRadius: BorderRadius.only(
-              //                 topLeft: Radius.circular(50),
-              //                 bottomRight: Radius.circular(50)),
-              //           ),
-              //           child: Image.asset('assets/splash-logo.png'),
-              //         ),
-              //         ListView.builder(
-              //           scrollDirection: Axis.vertical,
-              //           shrinkWrap: true,
-              //           itemCount: drawerDetail.length,
-              //           itemBuilder: (context, index) {
-              //             return ListTile(
-              //               leading: Icon(drawerDetail[index]['leading']),
-              //               title: InkWell(
-              //                 child: Text(drawerDetail[index]['title']),
-              //                 onTap: () {
-              //                   viewChangeOfDrawer(index);
-              //                 },
-              //               ),
-              //             );
-              //           },
-              //         ),
-              //         Padding(
-              //           padding: const EdgeInsets.all(8.0),
-              //           child: Divider(
-              //             thickness: 1.0,
-              //             color: Colors.black.withOpacity(0.2),
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
               body: loaderController.dataLoader
                   ? Center(child: CircularProgressIndicator())
                   : Container(
                       color: Color(0xffF4F7F8),
                       height: MediaQuery.of(context).size.height,
                       width: double.infinity,
-                      child: Container(
-                        child: ListView.builder(
-                          itemCount: dashboard.length,
-                          itemBuilder: (BuildContext context, index) {
-                            return InkWell(
-                              onTap: () {
-                                viewChange(index);
-                              },
-                              child: Container(
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0),
-                                  child: SizedBox(
-                                    height: 140,
-                                    child: Column(children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 10, 0, 0),
-                                          child: Container(
-                                            height: double.infinity,
-                                            width: double.infinity,
-                                            decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        dashboard[index]
-                                                            ['image']),
-                                                    fit: BoxFit.fill),
-                                                //  color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                      color: Colors.grey
-                                                          .withOpacity(0.2),
-                                                      spreadRadius: 2,
-                                                      blurRadius: 5)
+                      child: ListView(
+                        children: [
+                          ///---earnings
+                          InkWell(
+                            onTap: () {},
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: SizedBox(
+                                  height: 140,
+                                  child: Column(children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
+                                        child: Container(
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('assets/orange.png'),
+                                                  fit: BoxFit.fill),
+                                              //  color: Colors.white,
+                                              borderRadius:
+                                              BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 5)
+                                              ],
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft,
+                                                colors: [
+                                                  Color(0xff8E54E9),
+                                                  Color(0xff4776E6),
                                                 ],
-                                                gradient: LinearGradient(
-                                                  begin: Alignment.topRight,
-                                                  end: Alignment.bottomLeft,
-                                                  colors: [
-                                                    color1[index],
-                                                    color2[index],
-                                                  ],
-                                                )),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(15.0),
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  //   SvgPicture.asset('assets/doctor icon.svg',
-                                                  // height: 40,),
-                                                  Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Icon(
-                                                          dashboard[index]
-                                                              ['icon'],
-                                                          color: Colors.white38,
-                                                          size: 65,
-                                                        ),
-                                                      ]),
-
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Text(
-                                                        dashboard[index]
-                                                            ['text2'],
+                                              )),
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .end,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        'EARNINGS',
                                                         style: TextStyle(
                                                             color: Colors.white,
-                                                            fontSize: 16,
+                                                            fontSize: 22,
                                                             fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                            FontWeight
+                                                                .w500),
                                                       ),
-                                                      // getAllAppointmentsModel.data == null
-                                                      //     ?SizedBox()
-                                                      //     :Text(
-                                                      //   index == 2
-                                                      //       ? '${getAllAppointmentsModel.data.length}'
-                                                      //       : dashboard[index]
-                                                      //           ['text1'],
-                                                      //   style: TextStyle(
-                                                      //       color: Colors.white,
-                                                      //       fontSize: 16,
-                                                      //       fontWeight:
-                                                      //           FontWeight
-                                                      //               .bold),
-                                                      // ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.credit_card,
+                                                      color: Colors.white38,
+                                                      size: 60,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ]),
-                                  ),
+                                    ),
+                                  ]),
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                            ),
+                          ),
+                          ///---appointments
+                          InkWell(
+                            onTap: () {
+                              Get.to(AllAppointmentScreen());
+                            },
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: SizedBox(
+                                  height: 140,
+                                  child: Column(children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
+                                        child: Container(
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('assets/blue.png'),
+                                                  fit: BoxFit.fill),
+                                              //  color: Colors.white,
+                                              borderRadius:
+                                              BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 5)
+                                              ],
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft,
+                                                colors: [
+                                                  Color(0xff3A7BD5),
+                                                  Color(0xff00D2FF),
+                                                ],
+                                              )),
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .end,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        'APPOINTMENTS',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w500),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.app_registration,
+                                                      color: Colors.white38,
+                                                      size: 60,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ),
+                          ///---articles
+                          InkWell(
+                            onTap: () {
+                              Get.to(ArticlesScreen());
+                            },
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: SizedBox(
+                                  height: 140,
+                                  child: Column(children: [
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
+                                        child: Container(
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage('assets/blue.png'),
+                                                  fit: BoxFit.fill),
+                                              //  color: Colors.white,
+                                              borderRadius:
+                                              BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey
+                                                        .withOpacity(0.2),
+                                                    spreadRadius: 2,
+                                                    blurRadius: 5)
+                                              ],
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomLeft,
+                                                colors: [
+                                                  Color(0xff2948FF),
+                                                  Color(0xff396AFC),
+                                                ],
+                                              )),
+                                          child: Padding(
+                                            padding:
+                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .end,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        'ARTICLES',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 22,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w500),
+                                                      ),
+                                                    ),
+                                                    Icon(
+                                                      Icons.article_outlined,
+                                                      color: Colors.white38,
+                                                      size: 60,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ),
             ),
     );

@@ -7,8 +7,11 @@ import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/data/global_data.dart';
+import 'package:doctoworld_doctor/repositories/getDoctorProfileRepo.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/screens/speciality_form.dart';
+import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,6 +62,17 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
   void dispose() {
     super.dispose();
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.find<LoaderController>().updateDataController(true);
+    });
+    getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
+        getDoctorProfileRepo);
+  }
+  bool addChecker = false;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +88,32 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
             ),
             centerTitle: true,
             iconTheme: IconThemeData(color: Colors.black),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      addChecker = !addChecker;
+                    });
+                  },
+                  child: CircleAvatar(
+                    radius: 18,
+                    backgroundColor: primaryColor,
+                    child: Icon(
+                        addChecker
+                            ?Icons.rotate_left_outlined
+                            :Icons.add,
+                        color:Colors.white),
+                  ),
+                ),
+              )
+            ],
           ),
           resizeToAvoidBottomInset: false,
-          body: FadedSlideAnimation(
+          body: loaderController.dataLoader
+              ?Center(child: CircularProgressIndicator())
+              :FadedSlideAnimation(
             Container(
               height: MediaQuery.of(context).size.height,
               child: Form(
@@ -88,395 +125,256 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
                         bottom: MediaQuery.of(context).viewInsets.bottom),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                          child: Column(
-                            children: [
-                              _image == null
-                                  ? InkWell(
-                                onTap: () {
-                                  getImage();
-                                },
-                                child: Container(
-                                  height: 80,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      shape: BoxShape.circle),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.photo,
-                                          size: 18,
-                                        ),
-                                        Text(
-                                          'Upload Certificate',
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.black),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                                  : InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.withOpacity(0.2),
-                                      shape: BoxShape.circle),
-                                  height: 80,
-                                  width: 80,
-                                  child: ClipRRect(
-                                      borderRadius:
-                                      BorderRadius.circular(80),
-                                      child: Image.file(
-                                        _image,
-                                      )),
-                                ),
-                              ),
-                              _imageChecker
-                                  ? Text(
-                                'Image Required',
-                                style: TextStyle(
-                                    fontSize: 11, color: Colors.red),
-                              )
-                                  : SizedBox(),
-                              SizedBox(height: 20),
-
-                              /// institution
-                              EntryField(
-                                color: Colors.grey.withOpacity(0.2),
-                                controller: _instituteExperienceController,
-                                hint: 'Institution',
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Field is Required';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              SizedBox(height: 20.0),
-
-                              /// Discipline
-
-                              EntryField(
-                                color: Colors.grey.withOpacity(0.2),
-                                controller: _disciplineExperienceController,
-                                hint: 'Discipline',
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Field is Required';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              SizedBox(height: 20.0),
-
-                              /// period
-                              EntryField(
-                                color: Colors.grey.withOpacity(0.2),
-                                controller: _periodExperienceController,
-                                hint: 'Period',
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Field is Required';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-                              SizedBox(height: 20.0),
-
-                              CustomButton(
-                                label: 'Submit',
-                                onTap: () {
-                                  FocusScopeNode currentFocus =
-                                  FocusScope.of(context);
-                                  if (!currentFocus.hasPrimaryFocus) {
-                                    currentFocus.unfocus();
-                                  }
-                                  if (experienceKey.currentState.validate() &&
-                                      _image != null) {
-                                    setState(() {
-                                      _imageChecker = false;
-                                    });
-                                    Get.find<LoaderController>()
-                                        .updateFormController(true);
-                                    uploadImage(_image);
-                                  } else {
-                                    setState(() {
-                                      _imageChecker = true;
-                                    });
-                                  }
-                                },
-                              ),
-                              SizedBox(height: 20.0),
-                            ],
-                          ),
-                        ),
-                        experienceList.length == 0
-                            ? SizedBox()
-                            : Padding(
-                          padding:
-                          const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Colors.grey.withOpacity(0.4),
-                                      offset: Offset(0, 1),
-                                      blurRadius: 9,
-                                      spreadRadius: 3)
-                                ]),
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
+                        addChecker
+                            ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                               child: Column(
                                 children: [
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Container(
+                                  _image == null
+                                      ? InkWell(
+                                    onTap: () {
+                                      getImage();
+                                    },
+                                    child: Container(
+                                      height: 80,
+                                      width: 80,
                                       decoration: BoxDecoration(
-                                          color: Colors.white),
-                                      child: Row(
-                                        children: [
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Certificate',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor),
-                                              ),
+                                          color: Colors.grey.withOpacity(0.2),
+                                          shape: BoxShape.circle),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.photo,
+                                              size: 18,
                                             ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Institution',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Discipline',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor),
-                                              ),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                'Period',
-                                                style: TextStyle(
-                                                    fontSize: 11,
-                                                    color: primaryColor),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )),
-                                  Divider(
-                                    color: Colors.grey.withOpacity(0.8),
-                                  ),
-                                  Wrap(
-                                    children: List.generate(
-                                        experienceList.length, (index) {
-                                      return Column(
-                                        children: [
-                                          Slidable(
-                                            closeOnScroll: true,
-                                            controller:
-                                            slidableController,
-                                            actionPane:
-                                            SlidableDrawerActionPane(),
-                                            actionExtentRatio: 0.2,
-                                            secondaryActions: <Widget>[
-                                              IconSlideAction(
-                                                color: Colors.blue,
-                                                icon: Icons.edit,
-                                                onTap: () {
-                                                  setState(() {
-                                                    _instituteExperienceController
-                                                        .text =
-                                                    experienceList[
-                                                    index][
-                                                    'institution'];
-                                                    _disciplineExperienceController
-                                                        .text =
-                                                    experienceList[
-                                                    index][
-                                                    'discipline'];
-                                                    _periodExperienceController
-                                                        .text =
-                                                    experienceList[
-                                                    index]
-                                                    ['period'];
-                                                    _image =
-                                                    experienceList[
-                                                    index]
-                                                    ['image'];
-
-                                                    _scrollController
-                                                        .animateTo(
-                                                      _scrollController
-                                                          .position
-                                                          .minScrollExtent,
-                                                      curve:
-                                                      Curves.easeOut,
-                                                      duration:
-                                                      const Duration(
-                                                          milliseconds:
-                                                          500),
-                                                    );
-
-                                                    experienceList
-                                                        .removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                              IconSlideAction(
-                                                color: Colors.red,
-                                                icon: Icons.delete,
-                                                onTap: () {
-                                                  setState(() {
-                                                    experienceList
-                                                        .removeAt(index);
-                                                  });
-                                                },
-                                              ),
-                                            ],
-                                            child: Builder(
-                                              builder: (BuildContext
-                                              contextS) =>
-                                                  InkWell(
-                                                    onTap: () {
-                                                      print('CLICK ${index}');
-                                                      Slidable.of(contextS)
-                                                          .open();
-                                                    },
-                                                    child: Container(
-                                                      height: 30,
-                                                      child: Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: Align(
-                                                              alignment:
-                                                              Alignment
-                                                                  .center,
-                                                              child:
-                                                              Image.file(
-                                                                experienceList[
-                                                                index]
-                                                                ['image'],
-                                                                width: 20,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: Align(
-                                                                alignment:
-                                                                Alignment
-                                                                    .center,
-                                                                child: Text(
-                                                                  '${experienceList[index]['institution']}',
-                                                                  softWrap:
-                                                                  true,
-                                                                  overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                      11,
-                                                                      color: Colors
-                                                                          .black),
-                                                                )),
-                                                          ),
-                                                          Expanded(
-                                                            child: Align(
-                                                                alignment:
-                                                                Alignment
-                                                                    .center,
-                                                                child: Text(
-                                                                  '${experienceList[index]['discipline']}',
-                                                                  softWrap:
-                                                                  true,
-                                                                  overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                      11,
-                                                                      color: Colors
-                                                                          .black),
-                                                                )),
-                                                          ),
-                                                          Expanded(
-                                                            child: Align(
-                                                                alignment:
-                                                                Alignment
-                                                                    .center,
-                                                                child: Text(
-                                                                  '${experienceList[index]['period']}',
-                                                                  softWrap:
-                                                                  true,
-                                                                  overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                      11,
-                                                                      color: Colors
-                                                                          .black),
-                                                                )),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                            ),
-                                          ),
-                                          index ==
-                                              (experienceList.length -
-                                                  1)
-                                              ? SizedBox()
-                                              : Divider(
-                                            color: Colors.grey
-                                                .withOpacity(0.3),
-                                          ),
-                                        ],
-                                      );
-                                    }),
+                                            Text(
+                                              'Upload Certificate',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  color: Colors.black),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
                                   )
+                                      : InkWell(
+                                    onTap: () {},
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          shape: BoxShape.circle),
+                                      height: 80,
+                                      width: 80,
+                                      child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          child: Image.file(
+                                            _image,
+                                          )),
+                                    ),
+                                  ),
+                                  _imageChecker
+                                      ? Text(
+                                    'Image Required',
+                                    style: TextStyle(
+                                        fontSize: 11, color: Colors.red),
+                                  )
+                                      : SizedBox(),
+                                  SizedBox(height: 20),
+
+                                  /// institution
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _instituteExperienceController,
+                                    hint: 'Institution',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  /// Discipline
+
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _disciplineExperienceController,
+                                    hint: 'Discipline',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  /// period
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _periodExperienceController,
+                                    hint: 'Period',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  CustomButton(
+                                    label: 'Submit',
+                                    onTap: () {
+                                      FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+                                      if (!currentFocus.hasPrimaryFocus) {
+                                        currentFocus.unfocus();
+                                      }
+                                      if (experienceKey.currentState.validate() &&
+                                          _image != null) {
+                                        setState(() {
+                                          _imageChecker = false;
+                                        });
+                                        Get.find<LoaderController>()
+                                            .updateFormController(true);
+                                        uploadImage(_image);
+                                      } else {
+                                        setState(() {
+                                          _imageChecker = true;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
                                 ],
                               ),
                             ),
-                          ),
+                            SizedBox(height: 20.0),
+                          ],
+                        )
+                            :SizedBox(),
+
+                        Wrap(
+                          children: List.generate(getDoctorProfileModal.data.experienceDetails.length, (index){
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 30),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.grey.withOpacity(0.4),
+                                                blurRadius: 9,
+                                                spreadRadius: 2
+                                            )
+                                          ]
+                                      ),
+                                      child: ListTile(
+                                        leading: Container(
+                                          width: 40,
+                                          height: double.infinity,
+                                          child: Center(
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5),
+                                              child: Image.network(
+                                                '$mediaUrl${getDoctorProfileModal.data.experienceDetails[index].imagePath}',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        title: Text(
+                                          '${getDoctorProfileModal.data.experienceDetails[index].discipline}',
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: Colors.black
+                                          ),
+                                        ),
+                                        subtitle: Row(
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                '${getDoctorProfileModal.data.experienceDetails[index].institution}',
+                                                softWrap: true,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    fontSize: 13,
+                                                    color: Colors.grey.withOpacity(0.8)
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.centerRight,
+                                                child: Text(
+                                                  '${getDoctorProfileModal.data.experienceDetails[index].period}',
+                                                  softWrap: true,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Colors.grey.withOpacity(0.8)
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: (){},
+                                            child: Container(
+                                              height: 30,
+                                              width: 40,
+                                              color: Colors.red,
+                                              child: Center(child: Icon(Icons.delete,
+                                                color: Colors.white,),),
+                                            ),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context).primaryColor,
+                                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
+                                            ),
+                                            height: 30,
+                                            width: 40,
+                                            child: Center(child: Icon(Icons.edit,
+                                              color: Colors.white,)),
+                                          )
+                                        ],
+                                      ))
+                                ],
+                              ),
+                            );
+                          }),
                         ),
-                        SizedBox(height: 80.0),
+                        SizedBox(height: 20,)
                       ],
                     ),
                   ),
@@ -514,18 +412,13 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
-        experienceList.add({
-          'institution': _instituteExperienceController.text,
-          'discipline': _disciplineExperienceController.text,
-          'period': _periodExperienceController.text,
-          'image': _image
-        });
-        Get.find<LoaderController>().updateFormController(false);
+        getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
+            getDoctorProfileRepo);
 
-        // _instituteExperienceController.clear();
-        // _disciplineExperienceController.clear();
-        // _periodExperienceController.clear();
-        // _image = null;
+        _instituteExperienceController.clear();
+        _disciplineExperienceController.clear();
+        _periodExperienceController.clear();
+        _image = null;
         log('LocalList---->> ${experienceList}');
         setState(() {});
       }

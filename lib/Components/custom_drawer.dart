@@ -3,6 +3,7 @@
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
+import 'package:doctoworld_doctor/screens/articles_screen.dart';
 import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/drawer_education_form.dart';
 import 'package:doctoworld_doctor/screens/drawer_experience_form.dart';
@@ -215,14 +216,14 @@ class _CustomDrawerState extends State<CustomDrawer> {
                         ),
                         ListTile(
                           onTap: () {
-                            Navigator.pop(context);
+                            Get.to(ArticlesScreen());
                           },
                           leading: Icon(
                             Icons.info_outline,
                             color: Colors.white,
                           ),
                           title: Text(
-                            'About',
+                            'Articles',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,

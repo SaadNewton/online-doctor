@@ -1,12 +1,13 @@
 //@dart=2.9
 import 'package:animation_wrappers/Animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/Animations/faded_slide_animation.dart';
+import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AppointmentDetailScreen extends StatefulWidget {
-  const AppointmentDetailScreen({Key key}) : super(key: key);
-
+  final Appointments appointment;
+  AppointmentDetailScreen({this.appointment});
   @override
   _AppointmentDetailScreenState createState() =>
       _AppointmentDetailScreenState();
@@ -66,7 +67,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Row(
                         children: [
                           Text(
-                            'John Doe',
+                            '${widget.appointment.name}',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2
@@ -97,7 +98,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Row(
                         children: [
                           Text(
-                            'Chest Pain',
+                            '${widget.appointment.disease}',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2
@@ -128,7 +129,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Row(
                         children: [
                           Text(
-                            '12 June 2020 | 12:00 pm',
+                            '${widget.appointment.bookingDate} | ${widget.appointment.timeSerial}',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2

@@ -123,7 +123,10 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                   if (specialityKey.currentState.validate()) {
                                     Get.find<LoaderController>()
                                         .updateFormController(true);
-
+                                    setState(() {
+                                      specialityList
+                                          .add({'speciality': specialityType});
+                                    });
                                     postMethod(
                                         context,
                                         specialityStoreService,
@@ -141,10 +144,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                         },
                                         true,
                                         getSpeciality);
-                                    setState(() {
-                                      specialityList
-                                          .add({'speciality': specialityType});
-                                    });
+
                                     print(specialityList);
                                     _specialityController.clear();
                                   }

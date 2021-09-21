@@ -5,9 +5,12 @@ import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/education_store_repo.dart';
+import 'package:doctoworld_doctor/repositories/getDoctorProfileRepo.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
+import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
@@ -54,6 +57,17 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
   final _scrollController = ScrollController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.find<LoaderController>().updateDataController(true);
+    });
+    getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
+        getDoctorProfileRepo);
+  }
+
+  @override
   void dispose() {
     // _nameController.dispose();
     // _emailController.dispose();
@@ -75,7 +89,9 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
             iconTheme: IconThemeData(color: Colors.black),
           ),
           resizeToAvoidBottomInset: false,
-          body: FadedSlideAnimation(
+          body: loaderController.dataLoader
+              ?Center(child: CircularProgressIndicator())
+              :FadedSlideAnimation(
             Container(
               height: MediaQuery.of(context).size.height,
               child: Form(
@@ -117,29 +133,9 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
                                         : ClipRRect(
                                       borderRadius:
                                       BorderRadius.circular(80),
-                                      child: Padding(
-                                        padding:
-                                        const EdgeInsets.all(4.0),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment
-                                              .spaceEvenly,
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                          children: [
-                                            Icon(
-                                              Icons.photo,
-                                              size: 18,
-                                            ),
-                                            Text(
-                                              'Upload Profile',
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black),
-                                            )
-                                          ],
-                                        ),
+                                      child: Image.network(
+                                        '$mediaUrl${getDoctorProfileModal.data.image}',
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
                                   ),
@@ -173,7 +169,7 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
                                   : SizedBox(),
                               SizedBox(height: 35),
                               CustomButton(
-                                label: 'Submit',
+                                label: 'Update',
                                 onTap: () {
                                   if (_image != null) {
                                     setState(() {
@@ -233,7 +229,7 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
           profileList.add({'image': _image});
         });
         Get.find<LoaderController>().updateFormController(false);
-
+        Get.snackbar('Success','Updated Successfully');
         _image = null;
         log('LocalList---->> ${profileList}');
 
