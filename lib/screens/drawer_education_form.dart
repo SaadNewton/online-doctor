@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
+import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
@@ -74,6 +75,8 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
   }
 
   bool addChecker = false;
+  bool updateChecker = false;
+  int updateIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +97,11 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
                 child: InkWell(
                   onTap: (){
                     setState(() {
+                      updateChecker = false;
+                      _instituteController.clear();
+                      _disciplineController.clear();
+                      _periodController.clear();
+                      _image = null;
                       addChecker = !addChecker;
                     });
                   },
@@ -270,6 +278,146 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
                           ],
                         )
                             :SizedBox(),
+                        updateChecker
+                            ? Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                              child: Column(
+                                children: [
+                                  ///............. image.............///
+                                  _image == null
+                                      ? InkWell(
+                                    onTap: () {
+                                      getImage();
+                                    },
+                                    child: Container(
+                                      height: 80,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          shape: BoxShape.circle),
+                                      child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          child: Image.network(
+                                            '$mediaUrl${getDoctorProfileModal.data.educationDetails[updateIndex].imagePath}',
+                                          )),
+                                    ),
+                                  )
+                                      : InkWell(
+                                    onTap: () {
+                                      getImage();
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          shape: BoxShape.circle),
+                                      height: 80,
+                                      width: 80,
+                                      child: ClipRRect(
+                                          borderRadius:
+                                          BorderRadius.circular(80),
+                                          child: Image.file(
+                                            _image,
+                                          )),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+
+                                  ///...........institute....................///
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _instituteController,
+                                    hint: 'Institution',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  ///...............discipline................///
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _disciplineController,
+                                    hint: 'Discipline',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  ///..........period................///
+
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _periodController,
+                                    hint: 'Period',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  CustomButton(
+                                    label: 'Update',
+                                    onTap: () {
+                                      FocusScopeNode currentFocus =
+                                      FocusScope.of(context);
+                                      if (!currentFocus.hasPrimaryFocus) {
+                                        currentFocus.unfocus();
+                                      }
+                                      if (educationKey.currentState.validate() &&
+                                          _image != null) {
+                                        Get.find<LoaderController>()
+                                            .updateFormController(true);
+                                        updateImage(_image);
+                                        setState(() {
+                                          addChecker =false;
+                                          updateChecker =false;
+                                        });
+                                      } else if (educationKey.currentState.validate()){
+                                        Get.find<LoaderController>()
+                                            .updateFormController(true);
+                                        postMethod(
+                                            context,
+                                            educationStoreUpdateService,
+                                            {
+                                              'update_id':getDoctorProfileModal.data.educationDetails[updateIndex].id,
+                                              'doctor_id':storageBox.read('doctor_id'),
+                                              'institution': _instituteController.text,
+                                              'discipline': _disciplineController.text,
+                                              'period': _periodController.text,
+                                            }, true,
+                                            deleteEducationStoreData
+                                        );
+                                        setState(() {
+                                          addChecker =false;
+                                          updateChecker =false;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 20.0),
+                          ],
+                        )
+                            :SizedBox(),
                         Wrap(
                           children: List.generate(getDoctorProfileModal.data.educationDetails.length, (index){
                             return Padding(
@@ -348,7 +496,40 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
                                       child: Row(
                                         children: [
                                           InkWell(
-                                            onTap: (){},
+                                            onTap: (){
+                                              showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return CustomDialogBox(
+                                                      titleColor:
+                                                      customDialogQuestionColor,
+                                                      descriptions:
+                                                      'Are you sure You want to delete this education?',
+                                                      text: 'Remove',
+                                                      functionCall: () {
+
+                                                        Get.find<LoaderController>().updateDataController(true);
+                                                        postMethod(
+                                                            context,
+                                                            educationStoreDeleteService,
+                                                            {
+                                                              'delete_id':getDoctorProfileModal.data.educationDetails
+                                                              [index].id
+                                                            },
+                                                            true,
+                                                            deleteEducationStoreData
+                                                        );
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          addChecker = false;
+                                                        });
+                                                      },
+                                                      img:
+                                                      'assets/dialog_Question Mark.svg',
+                                                    );
+                                                  });
+                                            },
                                             child: Container(
                                               height: 30,
                                               width: 40,
@@ -357,15 +538,30 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
                                               color: Colors.white,),),
                                             ),
                                           ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Theme.of(context).primaryColor,
-                                              borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
+                                          InkWell(
+                                            onTap: (){
+                                              setState(() {
+                                                addChecker = false;
+                                                _instituteController.text =
+                                                    getDoctorProfileModal.data.educationDetails[index].institution.toString();
+                                                _disciplineController.text =
+                                                    getDoctorProfileModal.data.educationDetails[index].discipline.toString();
+                                                _periodController.text =
+                                                    getDoctorProfileModal.data.educationDetails[index].period.toString();
+                                                updateIndex = index;
+                                                updateChecker = true;
+                                              });
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context).primaryColor,
+                                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
+                                              ),
+                                              height: 30,
+                                              width: 40,
+                                              child: Center(child: Icon(Icons.edit,
+                                              color: Colors.white,)),
                                             ),
-                                            height: 30,
-                                            width: 40,
-                                            child: Center(child: Icon(Icons.edit,
-                                            color: Colors.white,)),
                                           )
                                         ],
                                       ))
@@ -409,6 +605,45 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
     dio_instance.Response<dynamic> response;
     try {
       response = await dio.post(educationStoreService, data: formData);
+      log('postStatusCode---->> ${response.statusCode}');
+      log('postResponse---->> ${response.data}');
+      if (response.statusCode.toString() == '200') {
+        getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
+            getDoctorProfileRepo);
+
+        _instituteController.clear();
+        _disciplineController.clear();
+        _periodController.clear();
+        _image = null;
+        log('LocalList---->> ${educationList}');
+
+        setState(() {});
+      }
+    } on dio_instance.DioError catch (e) {
+      Get.find<LoaderController>().updateFormController(false);
+      log('putResponseError---->> ${e}');
+    }
+  }
+  updateImage(File file) async {
+    String fileName = file.path.split('/').last;
+    dio_instance.FormData formData =
+    dio_instance.FormData.fromMap(<String, dynamic>{
+      'update_id':getDoctorProfileModal.data.educationDetails[updateIndex].id,
+      'doctor_id': storageBox.read('doctor_id'),
+      'institution': _instituteController.text,
+      'discipline': _disciplineController.text,
+      'period': _periodController.text,
+      'image': await dio_instance.MultipartFile.fromFile(
+        file.path,
+        filename: fileName,
+        contentType: new MediaType('image', 'jpeg'), //important
+      )
+    });
+    dio_instance.Dio dio = dio_instance.Dio();
+    // setCustomHeader(dio, 'Authorization', 'Bearer ${storageBox.read('accessToken')}');
+    dio_instance.Response<dynamic> response;
+    try {
+      response = await dio.post(educationStoreUpdateService, data: formData);
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {

@@ -1,6 +1,7 @@
 // @dart = 2.9
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
+import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
@@ -193,8 +194,11 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                             })
                                             },
                                             true,
-                                            getSpeciality);
-
+                                            updateSpeciality
+                                        );
+                                        setState(() {
+                                          addChecker = false;
+                                        });
                                         print(specialityList);
                                         _specialityController.clear();
                                       }
@@ -208,63 +212,82 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                         )
                             :SizedBox(),
                         Wrap(
-                          children: List.generate(getDoctorProfileModal.data.speciality.length, (index){
+                          children: List.generate(specialityList.length, (index){
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-                              child: Stack(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 30),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.grey.withOpacity(0.4),
-                                                blurRadius: 9,
-                                                spreadRadius: 2
-                                            )
-                                          ]
-                                      ),
-                                      child: ListTile(
-                                        title: Text(
-                                          '${getDoctorProfileModal.data.speciality[index]}',
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.black
-                                          ),
-                                        ),
-                                      ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.grey.withOpacity(0.4),
+                                          blurRadius: 9,
+                                          spreadRadius: 2
+                                      )
+                                    ]
+                                ),
+                                child: ListTile(
+                                  title: Text(
+                                    '${specialityList[index]['speciality']}',
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.black
                                     ),
                                   ),
-                                  Positioned(
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: (){},
-                                            child: Container(
-                                              height: 30,
-                                              width: 40,
-                                              color: Colors.red,
-                                              child: Center(child: Icon(Icons.delete,
-                                                color: Colors.white,),),
-                                            ),
-                                          ),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context).primaryColor,
-                                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))
-                                            ),
-                                            height: 30,
-                                            width: 40,
-                                            child: Center(child: Icon(Icons.edit,
-                                              color: Colors.white,)),
-                                          )
-                                        ],
-                                      ))
-                                ],
+                                  trailing: specialityList.length == 1
+                                      ?SizedBox()
+                                      :InkWell(
+                                    onTap: (){
+                                      showDialog(
+                                          context: context,
+                                          builder:
+                                              (BuildContext context) {
+                                            return CustomDialogBox(
+                                              titleColor:
+                                              customDialogQuestionColor,
+                                              descriptions:
+                                              'Are you sure You want to delete this speciality?',
+                                              text: 'Remove',
+                                              functionCall: () {
+                                                Get.find<LoaderController>()
+                                                    .updateFormController(true);
+                                                setState(() {
+                                                  specialityList.removeAt(index);
+                                                });
+                                                postMethod(
+                                                    context,
+                                                    specialityStoreService,
+                                                    {
+                                                      'doctor_id': storageBox.read('doctor_id'),
+                                                      'speciality':  specialityList.length == 0
+                                                          ?[]
+                                                          :List.generate(
+                                                          specialityList.length,
+                                                              (index) {
+                                                            return specialityList[index]
+                                                            ['speciality'];
+                                                          })
+                                                    },
+                                                    true,
+                                                    updateSpeciality
+                                                );
+                                                Navigator.pop(context);
+                                                setState(() {
+                                                  addChecker = false;
+                                                });
+                                              },
+                                              img:
+                                              'assets/dialog_Question Mark.svg',
+                                            );
+                                          });
+                                    },
+                                    child: Icon(
+                                      Icons.delete,
+                                      size: 25,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
                               ),
                             );
                           }),

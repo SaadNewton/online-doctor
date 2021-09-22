@@ -25,7 +25,8 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
   GlobalKey<FormState> signKey = GlobalKey();
 
   var currentPosition;
-  bool? obSecureText;
+  bool? obSecureText = true;
+  bool? confirmObSecureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -107,12 +108,13 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                             EntryField(
                               controller: emailController,
                               prefixIcon: Icons.mail,
+                              textInputType: TextInputType.emailAddress,
                               hint: locale.emailAddress,
                               color: Theme.of(context).scaffoldBackgroundColor,
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Field is Required';
-                                } else if (!value.contains('@')) {
+                                } else if (GetUtils.isEmail(value)) {
                                   return 'Please Enter Valid Email';
                                 } else {
                                   return null;
@@ -143,7 +145,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                             /// password
                             EntryField(
                               controller: passController,
-                              obSecure: true,
+                              obSecure: obSecureText,
                               prefixIcon: Icons.lock,
                               suffixIcon: Icons.remove_red_eye_outlined,
                               hint: 'Password',
@@ -161,7 +163,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                             /// confirm pass
                             EntryField(
                               controller: confirmPassController,
-                              obSecure: true,
+                              obSecure: confirmObSecureText,
                               prefixIcon: Icons.lock,
                               suffixIcon: Icons.remove_red_eye_outlined,
                               hint: 'Confirm Password',

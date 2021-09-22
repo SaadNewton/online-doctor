@@ -20,6 +20,26 @@ getDoctorProfileRepo(
 
     getDoctorProfileModal = GetDoctorProfileModal.fromJson(response);
 
+    specialityList = [];
+    getDoctorProfileModal.data.speciality.forEach((element) {
+      specialityList.add(
+          {
+            'speciality': element
+          }
+      );
+    });
+
+    scheduleList = [];
+    scheduleList.add(
+        {
+          'noOfDays': getDoctorProfileModal.data.serialDay,
+          'slotDuration': getDoctorProfileModal.data.duration,
+          'startTime':getDoctorProfileModal.data.startTime,
+          'endTime':getDoctorProfileModal.data.endTime,
+          'slots':getDoctorProfileModal.data.serialOrSlot,
+        }
+    );
+
     print('getDoctorProfileRepo ------>> ${getDoctorProfileModal.data}');
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateDataController(false);

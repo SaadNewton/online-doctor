@@ -27,6 +27,8 @@ String educationStoreDeleteService = baseUrl + 'delete-education';
 ///  Experience store
 
 String experienceStoreService = baseUrl + 'experience-store';
+String experienceStoreUpdateService = baseUrl + 'experience-update';
+String experienceStoreDeleteService = baseUrl + 'delete-experience';
 
 ///  speciality store
 
