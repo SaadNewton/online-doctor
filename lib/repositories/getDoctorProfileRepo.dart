@@ -30,15 +30,22 @@ getDoctorProfileRepo(
     });
 
     scheduleList = [];
-    scheduleList.add(
-        {
-          'noOfDays': getDoctorProfileModal.data.serialDay,
-          'slotDuration': getDoctorProfileModal.data.duration,
-          'startTime':getDoctorProfileModal.data.startTime,
-          'endTime':getDoctorProfileModal.data.endTime,
-          'slots':getDoctorProfileModal.data.serialOrSlot,
-        }
-    );
+    response['data']['serial_day_app'].forEach((element){
+
+      scheduleList.add(
+          {
+            'noOfDays': getDoctorProfileModal.data.serialDay,
+            'slotDuration': element['duration'],
+            'startTime':element['start_time'],
+            'endTime':element['end_time'],
+            'slots':element['slots'],
+            'schedule_type': element['schedule_type'],
+            'clinic_name': element['clinic_name'],
+            'clinic_address': element['clinic_address'],
+            'days': element['days']
+          }
+      );
+    });
 
     print('getDoctorProfileRepo ------>> ${getDoctorProfileModal.data}');
   } else if (!responseCheck && response == null) {

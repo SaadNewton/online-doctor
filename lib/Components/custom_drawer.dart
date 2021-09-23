@@ -190,46 +190,46 @@ class _CustomDrawerState extends State<CustomDrawer> {
                                 color: Colors.white),
                           ),
                         ),
-                        Container(
-                          height: 0.5,
-                          color: Colors.white.withOpacity(0.5),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Get.to(AllAppointmentScreen());
-                          },
-                          leading: Icon(
-                            Icons.reorder,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            'Appointments',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          ),
-                        ),
-                        Container(
-                          height: 0.5,
-                          color: Colors.white.withOpacity(0.5),
-                        ),
-                        ListTile(
-                          onTap: () {
-                            Get.to(ArticlesScreen());
-                          },
-                          leading: Icon(
-                            Icons.info_outline,
-                            color: Colors.white,
-                          ),
-                          title: Text(
-                            'Articles',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white),
-                          ),
-                        ),
+                        // Container(
+                        //   height: 0.5,
+                        //   color: Colors.white.withOpacity(0.5),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {
+                        //     Get.to(AllAppointmentScreen());
+                        //   },
+                        //   leading: Icon(
+                        //     Icons.reorder,
+                        //     color: Colors.white,
+                        //   ),
+                        //   title: Text(
+                        //     'Appointments',
+                        //     style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w400,
+                        //         color: Colors.white),
+                        //   ),
+                        // ),
+                        // Container(
+                        //   height: 0.5,
+                        //   color: Colors.white.withOpacity(0.5),
+                        // ),
+                        // ListTile(
+                        //   onTap: () {
+                        //     Get.to(ArticlesScreen());
+                        //   },
+                        //   leading: Icon(
+                        //     Icons.info_outline,
+                        //     color: Colors.white,
+                        //   ),
+                        //   title: Text(
+                        //     'Articles',
+                        //     style: TextStyle(
+                        //         fontSize: 15,
+                        //         fontWeight: FontWeight.w400,
+                        //         color: Colors.white),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

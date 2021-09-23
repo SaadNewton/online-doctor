@@ -40,6 +40,8 @@ class _ProfileWizardState extends State<ProfileWizard>
     getMethod(
         context, specialitiesListService, null, true, getSpecialityListRepo);
     super.initState();
+    scheduleList = [];
+
   }
 
   @override

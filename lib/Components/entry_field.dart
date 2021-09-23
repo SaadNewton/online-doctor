@@ -66,7 +66,6 @@ class _EntryFieldState extends State<EntryField> {
           children: [
             Expanded(
               child: TextFormField(
-
                 obscureText: obSecureText!,
                 validator: widget.validator,
                 controller: widget.controller,
@@ -82,11 +81,10 @@ class _EntryFieldState extends State<EntryField> {
                   suffixIcon: InkWell(
                     child: Icon(widget.suffixIcon),
                     onTap: () {
-                      setState(() {
-                        obSecureText = !obSecureText!;
-                      });
                       if (widget.obSecure!) {
-
+                        setState(() {
+                          obSecureText = !obSecureText!;
+                        });
                       }
                     },
                   ),
