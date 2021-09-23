@@ -22,6 +22,8 @@ getSignupData(
       storeDataLocally('user_detail', response);
       storeDataLocally('session', 'active');
       storeDataLocally('authToken', signupUserdataModel!.data.auth.token);
+      storageBox!.write('doctor_id', signupUserdataModel.data.id);
+
       Get.offAll(ProfileWizard());
       print('getLogin UserData ------>> ${signupUserdataModel!.data}');
     } else {

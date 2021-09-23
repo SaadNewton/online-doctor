@@ -9,6 +9,7 @@ import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/services/otp_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
@@ -76,6 +77,7 @@ class _VerificationUIState extends State<VerificationUI> {
                     ),
                     Spacer(flex: 2),
                     EntryField(
+                      textInputFormatter: LengthLimitingTextInputFormatter(6),
                       controller: _OtpController,
                       hint: "Enter 6 Digit Otp",
                       textAlign: TextAlign.center,

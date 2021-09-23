@@ -110,6 +110,7 @@ class _LoginUIState extends State<LoginUI> {
                                   padding:
                                       const EdgeInsets.symmetric(horizontal: 5),
                                   child: EntryField(
+                                    textInputType: TextInputType.emailAddress,
                                     validator: (value) {
                                       if (GetUtils.isEmail(_emailController.text)) {
                                         return null;

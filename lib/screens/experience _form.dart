@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
+import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
@@ -535,6 +536,23 @@ class _ExperienceFormState extends State<ExperienceForm> {
         _image = null;
         log('LocalList---->> ${experienceList}');
         setState(() {});
+      }
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
       }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);

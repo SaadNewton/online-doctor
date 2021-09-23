@@ -1,4 +1,5 @@
 // @dart = 2.9
+import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
@@ -56,6 +57,7 @@ class DoctoWorldDoctor extends StatelessWidget {
             locale: locale,
             theme: lightTheme,
             // home: ProfileWizard(),
+            // home: LoginUI(),
             home: SplashScreen(),
             //  routes: PageRoutes().routes(),
           );

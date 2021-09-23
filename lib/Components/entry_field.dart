@@ -1,23 +1,26 @@
+//@dart=2.9
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EntryField extends StatefulWidget {
-  final String? hint;
+  final String hint;
 
-  final IconData? prefixIcon;
-  final Color? color;
-  final TextEditingController? controller;
-  final String? initialValue;
-  final bool? readOnly;
-  final TextAlign? textAlign;
-  final IconData? suffixIcon;
-  final TextInputType? textInputType;
-  final String? label;
-  final int? maxLines;
-  final Function? onTap;
-  final IconData? suffix;
+  final IconData prefixIcon;
+  final Color color;
+  final TextEditingController controller;
+  final String initialValue;
+  final bool readOnly;
+  final TextAlign textAlign;
+  final IconData suffixIcon;
+  final TextInputType textInputType;
+  final String label;
+  final int maxLines;
+  final TextInputFormatter textInputFormatter;
+  final Function onTap;
+  final IconData suffix;
   final validator;
-  final bool? obSecure;
-  final bool? isDense;
+  final bool obSecure;
+  final bool isDense;
   EntryField({
     this.hint,
     this.obSecure,
@@ -31,6 +34,7 @@ class EntryField extends StatefulWidget {
     this.textInputType,
     this.label,
     this.maxLines,
+    this.textInputFormatter,
     this.onTap,
     this.suffix,
     this.validator,
@@ -42,7 +46,7 @@ class EntryField extends StatefulWidget {
 }
 
 class _EntryFieldState extends State<EntryField> {
-  bool? obSecureText;
+  bool obSecureText;
   @override
   void initState() {
     // TODO: implement initState
@@ -56,17 +60,22 @@ class _EntryFieldState extends State<EntryField> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         widget.label != null
-            ? Text('\n' + widget.label! + '\n',
+            ? Text('\n' + widget.label + '\n',
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2!
+                    .subtitle2
                     .copyWith(color: Theme.of(context).disabledColor))
             : SizedBox.shrink(),
         Row(
           children: [
             Expanded(
               child: TextFormField(
-                obscureText: obSecureText!,
+                inputFormatters: [
+                  widget.textInputFormatter == null
+                      ?LengthLimitingTextInputFormatter(300)
+                      :widget.textInputFormatter
+                ],
+                obscureText: obSecureText,
                 validator: widget.validator,
                 controller: widget.controller,
                 initialValue: widget.initialValue,
@@ -81,9 +90,9 @@ class _EntryFieldState extends State<EntryField> {
                   suffixIcon: InkWell(
                     child: Icon(widget.suffixIcon),
                     onTap: () {
-                      if (widget.obSecure!) {
+                      if (widget.obSecure) {
                         setState(() {
-                          obSecureText = !obSecureText!;
+                          obSecureText = !obSecureText;
                         });
                       }
                     },
@@ -96,7 +105,7 @@ class _EntryFieldState extends State<EntryField> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                onTap: widget.onTap as void Function()?,
+                onTap: widget.onTap as void Function(),
               ),
             ),
             if (widget.suffix != null)

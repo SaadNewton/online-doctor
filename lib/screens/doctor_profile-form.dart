@@ -231,6 +231,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
     dio_instance.Response<dynamic> response;
     try {
       response = await dio.post(getDoctorUpdateProfileService, data: formData);
+      Get.find<LoaderController>().updateFormController(false);
+
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {

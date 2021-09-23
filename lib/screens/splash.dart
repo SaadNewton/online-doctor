@@ -9,6 +9,7 @@ import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
+import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 class SplashScreen extends StatefulWidget {
@@ -29,8 +30,11 @@ class _SplashScreenState extends State<SplashScreen> {
   route() {
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) =>
-               storageBox!.hasData('session') ? Dashboard()
-               : LoginUI()));
+               storageBox!.hasData('session')
+                   ? storageBox!.hasData('profile')
+                   ? Dashboard()
+                   : ProfileWizard()
+                   : LoginUI()));
   }
 
   @override

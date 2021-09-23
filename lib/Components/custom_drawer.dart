@@ -238,6 +238,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   onTap: () {
                     storageBox.remove('session');
                     storageBox.remove('approved');
+                    storageBox.remove('profile');
                     Get.offAll(LoginUI());
                   },
                   child: Padding(

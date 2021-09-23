@@ -7,6 +7,7 @@ import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
+import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,13 @@ getLoginData(
       if(userDetailModel.data.status == 1){
         storageBox.write('approved', 'true');
       }
-      Get.offAll(Dashboard());
+      if(userDetailModel.data.speciality == null){
+        Get.offAll(ProfileWizard());
+      }else{
+        storageBox.write('profile', 'done');
+        Get.offAll(Dashboard());
+      }
+
       print('getLogin UserData ------>> ${userDetailModel.data.email}');
       storageBox.write('doctor_id', userDetailModel.data.id);
       print(storageBox.read('doctor_id'));

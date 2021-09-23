@@ -15,6 +15,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter/services.dart';
 
 class RegistrationUIOld extends StatefulWidget {
   @override
@@ -74,8 +75,10 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
 
                             /// name
                             EntryField(
+                              textInputFormatter: FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
                               controller: nameController,
                               prefixIcon: Icons.person,
+                              textInputType: TextInputType.name,
                               color: Theme.of(context).scaffoldBackgroundColor,
                               hint: 'Name',
                               validator: (value) {
@@ -114,7 +117,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Field is Required';
-                                } else if (GetUtils.isEmail(value)) {
+                                } else if (!GetUtils.isEmail(emailController.text)) {
                                   return 'Please Enter Valid Email';
                                 } else {
                                   return null;
@@ -125,6 +128,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
 
                             /// phone
                             EntryField(
+                              textInputFormatter: LengthLimitingTextInputFormatter(11),
                               controller: phoneController,
                               textInputType: TextInputType.phone,
                               prefixIcon: Icons.phone_iphone,
@@ -133,8 +137,39 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Field is Required';
-                                } else if (value.length > 11) {
+                                } else if (value.length != 11) {
                                   return 'Enter Valid Number';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20.0),
+                            ///  Location
+                            TextFormField(
+                              controller: locationController,
+                              keyboardType: TextInputType.text,
+                              decoration: InputDecoration(
+                                suffixIcon: InkWell(
+                                  child: Icon(
+                                    Icons.add_location,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                  onTap: () {
+                                    getCurrentLocation(context);
+                                  },
+                                ),
+                                hintText: 'Location',
+                                filled: true,
+                                fillColor: Theme.of(context).scaffoldBackgroundColor,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                  borderSide: BorderSide.none,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Field is Required';
                                 } else {
                                   return null;
                                 }
@@ -153,7 +188,9 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               validator: (value) {
                                 if (value.isEmpty) {
                                   return 'Field is Required';
-                                } else {
+                                } else if(value.length < 6){
+                                  return 'Password length must be greater than 6';
+                                }else {
                                   return null;
                                 }
                               },
@@ -180,37 +217,6 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               },
                             ),
                             SizedBox(height: 20.0),
-
-                            ///  Location
-                            // TextFormField(
-                            //   controller: locationController,
-                            //   decoration: InputDecoration(
-                            //     suffixIcon: InkWell(
-                            //       child: Icon(
-                            //         Icons.add_location,
-                            //         color: Theme.of(context).primaryColor,
-                            //       ),
-                            //       onTap: () {
-                            //         getCurrentLocation(context);
-                            //       },
-                            //     ),
-                            //     hintText: 'Location',
-                            //     filled: true,
-                            //     fillColor: Theme.of(context).scaffoldBackgroundColor,
-                            //     border: OutlineInputBorder(
-                            //       borderRadius: BorderRadius.circular(4),
-                            //       borderSide: BorderSide.none,
-                            //     ),
-                            //   ),
-                            //   validator: (value) {
-                            //     if (value!.isEmpty) {
-                            //       return 'Field is Required';
-                            //     } else {
-                            //       return null;
-                            //     }
-                            //   },
-                            // ),
-                            SizedBox(height: 10.0),
 
                             CustomButton(
                               onTap: () {
@@ -280,49 +286,49 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
     );
   }
 
-  // getCurrentLocation(BuildContext context) {
-  //   Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-  //       .then((Position position) {
-  //     setState(() {
-  //       currentPosition = position;
-  //       longitude = currentPosition!.longitude;
-  //       latitude = currentPosition!.latitude;
-  //
-  //       print("longitude : $longitude");
-  //       print("latitude : $latitude");
-  //       print("address : $currentPosition");
-  //     });
-  //
-  //     getAddressFromLatLng();
-  //   }).catchError((e) {
-  //     print(e);
-  //   });
-  // }
-  //
-  // getAddressFromLatLng() async {
-  //   try {
-  //     // var currentPosition;
-  //     List<Placemark> p = await GeocodingPlatform.instance
-  //         .placemarkFromCoordinates(
-  //             currentPosition!.latitude, currentPosition!.longitude);
-  //     Placemark place = p[0];
-  //     setState(() {
-  //       currentAddress =
-  //           '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
-  //       // var signUpAddressController;
-  //       // if (signUpAddressController.text.isEmpty) {
-  //       //   signUpAddressController.text = currentAddress;
-  //       // }
-  //       print(currentAddress + ' yes');
-  //       print(place.administrativeArea.toString());
-  //       print(place.subAdministrativeArea.toString());
-  //       print(place.thoroughfare.toString());
-  //       print(place.toJson().toString());
-  //       // FocusScope.of(context).unfocus();
-  //       locationController.text = place.name.toString();
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  getCurrentLocation(BuildContext context) {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        currentPosition = position;
+        longitude = currentPosition!.longitude;
+        latitude = currentPosition!.latitude;
+
+        print("longitude : $longitude");
+        print("latitude : $latitude");
+        print("address : $currentPosition");
+      });
+
+      getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  getAddressFromLatLng() async {
+    try {
+      // var currentPosition;
+      List<Placemark> p = await GeocodingPlatform.instance
+          .placemarkFromCoordinates(
+              currentPosition!.latitude, currentPosition!.longitude);
+      Placemark place = p[0];
+      setState(() {
+        currentAddress =
+            '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
+        // var signUpAddressController;
+        // if (signUpAddressController.text.isEmpty) {
+        //   signUpAddressController.text = currentAddress;
+        // }
+        print(currentAddress + ' yes');
+        print(place.administrativeArea.toString());
+        print(place.subAdministrativeArea.toString());
+        print(place.thoroughfare.toString());
+        print(place.toJson().toString());
+        // FocusScope.of(context).unfocus();
+        locationController.text = place.name.toString();
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 }

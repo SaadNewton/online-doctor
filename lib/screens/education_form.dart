@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
+import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
@@ -121,7 +122,9 @@ class _EducationFormState extends State<EducationForm> {
                                       ),
                                     )
                                   : InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        getImage();
+                                        },
                                       child: Container(
                                         decoration: BoxDecoration(
                                             color: Colors.grey.withOpacity(0.2),
@@ -526,6 +529,8 @@ class _EducationFormState extends State<EducationForm> {
     dio_instance.Response<dynamic> response;
     try {
       response = await dio.post(educationStoreService, data: formData);
+      Get.find<LoaderController>().updateFormController(false);
+
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
@@ -548,6 +553,24 @@ class _EducationFormState extends State<EducationForm> {
 
         setState(() {});
       }
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
+      }
+
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
       log('putResponseError---->> ${e}');

@@ -1535,6 +1535,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                         text: 'Ok',
                         functionCall: () {
                           Navigator.pop(context);
+                          storageBox.write('profile', 'done');
                           Get.offAll(Dashboard());
                         },
                         img: 'assets/dialog_success.svg',
