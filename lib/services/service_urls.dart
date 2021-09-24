@@ -68,3 +68,6 @@ String getAllArticlesService = baseUrl + 'get-all-article';
 String addArticlesService = baseUrl + 'article-store';
 String deleteArticlesService = baseUrl + 'article-delete';
 String updateArticlesService = baseUrl + 'article-update';
+String allDoctorsArticlesService = baseUrl + 'get-all-articles';
+
+

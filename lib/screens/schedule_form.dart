@@ -994,7 +994,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
                                                 'clinic_name': _clinicController.text.isEmpty
-                                                    ?null
+                                                    ?'Online'
                                                     :_clinicController.text,
                                                 'clinic_address': _locationController.text.isEmpty
                                                     ?null
@@ -1338,7 +1338,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
                                                 'clinic_name': _clinicController.text.isEmpty
-                                                    ?null
+                                                    ?'Online'
                                                     :_clinicController.text,
                                                 'clinic_address': _locationController.text.isEmpty
                                                     ?null

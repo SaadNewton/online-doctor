@@ -122,7 +122,9 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                       ),
                                     )
                                   : InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        getImage();
+                                      },
                                       child: Container(
                                         decoration: BoxDecoration(
                                             color: Colors.grey.withOpacity(0.2),

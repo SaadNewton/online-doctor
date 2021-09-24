@@ -148,6 +148,11 @@ class _LoginUIState extends State<LoginUI> {
                                 SizedBox(height: 30.0),
 
                                 CustomButton(onTap: () {
+
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus) {
+                                    currentFocus.unfocus();
+                                  }
                                   if (loginKey.currentState!.validate()) {
                                     //    .loginWithEmail('', _emailController.text);
                                     _.updateFormController(true);

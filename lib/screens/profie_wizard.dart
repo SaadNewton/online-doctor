@@ -2,6 +2,7 @@
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/repositories/get_speciality_list_repo.dart';
+import 'package:doctoworld_doctor/screens/clinic_form.dart';
 import 'package:doctoworld_doctor/screens/doctor_profile-form.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
@@ -17,6 +18,7 @@ List profileList = [];
 List educationList = [];
 List experienceList = [];
 List specialityList = [];
+List clinicsList = [];
 List scheduleList = [];
 List<String> getSpecialitiesList = [];
 
@@ -36,7 +38,7 @@ class _ProfileWizardState extends State<ProfileWizard>
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateFormController(true);
     });
-    profileWizardTabController = new TabController(length: 5, vsync: this);
+    profileWizardTabController = new TabController(length: 6, vsync: this);
     getMethod(
         context, specialitiesListService, null, true, getSpecialityListRepo);
     super.initState();
@@ -127,6 +129,15 @@ class _ProfileWizardState extends State<ProfileWizard>
                     ),
                     Center(
                       child: new Text(
+                        'Clinic',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Center(
+                      child: new Text(
                         'Schedule',
                         style: TextStyle(
                           fontSize: 14,
@@ -203,6 +214,11 @@ class _ProfileWizardState extends State<ProfileWizard>
         }
         break;
       case 4:
+        {
+          return ClinicForm(changeView: changeView);
+        }
+        break;
+      case 5:
         {
           return ScheduleForm();
         }

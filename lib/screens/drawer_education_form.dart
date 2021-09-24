@@ -177,7 +177,9 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
                                     ),
                                   )
                                       : InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      getImage();
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.grey.withOpacity(0.2),
@@ -619,6 +621,24 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
 
         setState(() {});
       }
+
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
+      }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
       log('putResponseError---->> ${e}');
@@ -657,6 +677,23 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
         log('LocalList---->> ${educationList}');
 
         setState(() {});
+      }
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
       }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);

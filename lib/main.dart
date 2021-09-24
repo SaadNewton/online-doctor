@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'Auth/Verification/UI/verification_ui.dart';
 import 'Locale/language_cubit.dart';
 import 'Locale/locale.dart';
 import 'Theme/style.dart';
@@ -57,7 +58,7 @@ class DoctoWorldDoctor extends StatelessWidget {
             locale: locale,
             theme: lightTheme,
             // home: ProfileWizard(),
-            // home: LoginUI(),
+            // home: VerificationUI(),
             home: SplashScreen(),
             //  routes: PageRoutes().routes(),
           );

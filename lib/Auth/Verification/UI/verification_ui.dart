@@ -51,6 +51,8 @@ class _VerificationUIState extends State<VerificationUI> {
     super.dispose();
   }
 
+  GlobalKey<FormState> otpFormKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context);
@@ -67,65 +69,80 @@ class _VerificationUIState extends State<VerificationUI> {
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 padding: EdgeInsets.all(20.0),
-                child: Column(
-                  children: [
-                    Spacer(),
-                    Text(
-                      locale.weveSentAnOTP,
-                      style: Theme.of(context).textTheme.bodyText1,
-                      textAlign: TextAlign.center,
-                    ),
-                    Spacer(flex: 2),
-                    EntryField(
-                      textInputFormatter: LengthLimitingTextInputFormatter(6),
-                      controller: _OtpController,
-                      hint: "Enter 6 Digit Otp",
-                      textAlign: TextAlign.center,
-                      textInputType: TextInputType.number,
-                    ),
-                    SizedBox(height: 20.0),
-                    CustomButton(
-                      onTap: () {
-                        Get.find<LoaderController>().updateFormController(true);
-                        verifyOTP(
-                          context,
-                          _OtpController.text,
-                          widget.fromSignUpForm
-                        );
-                      },
-                      label: locale.submit,
-                    ),
-                    SizedBox(height: 30.0),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          '$_counter' + locale.secLeft,
-                          style: Theme.of(context).textTheme.subtitle1,
-                        ),
-                        Spacer(
-                          flex: 2,
-                        ),
-                        Expanded(
-                          child: CustomButton(
-                              label: locale.resend,
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              textColor: _counter < 1
-                                  ?Theme.of(context).hintColor
-                                  :Colors.grey.withOpacity(0.5),
-                              padding: 0.0,
-                              onTap: _counter < 1
-                                  ? () {
-                                        otpFunction(
-                                            numberController.text,
-                                            context);
-                                      _startTimer();
-                                    }
-                                  : null),
-                        ),
-                      ],
-                    ),
-                    Spacer(flex: 12),
-                  ],
+                child: Form(
+                  key: otpFormKey,
+                  child: Column(
+                    children: [
+                      Spacer(),
+                      Text(
+                        locale.weveSentAnOTP,
+                        style: Theme.of(context).textTheme.bodyText1,
+                        textAlign: TextAlign.center,
+                      ),
+                      Spacer(flex: 2),
+                      EntryField(
+                        textInputFormatter: LengthLimitingTextInputFormatter(6),
+                        controller: _OtpController,
+                        hint: "Enter 6 Digit Otp",
+                        textAlign: TextAlign.center,
+                        textInputType: TextInputType.number,
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Field Required';
+                          }
+                        },
+                      ),
+                      SizedBox(height: 20.0),
+                      CustomButton(
+                        onTap: () {
+
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
+                          if(otpFormKey.currentState.validate()){
+                            Get.find<LoaderController>().updateFormController(true);
+                            verifyOTP(
+                                context,
+                                _OtpController.text,
+                                widget.fromSignUpForm
+                            );
+                          }
+                        },
+                        label: locale.submit,
+                      ),
+                      SizedBox(height: 30.0),
+                      Row(
+                        children: <Widget>[
+                          Text(
+                            '$_counter' + locale.secLeft,
+                            style: Theme.of(context).textTheme.subtitle1,
+                          ),
+                          Spacer(
+                            flex: 2,
+                          ),
+                          Expanded(
+                            child: CustomButton(
+                                label: locale.resend,
+                                color: Theme.of(context).scaffoldBackgroundColor,
+                                textColor: _counter < 1
+                                    ?Theme.of(context).hintColor
+                                    :Colors.grey.withOpacity(0.5),
+                                padding: 0.0,
+                                onTap: _counter < 1
+                                    ? () {
+                                          otpFunction(
+                                              numberController.text,
+                                              context);
+                                        _startTimer();
+                                      }
+                                    : null),
+                          ),
+                        ],
+                      ),
+                      Spacer(flex: 12),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -2,6 +2,7 @@
 
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
+import 'package:doctoworld_doctor/Model/get_all_doctors_articles.dart';
 import 'package:doctoworld_doctor/Model/get_articles_model.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
@@ -20,6 +21,21 @@ getAllLArticlesRepo(
     getArticlesModel = GetArticlesModel.fromJson(response);
     if (getArticlesModel.status == true) {
       print('getAllLArticlesRepo ------>> ${getArticlesModel.data}');
+    } else {}
+  } else if (!responseCheck && response == null) {
+    Get.find<LoaderController>().updateDataController(false);
+
+    print('Exception........................');
+    // Get.find<AppController>().changeServerErrorCheck(true);
+  }
+}
+getAllDoctorsArticlesRepo(
+    bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+  if (responseCheck) {
+    Get.find<LoaderController>().updateDataController(false);
+    getAllDoctorsArticles = GetAllDoctorsArticles.fromJson(response);
+    if (getAllDoctorsArticles.status == true) {
+      print('getAllLArticlesRepo ------>> ${getAllDoctorsArticles.data}');
     } else {}
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateDataController(false);

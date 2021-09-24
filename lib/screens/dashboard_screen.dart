@@ -5,7 +5,9 @@ import 'package:dio/dio.dart' as dio_instance;
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_drawer.dart';
+import 'package:doctoworld_doctor/repositories/getArticlesRepo.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
+import 'package:doctoworld_doctor/screens/article_detail_screen.dart';
 import 'package:doctoworld_doctor/screens/articles_screen.dart';
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
@@ -109,6 +111,12 @@ class _DashboardState extends State<Dashboard> {
         {'doctor_id': storageBox.read('doctor_id')},
         true,
         getAllLAppointmentRepo);
+    getMethod(
+        context,
+        allDoctorsArticlesService,
+        null,
+        false,
+        getAllDoctorsArticlesRepo);
     super.initState();
     if (!storageBox.hasData('approved')) {
       Timer.periodic(Duration(seconds: 2), (Timer t) {
@@ -173,88 +181,88 @@ class _DashboardState extends State<Dashboard> {
                       child: ListView(
                         children: [
                           ///---earnings
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 15.0),
-                                child: SizedBox(
-                                  height: 140,
-                                  child: Column(children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 0),
-                                        child: Container(
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage('assets/orange.png'),
-                                                  fit: BoxFit.fill),
-                                              //  color: Colors.white,
-                                              borderRadius:
-                                              BorderRadius.circular(20),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.grey
-                                                        .withOpacity(0.2),
-                                                    spreadRadius: 2,
-                                                    blurRadius: 5)
-                                              ],
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomLeft,
-                                                colors: [
-                                                  Color(0xff8E54E9),
-                                                  Color(0xff4776E6),
-                                                ],
-                                              )),
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .end,
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        'EARNINGS',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 22,
-                                                            fontWeight:
-                                                            FontWeight
-                                                                .w500),
-                                                      ),
-                                                    ),
-                                                    Icon(
-                                                      Icons.credit_card,
-                                                      color: Colors.white38,
-                                                      size: 60,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ]),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // InkWell(
+                          //   onTap: () {},
+                          //   child: Container(
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 15.0),
+                          //       child: SizedBox(
+                          //         height: 140,
+                          //         child: Column(children: [
+                          //           Expanded(
+                          //             child: Padding(
+                          //               padding: const EdgeInsets.fromLTRB(
+                          //                   0, 10, 0, 0),
+                          //               child: Container(
+                          //                 height: double.infinity,
+                          //                 width: double.infinity,
+                          //                 decoration: BoxDecoration(
+                          //                     image: DecorationImage(
+                          //                         image: AssetImage('assets/orange.png'),
+                          //                         fit: BoxFit.fill),
+                          //                     //  color: Colors.white,
+                          //                     borderRadius:
+                          //                     BorderRadius.circular(20),
+                          //                     boxShadow: [
+                          //                       BoxShadow(
+                          //                           color: Colors.grey
+                          //                               .withOpacity(0.2),
+                          //                           spreadRadius: 2,
+                          //                           blurRadius: 5)
+                          //                     ],
+                          //                     gradient: LinearGradient(
+                          //                       begin: Alignment.topRight,
+                          //                       end: Alignment.bottomLeft,
+                          //                       colors: [
+                          //                         Color(0xff8E54E9),
+                          //                         Color(0xff4776E6),
+                          //                       ],
+                          //                     )),
+                          //                 child: Padding(
+                          //                   padding:
+                          //                   const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                          //                   child: Column(
+                          //                     mainAxisAlignment:
+                          //                     MainAxisAlignment
+                          //                         .end,
+                          //                     crossAxisAlignment:
+                          //                     CrossAxisAlignment.start,
+                          //                     children: [
+                          //                       Row(
+                          //                         mainAxisAlignment:
+                          //                         MainAxisAlignment
+                          //                             .spaceBetween,
+                          //                         children: [
+                          //                           Expanded(
+                          //                             child: Text(
+                          //                               'EARNINGS',
+                          //                               style: TextStyle(
+                          //                                   color: Colors.white,
+                          //                                   fontSize: 22,
+                          //                                   fontWeight:
+                          //                                   FontWeight
+                          //                                       .w500),
+                          //                             ),
+                          //                           ),
+                          //                           Icon(
+                          //                             Icons.credit_card,
+                          //                             color: Colors.white38,
+                          //                             size: 60,
+                          //                           ),
+                          //                         ],
+                          //                       ),
+                          //                     ],
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ]),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                           ///---appointments
                           InkWell(
                             onTap: () {
@@ -398,7 +406,7 @@ class _DashboardState extends State<Dashboard> {
                                                   children: [
                                                     Expanded(
                                                       child: Text(
-                                                        'ARTICLES',
+                                                        'MY ARTICLES',
                                                         style: TextStyle(
                                                             color: Colors.white,
                                                             fontSize: 22,
@@ -425,6 +433,106 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                           ),
+
+                          ///all-articles
+                          getAllDoctorsArticles.data == null
+                              ? SizedBox()
+                              : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 30,left: 15),
+                                    child: Text(
+                                      'All ARTICLES',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight:
+                                          FontWeight
+                                              .w500),
+                                    ),
+                                  ),
+                                  SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Wrap(
+                            children: List.generate(getAllDoctorsArticles.data.length, (index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(15, 12, 0, 20),
+                                      child: InkWell(
+                                        onTap: (){
+                                          Get.to(ArticleDetailScreen(
+                                            getAllDoctorsArticlesData: getAllDoctorsArticles.data[index],));
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width*.4,
+                                          height: MediaQuery.of(context).size.height*.24,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey.withOpacity(0.5),
+                                                blurRadius: 9,
+                                                spreadRadius: 3
+                                              )
+                                            ]
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                getAllDoctorsArticles.data[index].image == null
+                                                    ? SizedBox()
+                                                    : Container(
+                                                  width: MediaQuery.of(context).size.width*.2,
+                                                  height: MediaQuery.of(context).size.height*.1,
+                                                      child: Image.network(
+                                                      '$mediaUrl${getAllDoctorsArticles.data[index].image}',
+                                                  width: MediaQuery.of(context).size.width*.2,
+                                                ),
+                                                    ),
+                                                SizedBox(height: 8,),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      '${getAllDoctorsArticles.data[index].title}',
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.black
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  children: [
+                                                    Expanded(
+                                                      child: Text(
+                                                        '${getAllDoctorsArticles.data[index].description}',
+                                                        maxLines: 2,
+                                                       softWrap: true,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          fontSize: 14,
+                                                          color: Colors.black
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                            }),
+                          ),
+                                  ),
+                                ],
+                              )
                         ],
                       )
                     ),

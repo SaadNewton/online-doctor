@@ -178,7 +178,9 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
                                     ),
                                   )
                                       : InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      getImage();
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.grey.withOpacity(0.2),
@@ -306,7 +308,9 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
                                     ),
                                   )
                                       : InkWell(
-                                    onTap: () {},
+                                    onTap: () {
+                                      getImage();
+                                    },
                                     child: Container(
                                       decoration: BoxDecoration(
                                           color: Colors.grey.withOpacity(0.2),
@@ -617,6 +621,23 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
         log('LocalList---->> ${experienceList}');
         setState(() {});
       }
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
+      }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
       log('putResponseError---->> ${e}');
@@ -654,6 +675,23 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
         _image = null;
         log('LocalList---->> ${experienceList}');
         setState(() {});
+      }
+      else{
+        Get.find<LoaderController>().updateFormController(false);
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'FAILED!',
+                titleColor: customDialogErrorColor,
+                descriptions: 'Try Again',
+                text: 'Ok',
+                functionCall: () {
+                  Navigator.pop(context);
+                },
+                img: 'assets/dialog_error.svg',
+              );
+            });
       }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);

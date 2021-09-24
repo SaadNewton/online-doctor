@@ -1029,7 +1029,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
                                                 'clinic_name': _clinicController.text.isEmpty
-                                                    ?null
+                                                    ?'Online'
                                                     :_clinicController.text,
                                                 'clinic_address': _locationController.text.isEmpty
                                                     ?null
@@ -1372,7 +1372,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
                                                 'clinic_name': _clinicController.text.isEmpty
-                                                    ?null
+                                                    ?'Online'
                                                     :_clinicController.text,
                                                 'clinic_address': _locationController.text.isEmpty
                                                     ?null
@@ -1621,6 +1621,38 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                     .subtitle2
                                                     .copyWith(fontSize: 17),
                                               ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'Slot Days:',
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .subtitle2
+                                                    .copyWith(
+                                                    color: Theme.of(context).disabledColor,
+                                                    fontSize: 15),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Wrap(
+                                                children: List.generate(scheduleList[index]['days'].length, (innerIndex) {
+                                                  return Text(
+                                                    '${scheduleList[index]['days'][innerIndex]}, ',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .subtitle2
+                                                        .copyWith(fontSize: 17),
+                                                  );
+                                                }),
+                                              )
                                             ),
                                           ],
                                         ),
