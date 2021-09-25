@@ -221,7 +221,7 @@ class _EducationFormState extends State<EducationForm> {
                             ],
                           ),
                         ),
-                        if (educationList.length == 0)
+                        if (loaderController.educationList.length == 0)
                           SizedBox()
                         else
                           Padding(
@@ -305,7 +305,7 @@ class _EducationFormState extends State<EducationForm> {
                                     ),
                                     Wrap(
                                       children: List.generate(
-                                          educationList.length, (index) {
+                                          loaderController.educationList.length, (index) {
                                         return Column(
                                           children: [
                                             Slidable(
@@ -322,17 +322,17 @@ class _EducationFormState extends State<EducationForm> {
                                                       setState(() {
                                                         _instituteController
                                                                 .text =
-                                                            educationList[index]
+                                                        loaderController.educationList[index]
                                                                 ['institution'];
                                                         _disciplineController
                                                                 .text =
-                                                            educationList[index]
+                                                        loaderController.educationList[index]
                                                                 ['discipline'];
                                                         _periodController.text =
-                                                            educationList[index]
+                                                        loaderController.educationList[index]
                                                                 ['period'];
                                                         _image =
-                                                            educationList[index]
+                                                        loaderController.educationList[index]
                                                                 ['image'];
 
                                                         _scrollController
@@ -347,7 +347,7 @@ class _EducationFormState extends State<EducationForm> {
                                                                       500),
                                                         );
 
-                                                        educationList
+                                                        loaderController.educationList
                                                             .removeAt(index);
                                                       });
                                                     },
@@ -364,7 +364,7 @@ class _EducationFormState extends State<EducationForm> {
                                                       //     deleteEducationStoreData
                                                       // );
                                                       setState(() {
-                                                        educationList
+                                                        loaderController.educationList
                                                             .removeAt(index);
                                                       });
                                                     },
@@ -390,7 +390,7 @@ class _EducationFormState extends State<EducationForm> {
                                                                   Alignment
                                                                       .center,
                                                               child: Image.file(
-                                                                educationList[
+                                                                loaderController.educationList[
                                                                         index]
                                                                     ['image'],
                                                                 width: 20,
@@ -403,7 +403,7 @@ class _EducationFormState extends State<EducationForm> {
                                                                     Alignment
                                                                         .center,
                                                                 child: Text(
-                                                                  '${educationList[index]['institution']}',
+                                                                  '${loaderController.educationList[index]['institution']}',
                                                                   softWrap:
                                                                       true,
                                                                   overflow:
@@ -422,7 +422,7 @@ class _EducationFormState extends State<EducationForm> {
                                                                     Alignment
                                                                         .center,
                                                                 child: Text(
-                                                                  '${educationList[index]['discipline']}',
+                                                                  '${loaderController.educationList[index]['discipline']}',
                                                                   softWrap:
                                                                       true,
                                                                   overflow:
@@ -441,7 +441,7 @@ class _EducationFormState extends State<EducationForm> {
                                                                     Alignment
                                                                         .center,
                                                                 child: Text(
-                                                                  '${educationList[index]['period']}',
+                                                                  '${loaderController.educationList[index]['period']}',
                                                                   softWrap:
                                                                       true,
                                                                   overflow:
@@ -465,7 +465,7 @@ class _EducationFormState extends State<EducationForm> {
                                                   ),
                                                   // ExperienceListShow(context: context,index: index,),
                                                 )),
-                                            index == (educationList.length - 1)
+                                            index == (loaderController.educationList.length - 1)
                                                 ? SizedBox()
                                                 : Divider(
                                                     color: Colors.grey
@@ -491,7 +491,7 @@ class _EducationFormState extends State<EducationForm> {
             endOffset: Offset(0, 0),
             slideCurve: Curves.linearToEaseOut,
           ),
-          floatingActionButton: educationList.length == 0
+          floatingActionButton: loaderController.educationList.length == 0
               ? SizedBox()
               : FloatingActionButton(
                   backgroundColor: primaryColor,
@@ -535,13 +535,22 @@ class _EducationFormState extends State<EducationForm> {
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
         setState(() {
-          educationList.add({
-            'id': response.data['data']['id'],
-            'institution': response.data['data']['institution'],
-            'discipline': response.data['data']['discipline'],
-            'period': response.data['data']['period'],
-            'image': _image
-          });
+          Get.find<LoaderController>().updateEducationList(
+              {
+                'id': response.data['data']['id'],
+                'institution': response.data['data']['institution'],
+                'discipline': response.data['data']['discipline'],
+                'period': response.data['data']['period'],
+                'image': _image
+              }
+          );
+          // educationList.add({
+          //   'id': response.data['data']['id'],
+          //   'institution': response.data['data']['institution'],
+          //   'discipline': response.data['data']['discipline'],
+          //   'period': response.data['data']['period'],
+          //   'image': _image
+          // });
         });
         Get.find<LoaderController>().updateFormController(false);
 
@@ -549,7 +558,7 @@ class _EducationFormState extends State<EducationForm> {
         _disciplineController.clear();
         _periodController.clear();
         _image = null;
-        log('LocalList---->> ${educationList}');
+        log('LocalList---->> ${Get.find<LoaderController>().educationList}');
 
         setState(() {});
       }
@@ -573,6 +582,20 @@ class _EducationFormState extends State<EducationForm> {
 
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: 'FAILED!',
+              titleColor: customDialogErrorColor,
+              descriptions: 'Try Again',
+              text: 'Ok',
+              functionCall: () {
+                Navigator.pop(context);
+              },
+              img: 'assets/dialog_error.svg',
+            );
+          });
       log('putResponseError---->> ${e}');
     }
   }

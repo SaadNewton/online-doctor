@@ -2,7 +2,9 @@
 import 'package:doctoworld_doctor/Auth/registration_data/signup_userdata_model.dart';
 import 'package:doctoworld_doctor/Model/add_speciality_model.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
+import 'package:doctoworld_doctor/Model/change_password_model.dart';
 import 'package:doctoworld_doctor/Model/check_status_model.dart';
+import 'package:doctoworld_doctor/Model/clinic_store_model.dart';
 import 'package:doctoworld_doctor/Model/education_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_doctors_articles.dart';
@@ -28,6 +30,8 @@ DoctorStatusModel doctorStatusModel = DoctorStatusModel();
 GetArticlesModel getArticlesModel = GetArticlesModel();
 GetAllDoctorsArticles getAllDoctorsArticles = GetAllDoctorsArticles();
 GetDoctorProfileModal getDoctorProfileModal = GetDoctorProfileModal();
+ChangePasswordModel changePasswordModel = ChangePasswordModel();
+ClinicStoreModel clinicStoreModel = ClinicStoreModel();
 final TextEditingController nameController = TextEditingController();
 final TextEditingController usernameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
@@ -36,6 +40,10 @@ final TextEditingController confirmPassController = TextEditingController();
 final TextEditingController phoneController = TextEditingController();
 final TextEditingController locationController = TextEditingController();
 final TextEditingController numberController = TextEditingController();
+
+TextEditingController updateEmailController = TextEditingController();
+TextEditingController updateLocationController = TextEditingController();
+
 
 AddSpecialityModel addSpecialityModel;
 

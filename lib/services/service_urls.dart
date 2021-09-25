@@ -4,8 +4,10 @@ import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 
 // String baseUrl = 'http://192.168.88.43:8000/api/';
 String baseUrl = 'http://192.168.88.77:7000/api/';
+String mediaUrl = 'http://192.168.88.77:7000/';
+
 // String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
-String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
+// String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
 
 ///  Doctor login
 
@@ -69,5 +71,14 @@ String addArticlesService = baseUrl + 'article-store';
 String deleteArticlesService = baseUrl + 'article-delete';
 String updateArticlesService = baseUrl + 'article-update';
 String allDoctorsArticlesService = baseUrl + 'get-all-articles';
+
+
+///  Change Password
+
+String changePasswordService = baseUrl + 'change-password';
+
+///  clinic
+
+String clinicStoreService = baseUrl + 'clinic-store';
 
 

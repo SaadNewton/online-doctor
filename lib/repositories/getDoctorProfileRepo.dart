@@ -20,19 +20,26 @@ getDoctorProfileRepo(
 
     getDoctorProfileModal = GetDoctorProfileModal.fromJson(response);
 
-    specialityList = [];
+    updateEmailController.text = getDoctorProfileModal.data.email;
+    updateLocationController.text = getDoctorProfileModal.data.address;
+    Get.find<LoaderController>().specialityList = [];
     getDoctorProfileModal.data.speciality.forEach((element) {
-      specialityList.add(
+      Get.find<LoaderController>().updateSpecialityList(
           {
             'speciality': element
           }
       );
+      // specialityList.add(
+      //     {
+      //       'speciality': element
+      //     }
+      // );
     });
 
-    scheduleList = [];
+    Get.find<LoaderController>().emptyScheduleList();
+    // scheduleList = [];
     response['data']['serial_day_app'].forEach((element){
-
-      scheduleList.add(
+      Get.find<LoaderController>().updateScheduleList(
           {
             'noOfDays': getDoctorProfileModal.data.serialDay,
             'slotDuration': element['duration'],
@@ -45,12 +52,47 @@ getDoctorProfileRepo(
             'days': element['days']
           }
       );
+      // scheduleList.add(
+      //     {
+      //       'noOfDays': getDoctorProfileModal.data.serialDay,
+      //       'slotDuration': element['duration'],
+      //       'startTime':element['start_time'],
+      //       'endTime':element['end_time'],
+      //       'slots':element['slots'],
+      //       'schedule_type': element['schedule_type'],
+      //       'clinic_name': element['clinic_name'],
+      //       'clinic_address': element['clinic_address'],
+      //       'days': element['days']
+      //     }
+      // );
     });
 
     print('getDoctorProfileRepo ------>> ${getDoctorProfileModal.data}');
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateDataController(false);
     Get.find<LoaderController>().updateFormController(false);
+
+
+    print('Exception........................');
+    // Get.find<AppController>().changeServerErrorCheck(true);
+  }
+}
+
+updateDoctorPersonalProfileRepo(
+    bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+  if (responseCheck) {
+    Get.find<LoaderController>().updateFormController(false);
+    if (response['status'].toString() == 'true') {
+      print('ADDED');
+      Get.snackbar('Success','Updated Successfully');
+
+    } else {
+      Get.snackbar('Failed','Try again');
+
+    }
+  } else if (!responseCheck && response == null) {
+    Get.find<LoaderController>().updateFormController(false);
+    Get.find<LoaderController>().updateDataController(false);
 
 
     print('Exception........................');

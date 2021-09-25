@@ -1024,7 +1024,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                         });
                                         setState(() {
                                           // scheduleList = [];
-                                          scheduleList.add(
+                                          Get.find<LoaderController>().updateScheduleList(
                                               {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
@@ -1041,8 +1041,25 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 'days': days
                                               }
                                           );
+                                          // scheduleList.add(
+                                          //     {
+                                          //       'noOfDays': 2,
+                                          //       'schedule_type': scheduleType,
+                                          //       'clinic_name': _clinicController.text.isEmpty
+                                          //           ?'Online'
+                                          //           :_clinicController.text,
+                                          //       'clinic_address': _locationController.text.isEmpty
+                                          //           ?null
+                                          //           :_locationController.text,
+                                          //       'slotDuration': _slotDurationController.text,
+                                          //       'startTime':fromTime.substring(0,5).toString(),
+                                          //       'endTime':toTime.substring(0,5).toString(),
+                                          //       'slots': times,
+                                          //       'days': days
+                                          //     }
+                                          // );
                                         });
-                                        print('${scheduleList}');
+                                        print('${loaderController.scheduleList}');
                                         Get.find<LoaderController>().updateFormController(true);
                                         postMethod(
                                             context,
@@ -1055,17 +1072,18 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                               'serial_day': 2,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
-                                              'serial_day_app': List.generate(scheduleList.length, (index){
+                                              'serial_day_app': List.generate(
+                                                  loaderController.scheduleList.length, (index){
                                                 return
                                                   {
-                                                    'schedule_type': scheduleList[index]['schedule_type'],
-                                                    'clinic_name': scheduleList[index]['clinic_name'],
-                                                    'clinic_address': scheduleList[index]['clinic_address'],
-                                                    'start_time': scheduleList[index]['startTime'],
-                                                    'end_time': scheduleList[index]['endTime'],
-                                                    'duration': scheduleList[index]['slotDuration'],
-                                                    'slots': scheduleList[index]['slots'],
-                                                    'days': scheduleList[index]['days']
+                                                    'schedule_type': loaderController.scheduleList[index]['schedule_type'],
+                                                    'clinic_name': loaderController.scheduleList[index]['clinic_name'],
+                                                    'clinic_address': loaderController.scheduleList[index]['clinic_address'],
+                                                    'start_time': loaderController.scheduleList[index]['startTime'],
+                                                    'end_time': loaderController.scheduleList[index]['endTime'],
+                                                    'duration': loaderController.scheduleList[index]['slotDuration'],
+                                                    'slots': loaderController.scheduleList[index]['slots'],
+                                                    'days': loaderController.scheduleList[index]['days']
                                                   };
                                               })
                                             },
@@ -1367,7 +1385,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                         });
                                         setState(() {
                                           // scheduleList = [];
-                                          scheduleList.add(
+                                          Get.find<LoaderController>().updateScheduleList(
                                               {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
@@ -1384,8 +1402,25 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 'days': days
                                               }
                                           );
+                                          // scheduleList.add(
+                                          //     {
+                                          //       'noOfDays': 2,
+                                          //       'schedule_type': scheduleType,
+                                          //       'clinic_name': _clinicController.text.isEmpty
+                                          //           ?'Online'
+                                          //           :_clinicController.text,
+                                          //       'clinic_address': _locationController.text.isEmpty
+                                          //           ?null
+                                          //           :_locationController.text,
+                                          //       'slotDuration': _slotDurationController.text,
+                                          //       'startTime':fromTime.substring(0,5).toString(),
+                                          //       'endTime':toTime.substring(0,5).toString(),
+                                          //       'slots': times,
+                                          //       'days': days
+                                          //     }
+                                          // );
                                         });
-                                        print('${scheduleList}');
+                                        print('${loaderController.scheduleList}');
                                         Get.find<LoaderController>().updateFormController(true);
                                         postMethod(
                                             context,
@@ -1398,17 +1433,18 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                               'serial_day': 2,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
-                                              'serial_day_app': List.generate(scheduleList.length, (index){
+                                              'serial_day_app': List.generate(
+                                                  loaderController.scheduleList.length, (index){
                                                 return
                                                   {
-                                                    'schedule_type': scheduleList[index]['schedule_type'],
-                                                    'clinic_name': scheduleList[index]['clinic_name'],
-                                                    'clinic_address': scheduleList[index]['clinic_address'],
-                                                    'start_time': scheduleList[index]['startTime'],
-                                                    'end_time': scheduleList[index]['endTime'],
-                                                    'duration': scheduleList[index]['slotDuration'],
-                                                    'slots': scheduleList[index]['slots'],
-                                                    'days': scheduleList[index]['days']
+                                                    'schedule_type': loaderController.scheduleList[index]['schedule_type'],
+                                                    'clinic_name': loaderController.scheduleList[index]['clinic_name'],
+                                                    'clinic_address': loaderController.scheduleList[index]['clinic_address'],
+                                                    'start_time': loaderController.scheduleList[index]['startTime'],
+                                                    'end_time': loaderController.scheduleList[index]['endTime'],
+                                                    'duration': loaderController.scheduleList[index]['slotDuration'],
+                                                    'slots': loaderController.scheduleList[index]['slots'],
+                                                    'days': loaderController.scheduleList[index]['days']
                                                   };
                                               })
                                             },
@@ -1441,7 +1477,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                         ),
                             )
                             :SizedBox(),
-                        scheduleList.length == 0
+                        loaderController.scheduleList.length == 0
                             ?SizedBox()
                             :Padding(
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -1461,7 +1497,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                             child: Padding(
                               padding: const EdgeInsets.all(15.0),
                               child: Wrap(
-                                children: List.generate(scheduleList.length, (index) {
+                                children: List.generate(loaderController.scheduleList.length, (index) {
                                   return Container(
                                     width: double.infinity,
                                     color: Colors.white,
@@ -1474,7 +1510,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                             InkWell(
                                                 onTap: (){
                                                   setState(() {
-                                                    scheduleList.removeAt(index);
+                                                    loaderController.scheduleList.removeAt(index);
                                                   });
                                                   Get.find<LoaderController>().updateFormController(true);
                                                   postMethod(
@@ -1486,19 +1522,20 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                         'max_serial': null,
                                                         'duration': 30,
                                                         'serial_day': 2,
-                                                        'start_time': scheduleList[0]['startTime'],
-                                                        'end_time': scheduleList[0]['endTime'],
-                                                        'serial_day_app': List.generate(scheduleList.length, (index){
+                                                        'start_time': loaderController.scheduleList[0]['startTime'],
+                                                        'end_time': loaderController.scheduleList[0]['endTime'],
+                                                        'serial_day_app': List.generate(
+                                                            loaderController.scheduleList.length, (index){
                                                           return
                                                             {
-                                                              'schedule_type': scheduleList[index]['schedule_type'],
-                                                              'clinic_name': scheduleList[index]['clinic_name'],
-                                                              'clinic_address': scheduleList[index]['clinic_address'],
-                                                              'start_time': scheduleList[index]['startTime'],
-                                                              'end_time': scheduleList[index]['endTime'],
-                                                              'duration': scheduleList[index]['slotDuration'],
-                                                              'slots': scheduleList[index]['slots'],
-                                                              'days': scheduleList[index]['days']
+                                                              'schedule_type': loaderController.scheduleList[index]['schedule_type'],
+                                                              'clinic_name': loaderController.scheduleList[index]['clinic_name'],
+                                                              'clinic_address': loaderController.scheduleList[index]['clinic_address'],
+                                                              'start_time': loaderController.scheduleList[index]['startTime'],
+                                                              'end_time': loaderController.scheduleList[index]['endTime'],
+                                                              'duration': loaderController.scheduleList[index]['slotDuration'],
+                                                              'slots': loaderController.scheduleList[index]['slots'],
+                                                              'days': loaderController.scheduleList[index]['days']
                                                             };
                                                         })
                                                       },
@@ -1506,7 +1543,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                       deleteScheduleRepo
                                                   );
                                                   setState(() {
-                                                    scheduleList.removeAt(index);
+                                                    loaderController.scheduleList.removeAt(index);
                                                   });
                                                 },
                                                 child: Icon(
@@ -1531,7 +1568,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                '${scheduleList[index]['schedule_type']}',
+                                                '${loaderController.scheduleList[index]['schedule_type']}',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle2
@@ -1541,7 +1578,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                           ],
                                         ),
                                         SizedBox(height: 8,),
-                                        scheduleList[index]['schedule_type'].toString() == 'Online'
+                                        loaderController.scheduleList[index]['schedule_type'].toString() == 'Online'
                                             ?SizedBox()
                                             :Column(
                                           children: [
@@ -1561,7 +1598,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    '${scheduleList[index]['clinic_name']}',
+                                                    '${loaderController.scheduleList[index]['clinic_name']}',
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle2
@@ -1587,7 +1624,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 ),
                                                 Expanded(
                                                   child: Text(
-                                                    '${scheduleList[index]['clinic_address']}',
+                                                    '${loaderController.scheduleList[index]['clinic_address']}',
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle2
@@ -1615,7 +1652,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                             ),
                                             Expanded(
                                               child: Text(
-                                                '${scheduleList[index]['slotDuration']} min',
+                                                '${loaderController.scheduleList[index]['slotDuration']} min',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle2
@@ -1643,9 +1680,10 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                             ),
                                             Expanded(
                                               child: Wrap(
-                                                children: List.generate(scheduleList[index]['days'].length, (innerIndex) {
+                                                children: List.generate(
+                                                    loaderController.scheduleList[index]['days'].length, (innerIndex) {
                                                   return Text(
-                                                    '${scheduleList[index]['days'][innerIndex]}, ',
+                                                    '${loaderController.scheduleList[index]['days'][innerIndex]}, ',
                                                     style: Theme.of(context)
                                                         .textTheme
                                                         .subtitle2
@@ -1660,7 +1698,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                           height: 10,
                                         ),
                                         Wrap(
-                                          children: List.generate(scheduleList[index]['slots'].length,
+                                          children: List.generate(loaderController.scheduleList[index]['slots'].length,
                                                   (innerIndex){
                                                 return Padding(
                                                   padding: const EdgeInsets.fromLTRB(0, 7, 5, 7),
@@ -1672,7 +1710,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                     child: Padding(
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: Text(
-                                                        '${scheduleList[index]['slots'][innerIndex]}',
+                                                        '${loaderController.scheduleList[index]['slots'][innerIndex]}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 11,
@@ -1683,7 +1721,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 );
                                               }),
                                         ),
-                                        index == (scheduleList.length-1)
+                                        index == (loaderController.scheduleList.length-1)
                                             ?SizedBox()
                                             :Padding(
                                           padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),

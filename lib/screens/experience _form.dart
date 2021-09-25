@@ -221,7 +221,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                             ],
                           ),
                         ),
-                        experienceList.length == 0
+                        loaderController.experienceList.length == 0
                             ? SizedBox()
                             : Padding(
                                 padding:
@@ -300,7 +300,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                         ),
                                         Wrap(
                                           children: List.generate(
-                                              experienceList.length, (index) {
+                                              loaderController.experienceList.length, (index) {
                                             return Column(
                                               children: [
                                                 Slidable(
@@ -318,21 +318,21 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                         setState(() {
                                                           _instituteExperienceController
                                                                   .text =
-                                                              experienceList[
+                                                          loaderController.experienceList[
                                                                       index][
                                                                   'institution'];
                                                           _disciplineExperienceController
                                                                   .text =
-                                                              experienceList[
+                                                          loaderController.experienceList[
                                                                       index][
                                                                   'discipline'];
                                                           _periodExperienceController
                                                                   .text =
-                                                              experienceList[
+                                                          loaderController.experienceList[
                                                                       index]
                                                                   ['period'];
                                                           _image =
-                                                              experienceList[
+                                                          loaderController.experienceList[
                                                                       index]
                                                                   ['image'];
 
@@ -349,7 +349,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                                         500),
                                                           );
 
-                                                          experienceList
+                                                          loaderController.experienceList
                                                               .removeAt(index);
                                                         });
                                                       },
@@ -359,7 +359,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                       icon: Icons.delete,
                                                       onTap: () {
                                                         setState(() {
-                                                          experienceList
+                                                          loaderController.experienceList
                                                               .removeAt(index);
                                                         });
                                                       },
@@ -385,7 +385,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                                         .center,
                                                                 child:
                                                                     Image.file(
-                                                                  experienceList[
+                                                                      loaderController.experienceList[
                                                                           index]
                                                                       ['image'],
                                                                   width: 20,
@@ -398,7 +398,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                                       Alignment
                                                                           .center,
                                                                   child: Text(
-                                                                    '${experienceList[index]['institution']}',
+                                                                    '${loaderController.experienceList[index]['institution']}',
                                                                     softWrap:
                                                                         true,
                                                                     overflow:
@@ -417,7 +417,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                                       Alignment
                                                                           .center,
                                                                   child: Text(
-                                                                    '${experienceList[index]['discipline']}',
+                                                                    '${loaderController.experienceList[index]['discipline']}',
                                                                     softWrap:
                                                                         true,
                                                                     overflow:
@@ -436,7 +436,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                                       Alignment
                                                                           .center,
                                                                   child: Text(
-                                                                    '${experienceList[index]['period']}',
+                                                                    '${loaderController.experienceList[index]['period']}',
                                                                     softWrap:
                                                                         true,
                                                                     overflow:
@@ -456,7 +456,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
                                                   ),
                                                 ),
                                                 index ==
-                                                        (experienceList.length -
+                                                        (loaderController.experienceList.length -
                                                             1)
                                                     ? SizedBox()
                                                     : Divider(
@@ -483,7 +483,7 @@ class _ExperienceFormState extends State<ExperienceForm> {
             endOffset: Offset(0, 0),
             slideCurve: Curves.linearToEaseOut,
           ),
-          floatingActionButton: experienceList.length == 0
+          floatingActionButton: loaderController.experienceList.length == 0
               ? SizedBox()
               : FloatingActionButton(
                   backgroundColor: primaryColor,
@@ -524,19 +524,28 @@ class _ExperienceFormState extends State<ExperienceForm> {
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
-        experienceList.add({
-          'institution': _instituteExperienceController.text,
-          'discipline': _disciplineExperienceController.text,
-          'period': _periodExperienceController.text,
-          'image': _image
-        });
+        Get.find<LoaderController>().updateExperienceList(
+            {
+              'id': response.data['data']['id'],
+              'institution': _instituteExperienceController.text,
+              'discipline': _disciplineExperienceController.text,
+              'period': _periodExperienceController.text,
+              'image': _image
+            }
+        );
+        // experienceList.add({
+        //   'institution': _instituteExperienceController.text,
+        //   'discipline': _disciplineExperienceController.text,
+        //   'period': _periodExperienceController.text,
+        //   'image': _image
+        // });
         Get.find<LoaderController>().updateFormController(false);
 
         _instituteExperienceController.clear();
         _disciplineExperienceController.clear();
         _periodExperienceController.clear();
         _image = null;
-        log('LocalList---->> ${experienceList}');
+        log('LocalList---->> ${Get.find<LoaderController>().experienceList}');
         setState(() {});
       }
       else{
@@ -558,6 +567,20 @@ class _ExperienceFormState extends State<ExperienceForm> {
       }
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return CustomDialogBox(
+              title: 'FAILED!',
+              titleColor: customDialogErrorColor,
+              descriptions: 'Try Again',
+              text: 'Ok',
+              functionCall: () {
+                Navigator.pop(context);
+              },
+              img: 'assets/dialog_error.svg',
+            );
+          });
       log('putResponseError---->> ${e}');
     }
   }

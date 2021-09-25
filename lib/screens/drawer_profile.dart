@@ -17,6 +17,8 @@ import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio_instance;
@@ -55,6 +57,8 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
 
   final slidableController = SlidableController();
   final _scrollController = ScrollController();
+
+  GlobalKey<FormState> updateFormKey = GlobalKey();
 
   @override
   void initState() {
@@ -95,7 +99,7 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
             Container(
               height: MediaQuery.of(context).size.height,
               child: Form(
-                key: educationKey,
+                key: updateFormKey,
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Padding(
@@ -167,22 +171,92 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
                                     fontSize: 11, color: Colors.red),
                               )
                                   : SizedBox(),
+                              SizedBox(height: 20.0),
+                              /// Email
+                              EntryField(
+                                controller: updateEmailController,
+                                color: Colors.grey.withOpacity(0.2),
+                                prefixIcon: Icons.mail,
+                                textInputType: TextInputType.emailAddress,
+                                hint: 'Email',
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Field is Required';
+                                  } else if (!GetUtils.isEmail(updateEmailController.text)) {
+                                    return 'Please Enter Valid Email';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 20.0),
+                              /// address
+                              TextFormField(
+                                controller: updateLocationController,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  suffixIcon: InkWell(
+                                    child: Icon(
+                                      Icons.add_location,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                    onTap: () {
+                                      getCurrentLocation(context);
+                                    },
+                                  ),
+                                  hintText: 'Location',
+                                  filled: true,
+                                  fillColor: Colors.grey.withOpacity(0.2),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Field is Required';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+
+
                               SizedBox(height: 35),
                               CustomButton(
                                 label: 'Update',
                                 onTap: () {
-                                  if (_image != null) {
+                                  if (updateFormKey.currentState.validate()
+                                      && _image != null) {
                                     setState(() {
                                       _imageChecker = false;
                                     });
                                     Get.find<LoaderController>()
                                         .updateFormController(true);
                                     uploadImage(_image);
-                                  } else {
+                                  } else{
                                     setState(() {
                                       _imageChecker = true;
                                     });
                                   }
+                                  // else if (updateFormKey.currentState.validate()){
+                                  //   Get.find<LoaderController>()
+                                  //       .updateFormController(true);
+                                  //   postMethod(
+                                  //       context,
+                                  //       getDoctorUpdateProfileService,
+                                  //       {
+                                  //         'doctor_id': storageBox.read('doctor_id'),
+                                  //         'email':updateEmailController.text,
+                                  //         'address':updateLocationController.text,
+                                  //       },
+                                  //       true,
+                                  //       updateDoctorPersonalProfileRepo
+                                  //   );
+                                  //   // setState(() {
+                                  //   //   _imageChecker = true;
+                                  //   // });
+                                  // }
                                 },
                               ),
                               SizedBox(height: 20.0),
@@ -210,6 +284,8 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
     dio_instance.FormData formData =
     dio_instance.FormData.fromMap(<String, dynamic>{
       'doctor_id': storageBox.read('doctor_id'),
+      'email':updateEmailController.text,
+      'address':updateLocationController.text,
       'image': await dio_instance.MultipartFile.fromFile(
         file.path,
         filename: fileName,
@@ -238,6 +314,54 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
     } on dio_instance.DioError catch (e) {
       Get.find<LoaderController>().updateFormController(false);
       log('putResponseError---->> ${e}');
+    }
+  }
+
+  var currentPosition;
+
+  getCurrentLocation(BuildContext context) {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        currentPosition = position;
+        longitude = currentPosition.longitude;
+        latitude = currentPosition.latitude;
+
+        print("longitude : $longitude");
+        print("latitude : $latitude");
+        print("address : $currentPosition");
+      });
+
+      getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  getAddressFromLatLng() async {
+    try {
+      // var currentPosition;
+      List<Placemark> p = await GeocodingPlatform.instance
+          .placemarkFromCoordinates(
+          currentPosition.latitude, currentPosition.longitude);
+      Placemark place = p[0];
+      setState(() {
+        currentAddress =
+        '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
+        // var signUpAddressController;
+        // if (signUpAddressController.text.isEmpty) {
+        //   signUpAddressController.text = currentAddress;
+        // }
+        print(currentAddress + ' yes');
+        print(place.administrativeArea.toString());
+        print(place.subAdministrativeArea.toString());
+        print(place.thoroughfare.toString());
+        print(place.toJson().toString());
+        // FocusScope.of(context).unfocus();
+        updateLocationController.text = place.name.toString();
+      });
+    } catch (e) {
+      print(e);
     }
   }
 }

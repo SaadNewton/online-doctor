@@ -124,7 +124,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                     Get.find<LoaderController>()
                                         .updateFormController(true);
                                     setState(() {
-                                      specialityList
+                                      loaderController.specialityList
                                           .add({'speciality': specialityType});
                                     });
                                     postMethod(
@@ -132,20 +132,20 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                         specialityStoreService,
                                         {
                                           'doctor_id': storageBox.read('doctor_id'),
-                                          'speciality': specialityList.length ==
+                                          'speciality': loaderController.specialityList.length ==
                                                   0
                                               ? [specialityType]
                                               : List.generate(
-                                                  specialityList.length,
+                                        loaderController.specialityList.length,
                                                   (index) {
-                                                  return specialityList[index]
+                                                  return loaderController.specialityList[index]
                                                       ['speciality'];
                                                 })
                                         },
                                         true,
                                         getSpeciality);
 
-                                    print(specialityList);
+                                    print(loaderController.specialityList);
                                     _specialityController.clear();
                                   }
                                 },
@@ -154,7 +154,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                             ],
                           ),
                         ),
-                        specialityList.length == 0
+                        loaderController.specialityList.length == 0
                             ? SizedBox()
                             : Padding(
                                 padding:
@@ -176,7 +176,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                       children: [
                                         Wrap(
                                           children: List.generate(
-                                              specialityList.length, (index) {
+                                              loaderController.specialityList.length, (index) {
                                             return Column(
                                               children: [
                                                 Slidable(
@@ -194,7 +194,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                                         setState(() {
                                                           _specialityController
                                                                   .text =
-                                                              specialityList[
+                                                          loaderController.specialityList[
                                                                       index][
                                                                   'speciality'];
 
@@ -211,7 +211,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                                                         500),
                                                           );
 
-                                                          specialityList
+                                                          loaderController.specialityList
                                                               .removeAt(index);
                                                         });
                                                       },
@@ -221,7 +221,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                                       icon: Icons.delete,
                                                       onTap: () {
                                                         setState(() {
-                                                          specialityList
+                                                          loaderController.specialityList
                                                               .removeAt(index);
                                                         });
                                                       },
@@ -266,7 +266,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                                                         Alignment
                                                                             .centerLeft,
                                                                     child: Text(
-                                                                      '${specialityList[index]['speciality']}',
+                                                                      '${loaderController.specialityList[index]['speciality']}',
                                                                       softWrap:
                                                                           true,
                                                                       overflow:
@@ -287,7 +287,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                                   ),
                                                 ),
                                                 index ==
-                                                        (specialityList.length -
+                                                        (loaderController.specialityList.length -
                                                             1)
                                                     ? SizedBox()
                                                     : Divider(
@@ -314,7 +314,7 @@ class _SpecialityFormState extends State<SpecialityForm> {
             endOffset: Offset(0, 0),
             slideCurve: Curves.linearToEaseOut,
           ),
-          floatingActionButton: specialityList.length == 0
+          floatingActionButton: loaderController.specialityList.length == 0
               ? SizedBox()
               : FloatingActionButton(
                   backgroundColor: primaryColor,

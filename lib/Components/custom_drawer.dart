@@ -4,6 +4,7 @@ import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
 import 'package:doctoworld_doctor/screens/articles_screen.dart';
+import 'package:doctoworld_doctor/screens/customer_change_password.dart';
 import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/drawer_education_form.dart';
 import 'package:doctoworld_doctor/screens/drawer_experience_form.dart';
@@ -184,6 +185,26 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           ),
                           title: Text(
                             'Schedule',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          height: 0.5,
+                          color: Colors.white.withOpacity(0.5),
+                        ),
+                        ListTile(
+                          onTap: () {
+                            Get.to(ChangePassword());
+                          },
+                          leading: Icon(
+                            Icons.lock,
+                            color: Colors.white,
+                          ),
+                          title: Text(
+                            'Change Password',
                             style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400,

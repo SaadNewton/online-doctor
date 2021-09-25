@@ -15,11 +15,6 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 List profileList = [];
-List educationList = [];
-List experienceList = [];
-List specialityList = [];
-List clinicsList = [];
-List scheduleList = [];
 List<String> getSpecialitiesList = [];
 
 class ProfileWizard extends StatefulWidget {
@@ -37,12 +32,13 @@ class _ProfileWizardState extends State<ProfileWizard>
     // TODO: implement initState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateFormController(true);
+      Get.find<LoaderController>().emptyScheduleList();
     });
     profileWizardTabController = new TabController(length: 6, vsync: this);
     getMethod(
         context, specialitiesListService, null, true, getSpecialityListRepo);
     super.initState();
-    scheduleList = [];
+    // scheduleList = [];
 
   }
 

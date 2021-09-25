@@ -5,7 +5,11 @@ import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/repositories/clinic_repo.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
+import 'package:doctoworld_doctor/services/post_method_call.dart';
+import 'package:doctoworld_doctor/services/service_urls.dart';
+import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -106,12 +110,19 @@ class _ClinicFormState extends State<ClinicForm> {
                                     Get.find<LoaderController>()
                                         .updateFormController(true);
 
-                                    clinicsList.add(
-                                      {
-                                        'clinic_name':_clinicNameController.text,
-                                        'clinic_address':_clinicAddressController.text
-                                      }
+                                    postMethod(
+                                        context,
+                                        clinicStoreService,
+                                        {
+                                          'doctor_id': storageBox.read('doctor_id'),
+                                          'name': _clinicNameController.text,
+                                          'address': _clinicAddressController.text
+                                        },
+                                        true,
+                                        clinicStore
                                     );
+                                    _clinicNameController.clear();
+                                    _clinicAddressController.clear();
                                   }
                                 },
                               ),
@@ -119,7 +130,7 @@ class _ClinicFormState extends State<ClinicForm> {
                             ],
                           ),
                         ),
-                        if (educationList.length == 0)
+                        if (loaderController.clinicsList.length == 0)
                           SizedBox()
                         else
                           Padding(
@@ -151,7 +162,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                               child: Align(
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  'Certificate',
+                                                  'Clinic Name',
                                                   style: TextStyle(
                                                       fontSize: 11,
                                                       color: primaryColor),
@@ -162,29 +173,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                               child: Align(
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  'Institution',
-                                                  style: TextStyle(
-                                                      fontSize: 11,
-                                                      color: primaryColor),
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Discipline',
-                                                  style: TextStyle(
-                                                      fontSize: 11,
-                                                      color: primaryColor),
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Text(
-                                                  'Period',
+                                                  'Clinic Address',
                                                   style: TextStyle(
                                                       fontSize: 11,
                                                       color: primaryColor),
@@ -203,7 +192,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                     ),
                                     Wrap(
                                       children: List.generate(
-                                          clinicsList.length, (index) {
+                                          loaderController.clinicsList.length, (index) {
                                         return Column(
                                           children: [
                                             Slidable(
@@ -220,11 +209,11 @@ class _ClinicFormState extends State<ClinicForm> {
                                                       setState(() {
                                                         _clinicNameController
                                                             .text =
-                                                        clinicsList[index]
+                                                        loaderController.clinicsList[index]
                                                         ['clinic_name'];
                                                         _clinicAddressController
                                                             .text =
-                                                        clinicsList[index]
+                                                        loaderController.clinicsList[index]
                                                         ['clinic_address'];
 
                                                         _scrollController
@@ -239,7 +228,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                                               500),
                                                         );
 
-                                                        educationList
+                                                        loaderController.clinicsList
                                                             .removeAt(index);
                                                       });
                                                     },
@@ -256,7 +245,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                                       //     deleteEducationStoreData
                                                       // );
                                                       setState(() {
-                                                        educationList
+                                                        loaderController.clinicsList
                                                             .removeAt(index);
                                                       });
                                                     },
@@ -278,24 +267,11 @@ class _ClinicFormState extends State<ClinicForm> {
                                                             children: [
                                                               Expanded(
                                                                 child: Align(
-                                                                  alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                                  child: Image.file(
-                                                                    educationList[
-                                                                    index]
-                                                                    ['image'],
-                                                                    width: 20,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              Expanded(
-                                                                child: Align(
                                                                     alignment:
                                                                     Alignment
                                                                         .center,
                                                                     child: Text(
-                                                                      '${educationList[index]['institution']}',
+                                                                      '${loaderController.clinicsList[index]['clinic_name']}',
                                                                       softWrap:
                                                                       true,
                                                                       overflow:
@@ -314,26 +290,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                                                     Alignment
                                                                         .center,
                                                                     child: Text(
-                                                                      '${educationList[index]['discipline']}',
-                                                                      softWrap:
-                                                                      true,
-                                                                      overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                          11,
-                                                                          color: Colors
-                                                                              .black),
-                                                                    )),
-                                                              ),
-                                                              Expanded(
-                                                                child: Align(
-                                                                    alignment:
-                                                                    Alignment
-                                                                        .center,
-                                                                    child: Text(
-                                                                      '${educationList[index]['period']}',
+                                                                      '${loaderController.clinicsList[index]['clinic_address']}',
                                                                       softWrap:
                                                                       true,
                                                                       overflow:
@@ -357,7 +314,7 @@ class _ClinicFormState extends State<ClinicForm> {
                                                       ),
                                                   // ExperienceListShow(context: context,index: index,),
                                                 )),
-                                            index == (educationList.length - 1)
+                                            index == (loaderController.clinicsList.length - 1)
                                                 ? SizedBox()
                                                 : Divider(
                                               color: Colors.grey

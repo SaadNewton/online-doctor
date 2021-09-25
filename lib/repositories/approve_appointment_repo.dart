@@ -31,7 +31,8 @@ approveAppointments(
           'Approve Appointment Message------>> ${approveAppointmentModel.message}');
       getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox!.read('doctor_id')}, true,
           getAllLAppointmentRepo);
-    } else {
+    }
+    else {
       log('data ' + response.toString());
       showDialog(
           context: context,

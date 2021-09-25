@@ -618,7 +618,6 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
         _disciplineExperienceController.clear();
         _periodExperienceController.clear();
         _image = null;
-        log('LocalList---->> ${experienceList}');
         setState(() {});
       }
       else{
@@ -673,7 +672,6 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
         _disciplineExperienceController.clear();
         _periodExperienceController.clear();
         _image = null;
-        log('LocalList---->> ${experienceList}');
         setState(() {});
       }
       else{

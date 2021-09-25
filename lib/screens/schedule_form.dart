@@ -553,6 +553,7 @@ import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -748,72 +749,90 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   //     ),
                                   //   ),
                                   // ),
-                                  Wrap(
-                                    children: List.generate(daysList.length, (index){
-                                      return Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                        child: InkWell(
-                                          onTap: (){
-                                            daysChecker = false;
-                                            daysList.forEach((element) {
-                                              if(element.title == daysList[index].title){
-                                                setState(() {
-                                                  element.selected = !element.selected;
-                                                });
-                                              }
-                                              if(element.selected){
-                                                daysCheckerError = false;
-                                                daysChecker = true;
-                                              }
-                                            });
+                                  // Wrap(
+                                  //   children: List.generate(daysList.length, (index){
+                                  //     return Padding(
+                                  //       padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                                  //       child: InkWell(
+                                  //         onTap: (){
+                                  //           daysChecker = false;
+                                  //           daysList.forEach((element) {
+                                  //             if(element.title == daysList[index].title){
+                                  //               setState(() {
+                                  //                 element.selected = !element.selected;
+                                  //               });
+                                  //             }
+                                  //             if(element.selected){
+                                  //               daysCheckerError = false;
+                                  //               daysChecker = true;
+                                  //             }
+                                  //           });
+                                  //
+                                  //           setState(() {});
+                                  //         },
+                                  //         child: Container(
+                                  //           decoration: BoxDecoration(
+                                  //             borderRadius: BorderRadius.circular(5),
+                                  //             color: daysList[index].selected
+                                  //                 ?primaryColor
+                                  //                 :Colors.grey.withOpacity(0.2)
+                                  //           ),
+                                  //           child: Padding(
+                                  //             padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                                  //             child: Text(
+                                  //               '${daysList[index].title}',
+                                  //               style: TextStyle(
+                                  //                 color: daysList[index].selected
+                                  //                     ?Colors.white
+                                  //                     :Colors.black,
+                                  //                 fontSize: 13
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     );
+                                  //   }),
+                                  // ),
+                                  // daysCheckerError
+                                  //     ? Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.start,
+                                  //   children: [
+                                  //     Padding(
+                                  //       padding: const EdgeInsets.only(left: 10,bottom: 5),
+                                  //       child: Text(
+                                  //         'Days Required',
+                                  //         style: TextStyle(
+                                  //           fontSize: 12,
+                                  //           color: Colors.red
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // )
+                                  //     : SizedBox(),
+                                  // SizedBox(height: 10.0),
 
-                                            setState(() {});
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(5),
-                                              color: daysList[index].selected
-                                                  ?primaryColor
-                                                  :Colors.grey.withOpacity(0.2)
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                                              child: Text(
-                                                '${daysList[index].title}',
-                                                style: TextStyle(
-                                                  color: daysList[index].selected
-                                                      ?Colors.white
-                                                      :Colors.black,
-                                                  fontSize: 13
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }),
+                                  /// serial days
+                                  EntryField(
+                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _availableDaysController,
+                                    textInputType: TextInputType.number,
+                                    hint: 'No. of days',
+                                    validator: (value){
+                                      if(value.isEmpty){
+                                        return 'Field is Required';
+                                      }else{
+                                        return null;
+                                      }
+                                    },
                                   ),
-                                  daysCheckerError
-                                      ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10,bottom: 5),
-                                        child: Text(
-                                          'Days Required',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.red
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                      : SizedBox(),
-                                  SizedBox(height: 10.0),
+                                  SizedBox(height: 20.0),
 
                                   /// Time Slot Duration (minutes)
                                   EntryField(
+                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
                                     color: Colors.grey.withOpacity(0.2),
                                     controller: _slotDurationController,
                                     textInputType: TextInputType.number,
@@ -955,7 +974,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   SizedBox(height: 20.0),
 
                                   CustomButton(
-                                    label: scheduleList.length == 0
+                                    label: loaderController.scheduleList.length == 0
                                         ?'Submit'
                                         :'Update',
                                     onTap: () {
@@ -963,7 +982,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                       if (!currentFocus.hasPrimaryFocus) {
                                         currentFocus.unfocus();
                                       }
-                                      if(scheduleKey.currentState.validate() && daysChecker) {
+                                      if(scheduleKey.currentState.validate()) {
                                         final startTime = TimeOfDay(
                                             hour: int.parse(fromTime.substring(0,2).toString()),
                                             minute: int.parse(fromTime.substring(3,5).toString()));
@@ -979,35 +998,51 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                           times.length = times.length-1;
                                         });
                                         print(times);
-                                        final days = [];
-                                        daysList.forEach((element) {
-                                          if(element.selected){
-                                            setState(() {
-                                              days.add(element.title);
-                                            });
-                                          }
-                                        });
+                                        // final days = [];
+                                        // daysList.forEach((element) {
+                                        //   if(element.selected){
+                                        //     setState(() {
+                                        //       days.add(element.title);
+                                        //     });
+                                        //   }
+                                        // });
                                         setState(() {
                                           // scheduleList = [];
-                                          scheduleList.add(
+                                          Get.find<LoaderController>().updateScheduleList(
                                               {
-                                                'noOfDays': 2,
-                                                'schedule_type': scheduleType,
-                                                'clinic_name': _clinicController.text.isEmpty
-                                                    ?'Online'
-                                                    :_clinicController.text,
-                                                'clinic_address': _locationController.text.isEmpty
-                                                    ?null
-                                                    :_locationController.text,
-                                                'slotDuration': _slotDurationController.text,
-                                                'startTime':fromTime.substring(0,5).toString(),
-                                                'endTime':toTime.substring(0,5).toString(),
-                                                'slots': times,
-                                                'days': days
+                                                'doctor_id': storageBox.read('doctor_id'),
+                                                'slot_type': 2,
+                                                'duration': _slotDurationController.text,
+                                                'serial_day': _availableDaysController.text,
+                                                'start_time': fromTime.substring(0,5).toString(),
+                                                'end_time': toTime.substring(0,5).toString(),
+                                                'type': 'online',
+                                                'clinic_id': null,
+                                                'clinic_name': null,
+                                                'clinic_address': null,
+                                                'slots': times
                                               }
                                           );
+
+                                          // scheduleList.add(
+                                          //     {
+                                          //       'noOfDays': 2,
+                                          //       'schedule_type': scheduleType,
+                                          //       'clinic_name': _clinicController.text.isEmpty
+                                          //           ?'Online'
+                                          //           :_clinicController.text,
+                                          //       'clinic_address': _locationController.text.isEmpty
+                                          //           ?null
+                                          //           :_locationController.text,
+                                          //       'slotDuration': _slotDurationController.text,
+                                          //       'startTime':fromTime.substring(0,5).toString(),
+                                          //       'endTime':toTime.substring(0,5).toString(),
+                                          //       'slots': times,
+                                          //       'days': days
+                                          //     }
+                                          // );
                                         });
-                                        print('${scheduleList}');
+                                        print('${loaderController.scheduleList}');
                                         Get.find<LoaderController>().updateFormController(true);
                                         postMethod(
                                             context,
@@ -1015,44 +1050,37 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                             {
                                               'doctor_id': storageBox.read('doctor_id'),
                                               'slot_type': 2,
-                                              'max_serial': null,
                                               'duration': _slotDurationController.text,
-                                              'serial_day': 2,
+                                              'serial_day': _availableDaysController.text,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
-                                              'serial_day_app': List.generate(scheduleList.length, (index){
-                                                return
-                                                  {
-                                                    'schedule_type': scheduleList[index]['schedule_type'],
-                                                    'clinic_name': scheduleList[index]['clinic_name'],
-                                                    'clinic_address': scheduleList[index]['clinic_address'],
-                                                    'start_time': scheduleList[index]['startTime'],
-                                                    'end_time': scheduleList[index]['endTime'],
-                                                    'duration': scheduleList[index]['slotDuration'],
-                                                    'slots': scheduleList[index]['slots'],
-                                                    'days': scheduleList[index]['days']
-                                                  };
-                                              })
+                                              'type': 'online'
                                             },
                                             true,
                                             addScheduleRepo
                                         );
 
                                         setState(() {
-                                          daysList.forEach((element) {
-                                            element.selected = false;
-                                          });
-                                          _clinicController.clear();
-                                          _locationController.clear();
+                                          _availableDaysController.clear();
                                           _slotDurationController.clear();
+                                          fromTime = null;
+                                          toTime = null;
                                         });
+                                        // setState(() {
+                                        //   daysList.forEach((element) {
+                                        //     element.selected = false;
+                                        //   });
+                                        //   _clinicController.clear();
+                                        //   _locationController.clear();
+                                        //   _slotDurationController.clear();
+                                        // });
                                       }
-                                      else if(!daysChecker){
-                                        setState(() {
-                                          daysCheckerError = true;
-                                          daysChecker = false;
-                                        });
-                                      }
+                                      // else if(!daysChecker){
+                                      //   setState(() {
+                                      //     daysCheckerError = true;
+                                      //     daysChecker = false;
+                                      //   });
+                                      // }
                                     },
                                   ),
                                   SizedBox(height: 20.0),
@@ -1299,7 +1327,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   SizedBox(height: 20.0),
 
                                   CustomButton(
-                                    label: scheduleList.length == 0
+                                    label: loaderController.scheduleList.length == 0
                                         ?'Submit'
                                         :'Update',
                                     onTap: () {
@@ -1333,7 +1361,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                         });
                                         setState(() {
                                           // scheduleList = [];
-                                          scheduleList.add(
+                                          Get.find<LoaderController>().updateScheduleList(
                                               {
                                                 'noOfDays': 2,
                                                 'schedule_type': scheduleType,
@@ -1350,8 +1378,25 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 'days': days
                                               }
                                           );
+                                          // scheduleList.add(
+                                          //     {
+                                          //       'noOfDays': 2,
+                                          //       'schedule_type': scheduleType,
+                                          //       'clinic_name': _clinicController.text.isEmpty
+                                          //           ?'Online'
+                                          //           :_clinicController.text,
+                                          //       'clinic_address': _locationController.text.isEmpty
+                                          //           ?null
+                                          //           :_locationController.text,
+                                          //       'slotDuration': _slotDurationController.text,
+                                          //       'startTime':fromTime.substring(0,5).toString(),
+                                          //       'endTime':toTime.substring(0,5).toString(),
+                                          //       'slots': times,
+                                          //       'days': days
+                                          //     }
+                                          // );
                                         });
-                                        print('${scheduleList}');
+                                        print('${loaderController.scheduleList}');
                                         Get.find<LoaderController>().updateFormController(true);
                                         postMethod(
                                             context,
@@ -1364,17 +1409,18 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                               'serial_day': 2,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
-                                              'serial_day_app': List.generate(scheduleList.length, (index){
+                                              'serial_day_app': List.generate(
+                                                  loaderController.scheduleList.length, (index){
                                                 return
                                                   {
-                                                    'schedule_type': scheduleList[index]['schedule_type'],
-                                                    'clinic_name': scheduleList[index]['clinic_name'],
-                                                    'clinic_address': scheduleList[index]['clinic_address'],
-                                                    'start_time': scheduleList[index]['startTime'],
-                                                    'end_time': scheduleList[index]['endTime'],
-                                                    'duration': scheduleList[index]['slotDuration'],
-                                                    'slots': scheduleList[index]['slots'],
-                                                    'days': scheduleList[index]['days']
+                                                    'schedule_type': loaderController.scheduleList[index]['schedule_type'],
+                                                    'clinic_name': loaderController.scheduleList[index]['clinic_name'],
+                                                    'clinic_address': loaderController.scheduleList[index]['clinic_address'],
+                                                    'start_time': loaderController.scheduleList[index]['startTime'],
+                                                    'end_time': loaderController.scheduleList[index]['endTime'],
+                                                    'duration': loaderController.scheduleList[index]['slotDuration'],
+                                                    'slots': loaderController.scheduleList[index]['slots'],
+                                                    'days': loaderController.scheduleList[index]['days']
                                                   };
                                               })
                                             },
@@ -1404,7 +1450,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                             ],
                           ),
                         ),
-                        scheduleList.length == 0
+                        loaderController.scheduleList.length == 0
                             ?SizedBox()
                             :Padding(
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -1427,7 +1473,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                 children: [
                                   SizedBox(height: 8,),
                                   Wrap(
-                                    children: List.generate(scheduleList.length, (index) {
+                                    children: List.generate(loaderController.scheduleList.length, (index) {
                                       return Container(
                                         width: double.infinity,
                                         color: Colors.white,
@@ -1435,7 +1481,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${scheduleList[index]['schedule_type']}',
+                                              '${loaderController.scheduleList[index]['type']}',
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w400,
@@ -1443,13 +1489,13 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                               ),
                                             ),
                                             SizedBox(height: 5,),
-                                            scheduleList[index]['clinic_name'].toString() == 'null'
+                                            loaderController.scheduleList[index]['clinic_name'].toString() == 'null'
                                                 ?SizedBox()
                                                 :Row(
                                               children: [
                                                 Text(
-                                                  '${scheduleList[index]['clinic_name']}'
-                                                      ' (${scheduleList[index]['clinic_address']})',
+                                                  '${loaderController.scheduleList[index]['clinic_name']}'
+                                                      ' (${loaderController.scheduleList[index]['clinic_address']})',
                                                   style: TextStyle(
                                                     fontSize: 14,
                                                     color: Colors.black
@@ -1459,7 +1505,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                             ),
                                             SizedBox(height: 5,),
                                             Wrap(
-                                              children: List.generate(scheduleList[index]['slots'].length, (innerIndex){
+                                              children: List.generate(
+                                                  loaderController.scheduleList[index]['slots'].length, (innerIndex){
                                                 return Padding(
                                                   padding: const EdgeInsets.fromLTRB(5, 7, 5, 0),
                                                   child: Container(
@@ -1470,7 +1517,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                     child: Padding(
                                                       padding: const EdgeInsets.all(8.0),
                                                       child: Text(
-                                                        '${scheduleList[index]['slots'][innerIndex]}',
+                                                        '${loaderController.scheduleList[index]['slots'][innerIndex]}',
                                                         style: TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 11,
@@ -1481,7 +1528,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 );
                                               }),
                                             ),
-                                            index == (scheduleList.length-1)
+                                            index == (loaderController.scheduleList.length-1)
                                                 ?SizedBox()
                                                 :Padding(
                                               padding: const EdgeInsets.fromLTRB(20, 5, 20, 5),
@@ -1509,7 +1556,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
             endOffset: Offset(0, 0),
             slideCurve: Curves.linearToEaseOut,
           ),
-          floatingActionButton: scheduleList.length == 0
+          floatingActionButton: loaderController.scheduleList.length == 0
               ?SizedBox()
               :FloatingActionButton(
             backgroundColor: primaryColor,
@@ -1519,10 +1566,10 @@ class _ScheduleFormState extends State<ScheduleForm> {
             ),
             onPressed: (){
               if(
-              educationList.length != 0 &&
-                  experienceList.length != 0 &&
-                  specialityList.length != 0 &&
-                  scheduleList.length != 0
+              loaderController.educationList.length != 0 &&
+                  loaderController.experienceList.length != 0 &&
+                  loaderController.specialityList.length != 0 &&
+                  loaderController.scheduleList.length != 0
               ){
                 showDialog(
                     context: context,

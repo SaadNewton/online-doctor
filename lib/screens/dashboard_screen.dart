@@ -458,73 +458,92 @@ class _DashboardState extends State<Dashboard> {
                             children: List.generate(getAllDoctorsArticles.data.length, (index) {
                                     return Padding(
                                       padding: const EdgeInsets.fromLTRB(15, 12, 0, 20),
-                                      child: InkWell(
-                                        onTap: (){
-                                          Get.to(ArticleDetailScreen(
-                                            getAllDoctorsArticlesData: getAllDoctorsArticles.data[index],));
-                                        },
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width*.4,
-                                          height: MediaQuery.of(context).size.height*.24,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.circular(10),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: Colors.grey.withOpacity(0.5),
-                                                blurRadius: 9,
-                                                spreadRadius: 3
-                                              )
-                                            ]
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                getAllDoctorsArticles.data[index].image == null
-                                                    ? SizedBox()
-                                                    : Container(
-                                                  width: MediaQuery.of(context).size.width*.2,
-                                                  height: MediaQuery.of(context).size.height*.1,
-                                                      child: Image.network(
-                                                      '$mediaUrl${getAllDoctorsArticles.data[index].image}',
-                                                  width: MediaQuery.of(context).size.width*.2,
-                                                ),
+                                      child: Container(
+                                        width: MediaQuery.of(context).size.width*.4,
+                                        height: MediaQuery.of(context).size.height*.28,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius: BorderRadius.circular(10),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.grey.withOpacity(0.5),
+                                              blurRadius: 9,
+                                              spreadRadius: 3
+                                            )
+                                          ]
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10.0),
+                                          child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            children: [
+                                              getAllDoctorsArticles.data[index].image == null
+                                                  ? SizedBox()
+                                                  : Container(
+                                                width: MediaQuery.of(context).size.width*.2,
+                                                height: MediaQuery.of(context).size.height*.1,
+                                                    child: Image.network(
+                                                    '$mediaUrl${getAllDoctorsArticles.data[index].image}',
+                                                width: MediaQuery.of(context).size.width*.2,
+                                              ),
+                                                  ),
+                                              SizedBox(height: 8,),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    '${getAllDoctorsArticles.data[index].title}',
+                                                    style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black
                                                     ),
-                                                SizedBox(height: 8,),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '${getAllDoctorsArticles.data[index].title}',
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${getAllDoctorsArticles.data[index].description}',
+                                                      maxLines: 2,
+                                                     softWrap: true,
+                                                      overflow: TextOverflow.ellipsis,
                                                       style: TextStyle(
-                                                        fontSize: 18,
+                                                        fontSize: 14,
                                                         color: Colors.black
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        '${getAllDoctorsArticles.data[index].description}',
-                                                        maxLines: 2,
-                                                       softWrap: true,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          fontSize: 14,
-                                                          color: Colors.black
-                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 8,),
+                                              Spacer(),
+                                              InkWell(
+                                                onTap: (){
+                                                  Get.to(ArticleDetailScreen(
+                                                    getAllDoctorsArticlesData: getAllDoctorsArticles.data[index],));
+                                                },
+                                                child: Container(
+                                                  height: 30,
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: primaryColor,
+                                                    borderRadius: BorderRadius.circular(5)
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      'View Details',
+                                                      style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.white
                                                       ),
                                                     ),
-                                                  ],
+                                                  ),
                                                 ),
-                                              ],
-                                            )
-                                          ),
+                                              )
+                                            ],
+                                          )
                                         ),
                                       ),
                                     );

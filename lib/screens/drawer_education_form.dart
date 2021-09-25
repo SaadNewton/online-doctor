@@ -617,7 +617,6 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
         _disciplineController.clear();
         _periodController.clear();
         _image = null;
-        log('LocalList---->> ${educationList}');
 
         setState(() {});
       }
@@ -674,7 +673,6 @@ class _DrawerEducationFormState extends State<DrawerEducationForm> {
         _disciplineController.clear();
         _periodController.clear();
         _image = null;
-        log('LocalList---->> ${educationList}');
 
         setState(() {});
       }

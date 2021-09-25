@@ -175,7 +175,7 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                         Get.find<LoaderController>()
                                             .updateFormController(true);
                                         setState(() {
-                                          specialityList
+                                          loaderController.specialityList
                                               .add({'speciality': specialityType});
                                         });
                                         postMethod(
@@ -183,13 +183,13 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                             specialityStoreService,
                                             {
                                             'doctor_id': storageBox.read('doctor_id'),
-                                            'speciality': specialityList.length ==
+                                            'speciality': loaderController.specialityList.length ==
                                             0
                                             ? [specialityType]
                                                 : List.generate(
-                                            specialityList.length,
+                                            loaderController.specialityList.length,
                                             (index) {
-                                            return specialityList[index]
+                                            return loaderController.specialityList[index]
                                             ['speciality'];
                                             })
                                             },
@@ -199,7 +199,7 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                         setState(() {
                                           addChecker = false;
                                         });
-                                        print(specialityList);
+                                        print(loaderController.specialityList);
                                         _specialityController.clear();
                                       }
                                     },
@@ -212,7 +212,7 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                         )
                             :SizedBox(),
                         Wrap(
-                          children: List.generate(specialityList.length, (index){
+                          children: List.generate(loaderController.specialityList.length, (index){
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
                               child: Container(
@@ -228,13 +228,13 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                 ),
                                 child: ListTile(
                                   title: Text(
-                                    '${specialityList[index]['speciality']}',
+                                    '${loaderController.specialityList[index]['speciality']}',
                                     style: TextStyle(
                                         fontSize: 17,
                                         color: Colors.black
                                     ),
                                   ),
-                                  trailing: specialityList.length == 1
+                                  trailing: loaderController.specialityList.length == 1
                                       ?SizedBox()
                                       :InkWell(
                                     onTap: (){
@@ -252,19 +252,19 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                                 Get.find<LoaderController>()
                                                     .updateFormController(true);
                                                 setState(() {
-                                                  specialityList.removeAt(index);
+                                                  loaderController.specialityList.removeAt(index);
                                                 });
                                                 postMethod(
                                                     context,
                                                     specialityStoreService,
                                                     {
                                                       'doctor_id': storageBox.read('doctor_id'),
-                                                      'speciality':  specialityList.length == 0
+                                                      'speciality':  loaderController.specialityList.length == 0
                                                           ?[]
                                                           :List.generate(
-                                                          specialityList.length,
+                                                    loaderController.specialityList.length,
                                                               (index) {
-                                                            return specialityList[index]
+                                                            return loaderController.specialityList[index]
                                                             ['speciality'];
                                                           })
                                                     },
