@@ -22,7 +22,7 @@ getMethod(
 
   if (addAuthHeader && storageBox!.hasData('authToken')) {
     setCustomHeader(dio, 'token', '${storageBox!.read('authToken')}');
-    setCustomHeader(dio, 'role', 'customer');
+    setCustomHeader(dio, 'role', 'doctor');
 
     print('token ' + storageBox!.read('authToken'));
   } else if (addAuthHeader && !storageBox!.hasData('authToken')) {}

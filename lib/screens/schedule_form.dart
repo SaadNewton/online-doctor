@@ -578,6 +578,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
   ];
 
 
+
   // final timeFormat = DateFormat("HH:mm");
   final timeFormat = DateFormat.jm();
   String fromTime ;
@@ -592,6 +593,16 @@ class _ScheduleFormState extends State<ScheduleForm> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      Get.find<LoaderController>().clinicsList.forEach((element) {
+        Get.find<LoaderController>().updateClinicTypeList(
+            element['clinic_name']
+        );
+        // Get.find<LoaderController>().clinicTypeList.add(
+        //   element['clinic_name']
+        // );
+      });
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -626,7 +637,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                           vertical: 17.0, horizontal: 10.0),
                                       fillColor: Colors.grey.withOpacity(0.2),
                                       filled: true,
-                                      hintText: 'Select Clinic Type',
+                                      hintText: 'Select Schedule Type',
                                       hintStyle: TextStyle(
                                           color: Colors.black,
                                           fontSize: 17
@@ -664,11 +675,6 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                     onChanged: (String value) {
                                       print(value);
                                       setState(() {
-                                         daysCheckerError = false;
-                                         daysChecker = false;
-                                        daysList.forEach((element) {
-                                          element.selected = false;
-                                        });
                                         scheduleType = value;
                                       });
                                     },
@@ -684,9 +690,9 @@ class _ScheduleFormState extends State<ScheduleForm> {
                               ),
                               SizedBox(height: 20.0),
                               scheduleType == null
-                                  ?SizedBox()
-                                  :scheduleType == 'Online'
-                                  ?Column(
+                                  ? SizedBox()
+                                  : scheduleType == 'Online'
+                                  ? Column(
                                 children: [
 
                                   // ButtonTheme(
@@ -1086,106 +1092,194 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   SizedBox(height: 20.0),
                                 ],
                               )
-                                  :Column(
+                                  : loaderController.clinicsList.length == 0
+                                  ? Text(
+                                'Add clinics first if you want to add schedule for physical appointments',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText1
+                                    .copyWith(color: Theme.of(context).disabledColor),
+                              )
+                                  : Column(
                                 children: [
 
-                                  /// clinic
-                                  EntryField(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    controller: _clinicController,
-                                    hint: 'Clinic Name',
-                                    validator: (value){
-                                      if(value.isEmpty){
-                                        return 'Field is Required';
-                                      }else{
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(height: 20.0),
+                                  // /// clinic
+                                  // EntryField(
+                                  //   color: Colors.grey.withOpacity(0.2),
+                                  //   controller: _clinicController,
+                                  //   hint: 'Clinic Name',
+                                  //   validator: (value){
+                                  //     if(value.isEmpty){
+                                  //       return 'Field is Required';
+                                  //     }else{
+                                  //       return null;
+                                  //     }
+                                  //   },
+                                  // ),
+                                  // SizedBox(height: 20.0),
+                                  //
+                                  // /// location
+                                  // EntryField(
+                                  //   color: Colors.grey.withOpacity(0.2),
+                                  //   controller: _locationController,
+                                  //   hint: 'Clinic Address',
+                                  //   validator: (value){
+                                  //     if(value.isEmpty){
+                                  //       return 'Field is Required';
+                                  //     }else{
+                                  //       return null;
+                                  //     }
+                                  //   },
+                                  // ),
+                                  // SizedBox(height: 20.0),
 
-                                  /// location
-                                  EntryField(
-                                    color: Colors.grey.withOpacity(0.2),
-                                    controller: _locationController,
-                                    hint: 'Clinic Address',
-                                    validator: (value){
-                                      if(value.isEmpty){
-                                        return 'Field is Required';
-                                      }else{
-                                        return null;
-                                      }
-                                    },
-                                  ),
-                                  SizedBox(height: 20.0),
-
-                                  /// Serial Available For Next How Many Days
-                                  Wrap(
-                                    children: List.generate(daysList.length, (index){
-                                      return Padding(
-                                        padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
-                                        child: InkWell(
-                                          onTap: (){
-                                            daysChecker = false;
-                                            daysList.forEach((element) {
-                                              if(element.title == daysList[index].title){
-                                                setState(() {
-                                                  element.selected = !element.selected;
-                                                });
-                                              }
-                                              if(element.selected){
-                                                daysCheckerError = false;
-                                                daysChecker = true;
-                                              }
-                                            });
-
-                                            setState(() {});
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(5),
-                                                color: daysList[index].selected
-                                                    ?primaryColor
-                                                    :Colors.grey.withOpacity(0.2)
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
-                                              child: Text(
-                                                '${daysList[index].title}',
-                                                style: TextStyle(
-                                                    color: daysList[index].selected
-                                                        ?Colors.white
-                                                        :Colors.black,
-                                                    fontSize: 13
+                                  // /// Serial Available For Next How Many Days
+                                  // Wrap(
+                                  //   children: List.generate(daysList.length, (index){
+                                  //     return Padding(
+                                  //       padding: const EdgeInsets.fromLTRB(0, 0, 10, 10),
+                                  //       child: InkWell(
+                                  //         onTap: (){
+                                  //           daysChecker = false;
+                                  //           daysList.forEach((element) {
+                                  //             if(element.title == daysList[index].title){
+                                  //               setState(() {
+                                  //                 element.selected = !element.selected;
+                                  //               });
+                                  //             }
+                                  //             if(element.selected){
+                                  //               daysCheckerError = false;
+                                  //               daysChecker = true;
+                                  //             }
+                                  //           });
+                                  //
+                                  //           setState(() {});
+                                  //         },
+                                  //         child: Container(
+                                  //           decoration: BoxDecoration(
+                                  //               borderRadius: BorderRadius.circular(5),
+                                  //               color: daysList[index].selected
+                                  //                   ?primaryColor
+                                  //                   :Colors.grey.withOpacity(0.2)
+                                  //           ),
+                                  //           child: Padding(
+                                  //             padding: const EdgeInsets.fromLTRB(10, 8, 10, 8),
+                                  //             child: Text(
+                                  //               '${daysList[index].title}',
+                                  //               style: TextStyle(
+                                  //                   color: daysList[index].selected
+                                  //                       ?Colors.white
+                                  //                       :Colors.black,
+                                  //                   fontSize: 13
+                                  //               ),
+                                  //             ),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     );
+                                  //   }),
+                                  // ),
+                                  // daysCheckerError
+                                  //     ? Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.start,
+                                  //   children: [
+                                  //     Padding(
+                                  //       padding: const EdgeInsets.only(left: 10,bottom: 5),
+                                  //       child: Text(
+                                  //         'Days Required',
+                                  //         style: TextStyle(
+                                  //             fontSize: 12,
+                                  //             color: Colors.red
+                                  //         ),
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // )
+                                  //     : SizedBox(),
+                                  // SizedBox(height: 20.0),
+                                  ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButtonFormField<String>(
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 17.0, horizontal: 10.0),
+                                          fillColor: Colors.grey.withOpacity(0.2),
+                                          filled: true,
+                                          hintText: 'Select Clinic',
+                                          hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17
+                                          ),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4))),
+                                        ),
+                                        // isExpanded: true,
+                                        focusColor: Colors.white,
+                                        // dropdownColor: Colors.grey.withOpacity(0.2),
+                                        // iconSize: 10,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17
+                                        ),
+                                        iconEnabledColor: Colors.black,
+                                        value: loaderController.clinicType,
+                                        items: loaderController.clinicTypeList
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style:
+                                                  TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 17
+                                                  ),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    }),
-                                  ),
-                                  daysCheckerError
-                                      ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 10,bottom: 5),
-                                        child: Text(
-                                          'Days Required',
-                                          style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.red
-                                          ),
-                                        ),
+                                              );
+                                            }).toList(),
+                                        onChanged: (String value) {
+                                          print(value);
+                                          setState(() {
+                                            loaderController.clinicType = value;
+                                          });
+                                        },
+                                        validator: (String value) {
+                                          if (value == null) {
+                                            return 'Field is Required';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
                                       ),
-                                    ],
-                                  )
-                                      : SizedBox(),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.0),
+
+                                  /// serial days
+                                  EntryField(
+                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
+                                    color: Colors.grey.withOpacity(0.2),
+                                    controller: _availableDaysController,
+                                    textInputType: TextInputType.number,
+                                    hint: 'No. of days',
+                                    validator: (value){
+                                      if(value.isEmpty){
+                                        return 'Field is Required';
+                                      }else{
+                                        return null;
+                                      }
+                                    },
+                                  ),
                                   SizedBox(height: 20.0),
 
                                   /// Time Slot Duration (minutes)
                                   EntryField(
+                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
                                     color: Colors.grey.withOpacity(0.2),
                                     controller: _slotDurationController,
                                     textInputType: TextInputType.number,
@@ -1335,7 +1429,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                       if (!currentFocus.hasPrimaryFocus) {
                                         currentFocus.unfocus();
                                       }
-                                      if(scheduleKey.currentState.validate() && daysChecker) {
+                                      if(scheduleKey.currentState.validate()) {
                                         final startTime = TimeOfDay(
                                             hour: int.parse(fromTime.substring(0,2).toString()),
                                             minute: int.parse(fromTime.substring(3,5).toString()));
@@ -1351,31 +1445,35 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                           times.length = times.length-1;
                                         });
                                         print(times);
-                                        final days = [];
-                                        daysList.forEach((element) {
-                                          if(element.selected){
-                                            setState(() {
-                                              days.add(element.title);
-                                            });
-                                          }
-                                        });
+                                        // final days = [];
+                                        // daysList.forEach((element) {
+                                        //   if(element.selected){
+                                        //     setState(() {
+                                        //       days.add(element.title);
+                                        //     });
+                                        //   }
+                                        // });
                                         setState(() {
                                           // scheduleList = [];
                                           Get.find<LoaderController>().updateScheduleList(
                                               {
-                                                'noOfDays': 2,
-                                                'schedule_type': scheduleType,
-                                                'clinic_name': _clinicController.text.isEmpty
-                                                    ?'Online'
-                                                    :_clinicController.text,
-                                                'clinic_address': _locationController.text.isEmpty
-                                                    ?null
-                                                    :_locationController.text,
-                                                'slotDuration': _slotDurationController.text,
-                                                'startTime':fromTime.substring(0,5).toString(),
-                                                'endTime':toTime.substring(0,5).toString(),
-                                                'slots': times,
-                                                'days': days
+                                                'doctor_id': storageBox.read('doctor_id'),
+                                                'slot_type': 2,
+                                                'duration': _slotDurationController.text,
+                                                'serial_day': _availableDaysController.text,
+                                                'start_time': fromTime.substring(0,5).toString(),
+                                                'end_time': toTime.substring(0,5).toString(),
+                                                'type': 'onsite',
+                                                'clinic_id': loaderController.clinicsList
+                                                [loaderController.clinicTypeList
+                                                    .indexOf(loaderController.clinicType)]['clinic_id'],
+                                                'clinic_name': loaderController.clinicsList
+                                                [loaderController.clinicTypeList
+                                                    .indexOf(loaderController.clinicType)]['clinic_name'],
+                                                'clinic_address': loaderController.clinicsList
+                                                [loaderController.clinicTypeList
+                                                    .indexOf(loaderController.clinicType)]['clinic_address'],
+                                                'slots': times
                                               }
                                           );
                                           // scheduleList.add(
@@ -1404,44 +1502,41 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                             {
                                               'doctor_id': storageBox.read('doctor_id'),
                                               'slot_type': 2,
-                                              'max_serial': null,
                                               'duration': _slotDurationController.text,
-                                              'serial_day': 2,
+                                              'serial_day': _availableDaysController.text,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
-                                              'serial_day_app': List.generate(
-                                                  loaderController.scheduleList.length, (index){
-                                                return
-                                                  {
-                                                    'schedule_type': loaderController.scheduleList[index]['schedule_type'],
-                                                    'clinic_name': loaderController.scheduleList[index]['clinic_name'],
-                                                    'clinic_address': loaderController.scheduleList[index]['clinic_address'],
-                                                    'start_time': loaderController.scheduleList[index]['startTime'],
-                                                    'end_time': loaderController.scheduleList[index]['endTime'],
-                                                    'duration': loaderController.scheduleList[index]['slotDuration'],
-                                                    'slots': loaderController.scheduleList[index]['slots'],
-                                                    'days': loaderController.scheduleList[index]['days']
-                                                  };
-                                              })
+                                              'type': 'onsite',
+                                              'clinic_id': loaderController.clinicsList
+                                              [loaderController.clinicTypeList
+                                                  .indexOf(loaderController.clinicType)]['clinic_id']
                                             },
                                             true,
                                             addScheduleRepo
                                         );
                                         setState(() {
-                                          daysList.forEach((element) {
-                                            element.selected = false;
-                                          });
-                                          _clinicController.clear();
-                                          _locationController.clear();
+                                          _availableDaysController.clear();
                                           _slotDurationController.clear();
+                                          loaderController.clinicType = null;
+                                          fromTime = null;
+                                          toTime = null;
                                         });
+
+                                        // setState(() {
+                                        //   daysList.forEach((element) {
+                                        //     element.selected = false;
+                                        //   });
+                                        //   _clinicController.clear();
+                                        //   _locationController.clear();
+                                        //   _slotDurationController.clear();
+                                        // });
                                       }
-                                      else if(!daysChecker){
-                                        setState(() {
-                                          daysCheckerError = true;
-                                          daysChecker = false;
-                                        });
-                                      }
+                                      // else if(!daysChecker){
+                                      //   setState(() {
+                                      //     daysCheckerError = true;
+                                      //     daysChecker = false;
+                                      //   });
+                                      // }
                                     },
                                   ),
                                   SizedBox(height: 20.0),

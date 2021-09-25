@@ -138,7 +138,7 @@ class _DrawerDoctorProfileState extends State<DrawerDoctorProfile> {
                                       borderRadius:
                                       BorderRadius.circular(80),
                                       child: Image.network(
-                                        '$mediaUrl${getDoctorProfileModal.data.image}',
+                                        '$mediaUrl${getDoctorProfileModal.data.imagePath}',
                                         fit: BoxFit.cover,
                                       ),
                                     ),

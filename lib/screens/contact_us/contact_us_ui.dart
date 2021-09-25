@@ -3,34 +3,34 @@ import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
-import 'package:doctoworld_doctor/data/global_data.dart';
-import 'package:doctoworld_doctor/repositories/change_password_repo.dart';
+import 'package:doctoworld_doctor/screens/contact_us/contact_us_repo.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class ChangePassword extends StatefulWidget {
+class ContactUs extends StatefulWidget {
 
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  _ContactUsState createState() => _ContactUsState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ContactUsState extends State<ContactUs> {
 
-  GlobalKey<FormState> _changePasswordKey = GlobalKey();
-  TextEditingController _currentPasswordController = TextEditingController();
-  TextEditingController _newPasswordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
+  GlobalKey<FormState> _contactUsKey = GlobalKey();
+  TextEditingController _contactNameController = TextEditingController();
+  TextEditingController _contactEmailController = TextEditingController();
+  TextEditingController _contactSubjectController = TextEditingController();
+  TextEditingController _contactMessageController = TextEditingController();
+
+
 
 
   final _scrollController = ScrollController();
 
-  bool oldObscure = true;
-  bool newObscure = true;
-  bool confirmObscure = true;
   @override
   void dispose() {
     // _nameController.dispose();
@@ -46,7 +46,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         inAsyncCall: loaderController.formLoader,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Change Password',
+            title: Text('Contact Us',
               style: TextStyle(color: Colors.black),
             ),
             iconTheme: IconThemeData(color: Colors.black),
@@ -57,7 +57,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             Container(
               height: MediaQuery.of(context).size.height,
               child: Form(
-                key: _changePasswordKey,
+                key: _contactUsKey,
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Padding(
@@ -71,15 +71,12 @@ class _ChangePasswordState extends State<ChangePassword> {
                             children: [
 
                               SizedBox(height: 20),
-                              ///...........Current Password....................///
+                              ///...........Name....................///
                               EntryField(
-                                controller: _currentPasswordController,
-                                obSecure: oldObscure,
-                                prefixIcon: Icons.lock,
-                                textInputType: TextInputType.text,
-                                suffixIcon: Icons.remove_red_eye_outlined,
-                                hint: 'Current Password',
+                                textInputFormatter: FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
+                                controller: _contactNameController,
                                 color: Colors.grey.withOpacity(0.2),
+                                hint: 'Name',
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
@@ -91,44 +88,44 @@ class _ChangePasswordState extends State<ChangePassword> {
 
                               SizedBox(height: 20),
 
-
-                              ///...........New Password....................///
+                              ///...........Email....................///
                               EntryField(
-                                controller: _newPasswordController,
-                                obSecure: newObscure,
-                                prefixIcon: Icons.lock,
-                                textInputType: TextInputType.text,
-                                suffixIcon: Icons.remove_red_eye_outlined,
-                                hint: 'New Password',
+                                controller: _contactEmailController,
                                 color: Colors.grey.withOpacity(0.2),
+                                hint: 'Email',
+                                validator: (value) {
+                                  if (GetUtils.isEmail(_contactEmailController.text)) {
+                                    return null;
+                                  } else {
+                                    return 'Please enter valid email';
+                                  }
+                                },
+                              ),
+
+                              SizedBox(height: 20.0),
+                              ///...........Subject....................///
+                              EntryField(
+                                controller: _contactSubjectController,
+                                color: Colors.grey.withOpacity(0.2),
+                                hint: 'Subject',
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
-                                  } else if(value.length < 6){
-                                    return 'Password length must be greater than 6';
-                                  }else {
+                                  } else {
                                     return null;
                                   }
                                 },
                               ),
                               SizedBox(height: 20.0),
-
-                              ///..........Confirm Password................///
-
+                              ///...........Message....................///
                               EntryField(
-                                controller: _confirmPasswordController,
-                                obSecure: confirmObscure,
-                                textInputType: TextInputType.text,
-                                prefixIcon: Icons.lock,
-                                suffixIcon: Icons.remove_red_eye_outlined,
-                                hint: 'Confirm Password',
+                                maxLines: 6,
+                                controller: _contactMessageController,
                                 color: Colors.grey.withOpacity(0.2),
+                                hint: 'Message',
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
-                                  } else if (_newPasswordController.text !=
-                                      _confirmPasswordController.text) {
-                                    return 'Password not match';
                                   } else {
                                     return null;
                                   }
@@ -143,22 +140,22 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   if (!currentFocus.hasPrimaryFocus) {
                                     currentFocus.unfocus();
                                   }
-                                  if(_changePasswordKey.currentState.validate()){
+                                  if (_contactUsKey.currentState.validate()){
+
                                     Get.find<LoaderController>().updateFormController(true);
                                     postMethod(
                                       context,
-                                      changePasswordService,
+                                      contactUsService,
                                       {
                                         'user_id': storageBox.read('doctor_id'),
-                                        'curent_password': _currentPasswordController.text,
-                                        'password': _newPasswordController.text,
-                                        'confirm_password': _confirmPasswordController.text,
-                                        'role': 'doctor'
+                                       'name': _contactNameController.text,
+                                        'email': _contactEmailController.text,
+                                        'subject': _contactSubjectController.text,
+                                        'message': _contactMessageController.text
                                       },
                                       true,
-                                        changePasswordRepo,
+                                      contactUsRepo,
                                     );
-
                                   }
                                 },
                               ),

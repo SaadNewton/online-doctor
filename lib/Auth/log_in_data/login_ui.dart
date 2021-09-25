@@ -3,6 +3,7 @@ import 'package:doctoworld_doctor/Auth/registration_data/registration_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/screens/forgot_password/Forgot_password_email_ui.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:flutter/gestures.dart';
@@ -145,6 +146,23 @@ class _LoginUIState extends State<LoginUI> {
                                     controller: _passController,
                                   ),
                                 ),
+
+                                InkWell(
+                                  onTap: (){
+                                    Get.to(PasswordEmail());
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 10,right: 6.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text('Forgot Password',
+                                          style: TextStyle(color: Colors.blueAccent, fontSize: 14),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                                 SizedBox(height: 30.0),
 
                                 CustomButton(onTap: () {
@@ -169,6 +187,7 @@ class _LoginUIState extends State<LoginUI> {
                                         getLoginData);
                                   }
                                 }),
+
                                 SizedBox(height: 60.0),
                                 RichText(
                                   text: TextSpan(

@@ -13,14 +13,14 @@ class GetDoctorProfileModal {
 
   GetDoctorProfileModal({
     GetDoctorProfileModalData data,
-    bool status,
-    int success,
-    String message}){
+      bool status, 
+      int success, 
+      String message}){
     _data = data;
     _status = status;
     _success = success;
     _message = message;
-  }
+}
 
   GetDoctorProfileModal.fromJson(dynamic json) {
     _data = json["data"] != null ? GetDoctorProfileModalData.fromJson(json["data"]) : null;
@@ -133,49 +133,49 @@ class GetDoctorProfileModalData {
   List<Appointments> get appointments => _appointments;
 
   GetDoctorProfileModalData({
-    int id,
-    String name,
-    dynamic username,
-    String email,
-    String mobile,
-    int otpIsVerified,
-    dynamic refBy,
-    String balance,
-    String image,
-    String address,
-    dynamic lat,
-    dynamic long,
-    int sectorId,
-    int locationId,
-    String qualification,
-    int rating,
-    int status,
-    int ev,
-    int sv,
-    dynamic verCode,
-    dynamic verCodeSendAt,
-    int ts,
-    int tv,
-    dynamic tsc,
-    int fees,
-    int slotType,
-    String startTime,
-    String endTime,
-    int serialDay,
-    int maxSerial,
-    int duration,
-    List<String> serialOrSlot,
-    String about,
-    int featured,
-    List<String> speciality,
-    String createdAt,
-    String updatedAt,
-    List<Schedules> schedules,
-    List<Clinics> clinics,
-    String imagePath,
-    List<Education_details> educationDetails,
-    List<Experience_details> experienceDetails,
-    List<Appointments> appointments}){
+      int id, 
+      String name, 
+      dynamic username, 
+      String email, 
+      String mobile, 
+      int otpIsVerified, 
+      dynamic refBy, 
+      String balance, 
+      String image, 
+      String address, 
+      dynamic lat, 
+      dynamic long, 
+      int sectorId, 
+      int locationId, 
+      String qualification, 
+      int rating, 
+      int status, 
+      int ev, 
+      int sv, 
+      dynamic verCode, 
+      dynamic verCodeSendAt, 
+      int ts, 
+      int tv, 
+      dynamic tsc, 
+      int fees, 
+      int slotType, 
+      String startTime, 
+      String endTime, 
+      int serialDay, 
+      int maxSerial,
+      int duration, 
+      List<String> serialOrSlot, 
+      String about, 
+      int featured, 
+      List<String> speciality, 
+      String createdAt, 
+      String updatedAt, 
+      List<Schedules> schedules, 
+      List<Clinics> clinics, 
+      String imagePath, 
+      List<Education_details> educationDetails, 
+      List<Experience_details> experienceDetails, 
+      List<Appointments> appointments}){
     _id = id;
     _name = name;
     _username = username;
@@ -219,7 +219,7 @@ class GetDoctorProfileModalData {
     _educationDetails = educationDetails;
     _experienceDetails = experienceDetails;
     _appointments = appointments;
-  }
+}
 
   GetDoctorProfileModalData.fromJson(dynamic json) {
     _id = json["id"];
@@ -263,12 +263,6 @@ class GetDoctorProfileModalData {
       _schedules = [];
       json["schedules"].forEach((v) {
         _schedules.add(Schedules.fromJson(v));
-      });
-    }
-    if (json["clinics"] != null) {
-      _clinics = [];
-      json["clinics"].forEach((v) {
-        _clinics.add(Clinics.fromJson(v));
       });
     }
     _imagePath = json["image_path"];
@@ -407,31 +401,31 @@ class Appointments {
   String get updatedAt => _updatedAt;
 
   Appointments({
-    int id,
-    int doctorId,
-    dynamic customerId,
-    dynamic entryDoctor,
-    dynamic assistant,
-    dynamic staff,
-    int admin,
-    int site,
-    String name,
-    String email,
-    String mobile,
-    int age,
-    dynamic disease,
-    String bookingDate,
-    String timeSerial,
-    int pStatus,
-    dynamic trx,
-    int isComplete,
-    int dStatus,
-    int dDoctor,
-    dynamic dAssistant,
-    dynamic dStaff,
-    int dAdmin,
-    String createdAt,
-    String updatedAt}){
+      int id, 
+      int doctorId, 
+      dynamic customerId, 
+      dynamic entryDoctor, 
+      dynamic assistant, 
+      dynamic staff, 
+      int admin, 
+      int site, 
+      String name, 
+      String email, 
+      String mobile, 
+      int age, 
+      dynamic disease, 
+      String bookingDate, 
+      String timeSerial, 
+      int pStatus, 
+      dynamic trx, 
+      int isComplete,
+      int dStatus, 
+      int dDoctor, 
+      dynamic dAssistant, 
+      dynamic dStaff, 
+      int dAdmin, 
+      String createdAt, 
+      String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _customerId = customerId;
@@ -457,7 +451,7 @@ class Appointments {
     _dAdmin = dAdmin;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-  }
+}
 
   Appointments.fromJson(dynamic json) {
     _id = json["id"];
@@ -540,14 +534,14 @@ class Experience_details {
   String get updatedAt => _updatedAt;
 
   Experience_details({
-    int id,
-    int doctorId,
-    String imagePath,
-    String institution,
-    String discipline,
-    String period,
-    String createdAt,
-    String updatedAt}){
+      int id, 
+      int doctorId, 
+      String imagePath, 
+      String institution, 
+      String discipline, 
+      String period, 
+      String createdAt, 
+      String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _imagePath = imagePath;
@@ -556,7 +550,7 @@ class Experience_details {
     _period = period;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-  }
+}
 
   Experience_details.fromJson(dynamic json) {
     _id = json["id"];
@@ -605,14 +599,14 @@ class Education_details {
   String get updatedAt => _updatedAt;
 
   Education_details({
-    int id,
-    int doctorId,
-    String imagePath,
-    String institution,
-    String discipline,
-    String period,
-    String createdAt,
-    String updatedAt}){
+      int id, 
+      int doctorId, 
+      String imagePath, 
+      String institution, 
+      String discipline, 
+      String period, 
+      String createdAt, 
+      String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _imagePath = imagePath;
@@ -621,7 +615,7 @@ class Education_details {
     _period = period;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-  }
+}
 
   Education_details.fromJson(dynamic json) {
     _id = json["id"];
@@ -666,19 +660,19 @@ class Clinics {
   String get updatedAt => _updatedAt;
 
   Clinics({
-    int id,
-    int doctorId,
-    String name,
-    String address,
-    String createdAt,
-    String updatedAt}){
+      int id, 
+      int doctorId, 
+      String name, 
+      String address, 
+      String createdAt, 
+      String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _name = name;
     _address = address;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
-  }
+}
 
   Clinics.fromJson(dynamic json) {
     _id = json["id"];

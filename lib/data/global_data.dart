@@ -15,6 +15,10 @@ import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
 import 'package:doctoworld_doctor/Model/user_detail_model.dart';
 import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
+import 'package:doctoworld_doctor/screens/contact_us/contact_us_model.dart';
+import 'package:doctoworld_doctor/screens/forgot_password/forget_password_email_model.dart';
+import 'package:doctoworld_doctor/screens/forgot_password/forget_password_email_verify_model.dart';
+import 'package:doctoworld_doctor/screens/forgot_password/forget_password_model.dart';
 import 'package:flutter/material.dart';
 
 UserDetailModel userDetailModel = UserDetailModel();
@@ -32,6 +36,10 @@ GetAllDoctorsArticles getAllDoctorsArticles = GetAllDoctorsArticles();
 GetDoctorProfileModal getDoctorProfileModal = GetDoctorProfileModal();
 ChangePasswordModel changePasswordModel = ChangePasswordModel();
 ClinicStoreModel clinicStoreModel = ClinicStoreModel();
+ContactUsModel contactUsModel = ContactUsModel();
+ForgetPasswordEmailVerifyModel forgetPasswordEmailVerifyModel = ForgetPasswordEmailVerifyModel();
+ForgetPasswordEmailModel forgetPasswordEmailModel = ForgetPasswordEmailModel();
+ForgetPasswordModel forgetPasswordModel = ForgetPasswordModel();
 final TextEditingController nameController = TextEditingController();
 final TextEditingController usernameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();
@@ -40,6 +48,9 @@ final TextEditingController confirmPassController = TextEditingController();
 final TextEditingController phoneController = TextEditingController();
 final TextEditingController locationController = TextEditingController();
 final TextEditingController numberController = TextEditingController();
+
+
+final TextEditingController forgetEmailController = TextEditingController();
 
 TextEditingController updateEmailController = TextEditingController();
 TextEditingController updateLocationController = TextEditingController();

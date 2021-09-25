@@ -1,3 +1,4 @@
+//@dart=2.9
 import 'package:get/get.dart';
 
 class LoaderController extends GetxController {
@@ -80,4 +81,10 @@ class LoaderController extends GetxController {
     update();
   }
 
+  String clinicType;
+  List<String> clinicTypeList = [];
+  updateClinicTypeList(String updateValue){
+    clinicTypeList.add(updateValue);
+    update();
+  }
 }

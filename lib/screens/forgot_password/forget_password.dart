@@ -4,33 +4,28 @@ import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
-import 'package:doctoworld_doctor/repositories/change_password_repo.dart';
+import 'package:doctoworld_doctor/screens/forgot_password/forget_password_repo.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
-import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class ChangePassword extends StatefulWidget {
+class ForgetPassword extends StatefulWidget {
 
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  _ForgetPasswordState createState() => _ForgetPasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ForgetPasswordState extends State<ForgetPassword> {
 
-  GlobalKey<FormState> _changePasswordKey = GlobalKey();
-  TextEditingController _currentPasswordController = TextEditingController();
+  GlobalKey<FormState> _forgetPasswordKey = GlobalKey();
   TextEditingController _newPasswordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
-
+  TextEditingController _confirmNewPasswordController = TextEditingController();
 
   final _scrollController = ScrollController();
 
-  bool oldObscure = true;
-  bool newObscure = true;
-  bool confirmObscure = true;
   @override
   void dispose() {
     // _nameController.dispose();
@@ -38,6 +33,8 @@ class _ChangePasswordState extends State<ChangePassword> {
     super.dispose();
   }
 
+  bool newObscure = true;
+  bool confirmObscure = true;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoaderController>(
@@ -46,7 +43,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         inAsyncCall: loaderController.formLoader,
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Change Password',
+            title: Text('Forget Password',
               style: TextStyle(color: Colors.black),
             ),
             iconTheme: IconThemeData(color: Colors.black),
@@ -57,7 +54,7 @@ class _ChangePasswordState extends State<ChangePassword> {
             Container(
               height: MediaQuery.of(context).size.height,
               child: Form(
-                key: _changePasswordKey,
+                key: _forgetPasswordKey,
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   child: Padding(
@@ -71,26 +68,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                             children: [
 
                               SizedBox(height: 20),
-                              ///...........Current Password....................///
-                              EntryField(
-                                controller: _currentPasswordController,
-                                obSecure: oldObscure,
-                                prefixIcon: Icons.lock,
-                                textInputType: TextInputType.text,
-                                suffixIcon: Icons.remove_red_eye_outlined,
-                                hint: 'Current Password',
-                                color: Colors.grey.withOpacity(0.2),
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'Field is Required';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
-
-                              SizedBox(height: 20),
-
 
                               ///...........New Password....................///
                               EntryField(
@@ -104,9 +81,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
-                                  } else if(value.length < 6){
-                                    return 'Password length must be greater than 6';
-                                  }else {
+                                  } else if(value.length < 8){
+                                    return 'Password length must be greater than 8';
+                                  } else {
                                     return null;
                                   }
                                 },
@@ -116,10 +93,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                               ///..........Confirm Password................///
 
                               EntryField(
-                                controller: _confirmPasswordController,
+                                controller: _confirmNewPasswordController,
                                 obSecure: confirmObscure,
-                                textInputType: TextInputType.text,
                                 prefixIcon: Icons.lock,
+                                textInputType: TextInputType.text,
                                 suffixIcon: Icons.remove_red_eye_outlined,
                                 hint: 'Confirm Password',
                                 color: Colors.grey.withOpacity(0.2),
@@ -127,7 +104,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
                                   } else if (_newPasswordController.text !=
-                                      _confirmPasswordController.text) {
+                                      _confirmNewPasswordController.text) {
                                     return 'Password not match';
                                   } else {
                                     return null;
@@ -143,21 +120,21 @@ class _ChangePasswordState extends State<ChangePassword> {
                                   if (!currentFocus.hasPrimaryFocus) {
                                     currentFocus.unfocus();
                                   }
-                                  if(_changePasswordKey.currentState.validate()){
+                                  if(_forgetPasswordKey.currentState.validate()){
                                     Get.find<LoaderController>().updateFormController(true);
-                                    postMethod(
-                                      context,
-                                      changePasswordService,
-                                      {
-                                        'user_id': storageBox.read('doctor_id'),
-                                        'curent_password': _currentPasswordController.text,
-                                        'password': _newPasswordController.text,
-                                        'confirm_password': _confirmPasswordController.text,
-                                        'role': 'doctor'
-                                      },
-                                      true,
-                                        changePasswordRepo,
-                                    );
+                                  postMethod(
+                                    context,
+                                      resetPasswordService,
+                                    {
+                                      'password': _newPasswordController.text,
+                                      'role': 'doctor',
+                                      'confirm_password': _confirmNewPasswordController.text,
+                                      'email': forgetEmailController.text
+
+                                    },
+                                    true,
+                                      forgotPasswordRepo
+                                  );
 
                                   }
                                 },

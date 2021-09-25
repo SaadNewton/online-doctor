@@ -63,6 +63,7 @@ String checkDoctorStatusService = baseUrl + 'get-doctor-status';
 ///  scheduleStatusService
 
 String scheduleSetService = baseUrl + 'schedule-manage';
+String scheduleDeleteService = baseUrl + 'schedule-delete';
 
 ///  doctorArticles
 
@@ -77,8 +78,19 @@ String allDoctorsArticlesService = baseUrl + 'get-all-articles';
 
 String changePasswordService = baseUrl + 'change-password';
 
+///  contact us
+
+String contactUsService = baseUrl + 'contact-us';
+
+///  forgot
+
+String forgotEmailService = baseUrl + 'forgot-password-email';
+String forgotEmailVerifyService = baseUrl + 'forgot-password-email-verify';
+String resetPasswordService = baseUrl + 'reset-password';
+
 ///  clinic
 
 String clinicStoreService = baseUrl + 'clinic-store';
+String clinicDeleteService = baseUrl + 'clinic-delete';
 
 

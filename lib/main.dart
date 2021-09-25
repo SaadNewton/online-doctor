@@ -57,9 +57,9 @@ class DoctoWorldDoctor extends StatelessWidget {
             ],
             locale: locale,
             theme: lightTheme,
-            home: ProfileWizard(),
+            // home: ProfileWizard(),
             // home: VerificationUI(),
-            // home: SplashScreen(),
+            home: SplashScreen(),
             //  routes: PageRoutes().routes(),
           );
         },

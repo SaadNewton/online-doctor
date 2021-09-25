@@ -104,6 +104,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateDataController(true);
+      Get.find<LoaderController>().emptyClinicList();
     });
     getMethod(
         context,

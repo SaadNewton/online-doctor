@@ -29,43 +29,49 @@ getDoctorProfileRepo(
             'speciality': element
           }
       );
-      // specialityList.add(
-      //     {
-      //       'speciality': element
-      //     }
-      // );
+    });
+
+    Get.find<LoaderController>().clinicType = null;
+    Get.find<LoaderController>().clinicTypeList = [];
+
+    getDoctorProfileModal.data.clinics.forEach((element) {
+
+      if(Get.find<LoaderController>()
+          .clinicTypeList.length != 0){
+
+        if(element.name.toString() !=
+            Get.find<LoaderController>().clinicTypeList[(Get.find<LoaderController>()
+                .clinicTypeList.length)-1].toString()){
+
+          Get.find<LoaderController>().updateClinicTypeList(
+              element.name.toString()
+          );
+        }
+      }else{
+        Get.find<LoaderController>().updateClinicTypeList(
+            element.name.toString()
+        );
+      }
+
     });
 
     Get.find<LoaderController>().emptyScheduleList();
     // scheduleList = [];
-    response['data']['serial_day_app'].forEach((element){
-      Get.find<LoaderController>().updateScheduleList(
-          {
-            'noOfDays': getDoctorProfileModal.data.serialDay,
-            'slotDuration': element['duration'],
-            'startTime':element['start_time'],
-            'endTime':element['end_time'],
-            'slots':element['slots'],
-            'schedule_type': element['schedule_type'],
-            'clinic_name': element['clinic_name'],
-            'clinic_address': element['clinic_address'],
-            'days': element['days']
-          }
-      );
-      // scheduleList.add(
-      //     {
-      //       'noOfDays': getDoctorProfileModal.data.serialDay,
-      //       'slotDuration': element['duration'],
-      //       'startTime':element['start_time'],
-      //       'endTime':element['end_time'],
-      //       'slots':element['slots'],
-      //       'schedule_type': element['schedule_type'],
-      //       'clinic_name': element['clinic_name'],
-      //       'clinic_address': element['clinic_address'],
-      //       'days': element['days']
-      //     }
-      // );
-    });
+    // response['data']['serial_day_app'].forEach((element){
+    //   Get.find<LoaderController>().updateScheduleList(
+    //       {
+    //         'noOfDays': getDoctorProfileModal.data.serialDay,
+    //         'slotDuration': element['duration'],
+    //         'startTime':element['start_time'],
+    //         'endTime':element['end_time'],
+    //         'slots':element['slots'],
+    //         'schedule_type': element['schedule_type'],
+    //         'clinic_name': element['clinic_name'],
+    //         'clinic_address': element['clinic_address'],
+    //         'days': element['days']
+    //       }
+    //   );
+    // });
 
     print('getDoctorProfileRepo ------>> ${getDoctorProfileModal.data}');
   } else if (!responseCheck && response == null) {

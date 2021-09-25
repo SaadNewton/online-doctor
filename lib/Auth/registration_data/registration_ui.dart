@@ -75,7 +75,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
 
                             /// name
                             EntryField(
-                              textInputFormatter: FilteringTextInputFormatter.allow(RegExp("[a-zA-Z]")),
+                              textInputFormatter: FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]")),
                               controller: nameController,
                               prefixIcon: Icons.person,
                               textInputType: TextInputType.name,
