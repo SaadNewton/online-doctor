@@ -26,6 +26,12 @@ removeAppointments(
     Get.find<LoaderController>().updateFormController(false);
     removeAppointmentModel = RemoveAppointmentModel.fromJson(response);
     if (removeAppointmentModel.status == true) {
+      Get.snackbar(
+          'Success',
+          'Successfully Rejected',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       // storeDataLocally('user_detail', response);
       // storeDataLocally('session', 'active');
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);

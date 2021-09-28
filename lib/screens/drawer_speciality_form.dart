@@ -196,6 +196,12 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                             true,
                                             updateSpeciality
                                         );
+                                        Get.snackbar(
+                                            'Success',
+                                            'Successfully Uploaded',
+                                            backgroundColor: Colors.black.withOpacity(0.5),
+                                            colorText: Colors.white
+                                        );
                                         setState(() {
                                           addChecker = false;
                                         });
@@ -270,6 +276,12 @@ class _DrawerSpecialityFormState extends State<DrawerSpecialityForm> {
                                                     },
                                                     true,
                                                     updateSpeciality
+                                                );
+                                                Get.snackbar(
+                                                    'Success',
+                                                    'Successfully Deleted',
+                                                    backgroundColor: Colors.black.withOpacity(0.5),
+                                                    colorText: Colors.white
                                                 );
                                                 Navigator.pop(context);
                                                 setState(() {

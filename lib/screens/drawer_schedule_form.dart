@@ -984,7 +984,12 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 true,
                                                 deleteScheduleRepo
                                             );
-
+                                            Get.snackbar(
+                                                'Success',
+                                                'Successfully Done',
+                                                backgroundColor: Colors.black.withOpacity(0.5),
+                                                colorText: Colors.white
+                                            );
                                             setState(() {
                                               _availableDaysController.clear();
                                               _slotDurationController.clear();
@@ -1264,6 +1269,12 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                 true,
                                                 deleteScheduleRepo
                                             );
+                                            Get.snackbar(
+                                                'Success',
+                                                'Successfully Done',
+                                                backgroundColor: Colors.black.withOpacity(0.5),
+                                                colorText: Colors.white
+                                            );
                                             setState(() {
                                               _availableDaysController.clear();
                                               _slotDurationController.clear();
@@ -1325,6 +1336,12 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                                       },
                                                       true,
                                                       deleteScheduleRepo
+                                                  );
+                                                  Get.snackbar(
+                                                      'Success',
+                                                      'Successfully Done',
+                                                      backgroundColor: Colors.black.withOpacity(0.5),
+                                                      colorText: Colors.white
                                                   );
                                                 },
                                                 child: Icon(

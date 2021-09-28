@@ -23,6 +23,12 @@ approveAppointments(
     Get.find<LoaderController>().updateFormController(false);
     approveAppointmentModel = ApproveAppointmentModel.fromJson(response);
     if (approveAppointmentModel.status == true) {
+      Get.snackbar(
+          'Success',
+          'Successfully Accepted',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       // storeDataLocally('user_detail', response);
       // storeDataLocally('session', 'active');
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);

@@ -21,6 +21,12 @@ clinicStore(
     Get.find<LoaderController>().updateFormController(false);
     clinicStoreModel = ClinicStoreModel.fromJson(response);
     if (clinicStoreModel.status == true) {
+      Get.snackbar(
+          'Success',
+          'Successfully Uploaded',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       print(
           'clinic Message------>> ${clinicStoreModel.message}');
       Get.find<LoaderController>().updateClinicList(
@@ -83,6 +89,12 @@ deleteClinic(
   if (responseCheck) {
     Get.find<LoaderController>().updateFormController(false);
     if (response['status'].toString() == 'true') {
+      Get.snackbar(
+          'Success',
+          'Successfully Done',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       print('ADDED');
       Get.find<LoaderController>().updateDataController(true);
 

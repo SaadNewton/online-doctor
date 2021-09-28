@@ -12,6 +12,12 @@ addScheduleRepo(
   if (responseCheck) {
     Get.find<LoaderController>().updateFormController(false);
     if (response['status'].toString() == 'true') {
+      Get.snackbar(
+          'Success',
+          'Successfully Uploaded',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       print('ADDED');
     } else {}
   } else if (!responseCheck && response == null) {

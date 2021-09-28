@@ -145,6 +145,48 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               },
                             ),
                             SizedBox(height: 20.0),
+
+                            /// password
+                            EntryField(
+                              controller: passController,
+                              obSecure: obSecureText,
+                              prefixIcon: Icons.lock,
+                              suffixIcon: Icons.remove_red_eye_outlined,
+                              hint: 'Password',
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Field is Required';
+                                } else if(value.length < 8){
+                                  return 'Password length must be greater than 8';
+                                }else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20.0),
+
+                            /// confirm pass
+                            EntryField(
+                              controller: confirmPassController,
+                              obSecure: confirmObSecureText,
+                              prefixIcon: Icons.lock,
+                              suffixIcon: Icons.remove_red_eye_outlined,
+                              hint: 'Confirm Password',
+                              color: Theme.of(context).scaffoldBackgroundColor,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'Field is Required';
+                                } else if (passController.text !=
+                                    confirmPassController.text) {
+                                  return 'Password not match';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 20.0),
+
                             ///  Location
                             TextFormField(
                               controller: locationController,
@@ -176,48 +218,6 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               },
                             ),
                             SizedBox(height: 20.0),
-
-                            /// password
-                            EntryField(
-                              controller: passController,
-                              obSecure: obSecureText,
-                              prefixIcon: Icons.lock,
-                              suffixIcon: Icons.remove_red_eye_outlined,
-                              hint: 'Password',
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Field is Required';
-                                } else if(value.length < 6){
-                                  return 'Password length must be greater than 6';
-                                }else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            SizedBox(height: 20.0),
-
-                            /// confirm pass
-                            EntryField(
-                              controller: confirmPassController,
-                              obSecure: confirmObSecureText,
-                              prefixIcon: Icons.lock,
-                              suffixIcon: Icons.remove_red_eye_outlined,
-                              hint: 'Confirm Password',
-                              color: Theme.of(context).scaffoldBackgroundColor,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Field is Required';
-                                } else if (passController.text !=
-                                    confirmPassController.text) {
-                                  return 'Password not match';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
-                            SizedBox(height: 20.0),
-
                             CustomButton(
                               onTap: () {
                                 FocusScopeNode currentFocus =

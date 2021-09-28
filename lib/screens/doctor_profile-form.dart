@@ -40,7 +40,8 @@ class _DoctorProfileState extends State<DoctorProfile> {
   bool _imageChecker = false;
 
   Future getImage() async {
-    final photo = await _picker.pickImage(source: ImageSource.gallery);
+    final photo = await _picker.pickImage(source: ImageSource.gallery,
+        imageQuality: 80);
     setState(() {
       if (photo != null) {
         _image = File(photo.path);
@@ -242,6 +243,12 @@ class _DoctorProfileState extends State<DoctorProfile> {
         });
         Get.find<LoaderController>().updateFormController(false);
 
+        Get.snackbar(
+            'Success',
+            'Successfully Uploaded',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+        );
         _image = null;
         log('LocalList---->> ${profileList}');
 

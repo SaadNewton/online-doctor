@@ -50,6 +50,12 @@ addArticlesRepo(
     Get.find<LoaderController>().updateFormController(false);
     if (response['status'].toString() == 'true') {
       print('ADDED');
+      Get.snackbar(
+          'Success',
+          'Successfully Uploaded',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       Get.find<LoaderController>().updateDataController(true);
       getMethod(
           context,
@@ -72,6 +78,12 @@ deleteArticlesRepo(
     Get.find<LoaderController>().updateFormController(false);
     if (response['status'].toString() == 'true') {
       print('ADDED');
+      Get.snackbar(
+          'Success',
+          'Successfully Done',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
       Get.find<LoaderController>().updateDataController(true);
       getMethod(
           context,

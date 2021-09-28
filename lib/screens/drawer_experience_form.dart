@@ -49,7 +49,8 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
   bool _imageChecker = false;
 
   Future getImage() async {
-    final photo = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final photo = await _imagePicker.pickImage(source: ImageSource.gallery,
+        imageQuality: 80);
     setState(() {
       if (photo != null) {
         _image = File(photo.path);
@@ -611,6 +612,12 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
+        Get.snackbar(
+            'Success',
+            'Successfully Uploaded',
+            backgroundColor: Colors.black.withOpacity(0.5),
+            colorText: Colors.white
+        );
         getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
             getDoctorProfileRepo);
 
@@ -665,6 +672,12 @@ class _DrawerExperienceFormState extends State<DrawerExperienceForm> {
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
+        Get.snackbar(
+            'Success',
+            'Successfully Uploaded',
+            backgroundColor: Colors.black.withOpacity(0.5),
+            colorText: Colors.white
+        );
         getMethod(context, getDoctorProfileService, {'doctor_id': storageBox.read('doctor_id')}, true,
             getDoctorProfileRepo);
 

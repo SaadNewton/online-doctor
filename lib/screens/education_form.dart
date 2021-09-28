@@ -41,7 +41,8 @@ class _EducationFormState extends State<EducationForm> {
   bool _imageChecker = false;
 
   Future getImage() async {
-    final photo = await _picker.pickImage(source: ImageSource.gallery);
+    final photo = await _picker.pickImage(source: ImageSource.gallery,
+        imageQuality: 80);
     setState(() {
       if (photo != null) {
         _image = File(photo.path);
@@ -534,6 +535,12 @@ class _EducationFormState extends State<EducationForm> {
       log('postStatusCode---->> ${response.statusCode}');
       log('postResponse---->> ${response.data}');
       if (response.statusCode.toString() == '200') {
+        Get.snackbar(
+            'Success',
+            'Successfully Uploaded',
+            backgroundColor: Colors.black.withOpacity(0.5),
+            colorText: Colors.white
+        );
         setState(() {
           Get.find<LoaderController>().updateEducationList(
               {

@@ -479,7 +479,9 @@ class _DashboardState extends State<Dashboard> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               getAllDoctorsArticles.data[index].image == null
-                                                  ? SizedBox()
+                                                  ? SizedBox(
+                                                height: MediaQuery.of(context).size.height*.1,
+                                              )
                                                   : Container(
                                                 width: MediaQuery.of(context).size.width*.2,
                                                 height: MediaQuery.of(context).size.height*.1,

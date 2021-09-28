@@ -144,7 +144,12 @@ class _SpecialityFormState extends State<SpecialityForm> {
                                         },
                                         true,
                                         getSpeciality);
-
+                                    Get.snackbar(
+                                        'Success',
+                                        'Successfully Uploaded',
+                                        backgroundColor: Colors.black.withOpacity(0.5),
+                                        colorText: Colors.white
+                                    );
                                     print(loaderController.specialityList);
                                     _specialityController.clear();
                                   }

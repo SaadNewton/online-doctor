@@ -104,8 +104,8 @@ class _ChangePasswordState extends State<ChangePassword> {
                                 validator: (value) {
                                   if (value.isEmpty) {
                                     return 'Field is Required';
-                                  } else if(value.length < 6){
-                                    return 'Password length must be greater than 6';
+                                  } else if(value.length < 8){
+                                    return 'Password length must be greater than 8';
                                   }else {
                                     return null;
                                   }
