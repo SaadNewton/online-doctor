@@ -5,6 +5,7 @@ import 'package:dio/dio.dart' as dio_instance;
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_drawer.dart';
+import 'package:doctoworld_doctor/repositories/create_notify_repo.dart';
 import 'package:doctoworld_doctor/repositories/getArticlesRepo.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
 import 'package:doctoworld_doctor/screens/article_detail_screen.dart';
@@ -19,8 +20,10 @@ import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 import 'package:doctoworld_doctor/screens/speciality_form.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
+import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -99,13 +102,30 @@ class _DashboardState extends State<Dashboard> {
           {'doctor_id': storageBox.read('doctor_id')}, true, doctorStatusRepo);
     }
   }
+  String fcmToken;
+  updateToken() async {
 
+    await FirebaseMessaging.instance.getToken().then((value) {
+      fcmToken = value;
+      storageBox.write('fcmToken', fcmToken);
+    }).catchError((onError){
+      print('Error--->>$onError');
+    });
+    print('Token--->>${fcmToken}');
+
+    postMethod(context, createNotifyUserService,
+        {'role':'doctor',
+      'user_id':storageBox.read('doctor_id'),
+      'token':fcmToken
+    }, false, createNotifyRepo);
+  }
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateDataController(true);
       Get.find<LoaderController>().emptyClinicList();
     });
+    updateToken();
     getMethod(
         context,
         getAllAppointmentsService,
@@ -461,7 +481,7 @@ class _DashboardState extends State<Dashboard> {
                                       padding: const EdgeInsets.fromLTRB(15, 12, 0, 20),
                                       child: Container(
                                         width: MediaQuery.of(context).size.width*.4,
-                                        height: MediaQuery.of(context).size.height*.28,
+                                        height: MediaQuery.of(context).size.height*.3,
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius: BorderRadius.circular(10),
@@ -494,15 +514,21 @@ class _DashboardState extends State<Dashboard> {
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    '${getAllDoctorsArticles.data[index].title}',
-                                                    style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${getAllDoctorsArticles.data[index].title}',
+                                                      maxLines: 1,
+                                                      softWrap: true,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.black
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
                                               ),
+                                              SizedBox(height: 8,),
                                               Row(
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [

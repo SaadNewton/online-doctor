@@ -46,7 +46,7 @@ getMethod(
         executionMethod(false, null, context);
         if (e.response != null) {
           print(
-              'Dio Error From Get $apiUrl -->> ${e.response!.data['message']}');
+              'Dio Error From Get $apiUrl -->> ${e.response}');
         } else {
           print('Dio Error From Get $apiUrl -->> ${e}');
         }

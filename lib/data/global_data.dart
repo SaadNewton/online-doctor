@@ -10,6 +10,7 @@ import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_doctors_articles.dart';
 import 'package:doctoworld_doctor/Model/get_articles_model.dart';
 import 'package:doctoworld_doctor/Model/get_doctor_profile_modal.dart';
+import 'package:doctoworld_doctor/Model/get_notify_token_model.dart';
 import 'package:doctoworld_doctor/Model/get_speciality_list_model.dart';
 import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
@@ -65,3 +66,5 @@ final TextEditingController addressController = TextEditingController();
 var longitude;
 var latitude;
 var currentAddress;
+
+GetNotifyTokenModel getNotifyTokenModel=GetNotifyTokenModel();

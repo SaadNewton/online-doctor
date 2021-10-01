@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:doctoworld_doctor/repositories/get_notify_token_repo.dart';
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
@@ -11,10 +12,13 @@ import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
 import 'package:doctoworld_doctor/screens/splash.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
+import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+method(){}
 
 ///-------- Approve Appointments by doctor
 approveAppointments(
@@ -29,6 +33,22 @@ approveAppointments(
           backgroundColor: Colors.black.withOpacity(0.5),
           colorText: Colors.white
       );
+      postMethod(context,
+          fcmService,
+          {
+            'notification': <String, dynamic>{
+              'body': 'Your appointment is confirmed',
+              'title': 'Appointment'
+            },
+            'priority': 'high',
+            'data': <String, dynamic>{
+              'routeWeb': '/customer/approved/appointment/detail',
+              'routeApp':'/allAppointments',
+            },
+            'to': otherRoleToken,
+          },
+          false,
+          method);
       // storeDataLocally('user_detail', response);
       // storeDataLocally('session', 'active');
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);

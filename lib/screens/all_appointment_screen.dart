@@ -5,6 +5,7 @@ import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/approve_appointment_repo.dart';
 import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
+import 'package:doctoworld_doctor/repositories/get_notify_token_repo.dart';
 import 'package:doctoworld_doctor/repositories/remove_appointment_repo.dart';
 import 'package:doctoworld_doctor/screens/appointment_detail_screen.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
@@ -14,6 +15,13 @@ import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+class TokenController extends GetxController{
+  bool forDoctor=true;
+  updateTokenController(bool value){
+    forDoctor=value;
+    update();
+  }
+}
 class AllAppointmentScreen extends StatefulWidget {
   const AllAppointmentScreen({Key key}) : super(key: key);
 
@@ -28,6 +36,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
   @override
   void initState() {
     // TODO: implement initState
+    otherRoleToken=null;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateDataController(true);
@@ -289,7 +298,9 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
                                               ),
                                               onTap: () {
                                                 ///............///
-
+Get.find<TokenController>().updateTokenController(false);
+                                                getMethod(context, getNotifyTokenService, {'user_id':storageBox.read('doctor_id'),
+                                                  'role':'doctor'}, false, getNotifyTokenRepo);
                                                 Get.find<LoaderController>()
                                                     .updateFormController(true);
                                                 postMethod(

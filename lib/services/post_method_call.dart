@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart' as dio_instance;
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/services/headers.dart';
+import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,12 @@ postMethod(
     print('token ' + storageBox!.read('authToken'));
   } else if (addAuthHeader && !storageBox!.hasData('authToken')) {}
 
+  if(apiUrl == fcmService){
+    setCustomHeader(dio, 'Content-Type', 'application/json');
+    setCustomHeader(dio, 'Authorization', 'key=AAAAP9EQh1k:APA91bGVtLnlorWNnVgzRIcy1SVxuhhamHL7nSTJbQ3bWZeXRWOHMCZMw4q_XLyLt82j'
+        '0WqqDU-R6jITJq9hpqIn-l3u0IseUX_NR-UYYWJ4wvgYJiWG42HGpxGOI4lpr3desi1_YnWC');
+
+  }
   try {
     final result = await InternetAddress.lookup('google.com');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -51,8 +58,8 @@ postMethod(
           executionMethod(false, null, context);
         }
       } on dio_instance.DioError catch (e) {
-        print('Dio Error From Post $apiUrl -->> ${e.response!.data.toString()}');
         executionMethod(false, null, context);
+        print('Dio Error From Post $apiUrl -->> ${e.response}');
         // messageShowService(response.data,false);
       }
     }
