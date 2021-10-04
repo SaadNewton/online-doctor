@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:doctoworld_doctor/call/join_channel_video.dart';
 import 'package:doctoworld_doctor/repositories/get_notify_token_repo.dart';
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
@@ -18,7 +19,11 @@ import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-method(){}
+method(bool responseCheck, Map<String, dynamic> response, BuildContext context){
+  if(response['success'].toString() == '1'){
+    Get.to(JoinChannelVideo());
+  }
+}
 
 ///-------- Approve Appointments by doctor
 approveAppointments(
@@ -45,7 +50,7 @@ approveAppointments(
               'routeWeb': '/customer/approved/appointment/detail',
               'routeApp':'/allAppointments',
             },
-            'to': otherRoleToken,
+            'to': Get.find<LoaderController>().otherRoleToken,
           },
           false,
           method);
@@ -57,6 +62,12 @@ approveAppointments(
           'Approve Appointment Message------>> ${approveAppointmentModel.message}');
       getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox!.read('doctor_id')}, true,
           getAllLAppointmentRepo);
+      getMethod(
+          context,
+          getDoneAppointmentsService,
+          {'doctor_id': storageBox!.read('doctor_id')},
+          true,
+          getDoneAppointmentRepo);
     }
     else {
       log('data ' + response.toString());

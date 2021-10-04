@@ -4,17 +4,21 @@ import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:doctoworld_doctor/call/agora.config.dart' as config;
+import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/data/global_data.dart';
+import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 
 /// MultiChannel Example
 class JoinChannelVideo extends StatefulWidget {
-  final channelId;
-  final listner;
-  JoinChannelVideo({this.channelId,this.listner});
+  // final channelId;
+  // final listner;
+  // JoinChannelVideo({this.channelId,this.listner});
   @override
   State<StatefulWidget> createState() => _State();
 }
@@ -69,6 +73,10 @@ class _State extends State<JoinChannelVideo> {
         setState(() {
           remoteUid.removeWhere((element) => element == uid);
         });
+        if(remoteUid.length == 0){
+          Get.offAll(Dashboard());
+
+        }
       },
       leaveChannel: (stats) {
         log('leaveChannel ${stats.toJson()}');
@@ -84,7 +92,15 @@ class _State extends State<JoinChannelVideo> {
     if (defaultTargetPlatform == TargetPlatform.android) {
       await [Permission.microphone, Permission.camera].request();
     }
-    await _engine.joinChannel(config.agoraToken, 'bk', null,widget.listner==null?2:1);
+    await _engine.joinChannel(
+        Get.find<LoaderController>().agoraModel.token == null
+            ?Get.find<LoaderController>().agoraModelDefault.token
+            :Get.find<LoaderController>().agoraModel.token,
+        Get.find<LoaderController>().agoraModel.channelName == null
+            ?Get.find<LoaderController>().agoraModelDefault.channelName!
+            :Get.find<LoaderController>().agoraModel.channelName!,
+        null,
+        Get.find<LoaderController>().callerType);
     this._addListeners();
   }
 
@@ -131,7 +147,6 @@ class _State extends State<JoinChannelVideo> {
     if (!isJoined) return Center(
       child: RawMaterialButton
         (
-
         onPressed: () =>_joinChannel(),
         child: Icon(
           Icons.call,
@@ -194,32 +209,46 @@ class _State extends State<JoinChannelVideo> {
     );
   }
   _renderVideo() {
-    return Expanded(
-      child: Stack(
-        children: [
-          RtcLocalView.SurfaceView(),
-          Align(
-            alignment: Alignment.topLeft,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.of(remoteUid.map(
-                  (e) => GestureDetector(
-                    onTap: this._switchRender,
-                    child: Container(
-                      width: 120,
-                      height: 120,
-                      child: RtcRemoteView.SurfaceView(
-                        uid: e,
-                      ),
-                    ),
-                  ),
-                )),
-              ),
+    return Container(
+      color: Colors.white,
+      height: double.infinity,
+      width: double.infinity,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            remoteUid.length == 0
+                ?Container(color: Colors.grey,)
+                :RtcRemoteView.SurfaceView(
+              uid: remoteUid[0],
             ),
-          ),
-          _toolbar()
-        ],
+            Container(
+              width: 120,
+              height: 120,
+              child: RtcLocalView.SurfaceView(),
+
+            ),
+
+            // Align(
+            //   alignment: Alignment.topLeft,
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: List.of(remoteUid.map(
+            //         (e) => GestureDetector(
+            //           onTap: this._switchRender,
+            //           child: Container(
+            //             width: 120,
+            //             height: 120,
+            //             child: RtcLocalView.SurfaceView(),
+            //           ),
+            //         ),
+            //       )),
+            //     ),
+            //   ),
+            // ),
+            _toolbar()
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 //@dart=2.9
+import 'package:doctoworld_doctor/Model/agora_model.dart';
 import 'package:get/get.dart';
 
 class LoaderController extends GetxController {
@@ -87,4 +88,29 @@ class LoaderController extends GetxController {
     clinicTypeList.add(updateValue);
     update();
   }
+
+  AgoraModel agoraModel = AgoraModel();
+  AgoraModel agoraModelDefault = AgoraModel();
+
+  updateAgoraModel(AgoraModel newAgoraModel){
+    agoraModel = newAgoraModel;
+    update();
+  }
+  updateAgoraModelDefault(AgoraModel newAgoraModel){
+    agoraModelDefault = newAgoraModel;
+    update();
+  }
+
+  String otherRoleToken;
+  updateOtherRoleToken(String newToken){
+    newToken = otherRoleToken;
+    update();
+  }
+
+  int callerType = 2;
+  updateCallerType(int i){
+    callerType = i;
+    update();
+  }
+
 }

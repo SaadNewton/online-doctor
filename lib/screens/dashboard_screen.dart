@@ -1,24 +1,17 @@
 //@dart=2.9
 import 'dart:async';
-
 import 'package:dio/dio.dart' as dio_instance;
-import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
-import 'package:doctoworld_doctor/Auth/phone_auth_ui.dart';
 import 'package:doctoworld_doctor/Components/custom_drawer.dart';
 import 'package:doctoworld_doctor/repositories/create_notify_repo.dart';
 import 'package:doctoworld_doctor/repositories/getArticlesRepo.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
 import 'package:doctoworld_doctor/screens/article_detail_screen.dart';
 import 'package:doctoworld_doctor/screens/articles_screen.dart';
-import 'package:doctoworld_doctor/screens/new_appointments.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
 import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
-import 'package:doctoworld_doctor/screens/education_form.dart';
-import 'package:doctoworld_doctor/screens/experience%20_form.dart';
-import 'package:doctoworld_doctor/screens/speciality_form.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
@@ -26,9 +19,7 @@ import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class Dashboard extends StatefulWidget {
   @override
@@ -36,64 +27,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  List<dynamic> dashboard = [
-    {
-      'text1': '0 PKR',
-      'text2': 'Total Online Earn',
-      'image': 'assets/orange.png',
-      'icon': Icons.credit_card
-    },
-    {
-      'text1': '0 PKR',
-      'text2': 'Total Cash Earn',
-      'image': 'assets/blue.png',
-      'icon': Icons.account_balance_wallet_outlined
-    },
-    {
-      'text1': '0',
-      'text2': 'New Appointment',
-      'image': 'assets/orange.png',
-      'icon': Icons.group_rounded
-    },
-    {
-      'text1': '',
-      'text2': 'All Appointment',
-      'image': 'assets/blue.png',
-      'icon': Icons.reorder
-    }
-  ];
 
-// final List<Color> colors = <Color>[customOrangeColor, primaryColor, Colors.red, Colors.green];
-  final List<Color> color1 = <Color>[
-    Color(0xff8E54E9),
-    Color(0xff3A7BD5),
-    Color(0xff2948FF),
-    Color(0xff38EF7D)
-  ];
-  final List<Color> color2 = <Color>[
-    Color(0xff4776E6),
-    Color(0xff00D2FF),
-    Color(0xff396AFC),
-    Color(0xff11998E)
-  ];
-
-
-  viewChange(int index) {
-    switch (index) {
-      case 0:
-        return {};
-        break;
-      case 1:
-        return {};
-        break;
-      case 2:
-        return {Get.to(MyAppointmentsBody())};
-        break;
-      case 3:
-        return {Get.to(AllAppointmentScreen())};
-        break;
-    }
-  }
 
   checkDoctorStatus() {
     if (!Get.find<LoaderController>().checkDoctorStatusLoader) {
@@ -113,11 +47,17 @@ class _DashboardState extends State<Dashboard> {
     });
     print('Token--->>${fcmToken}');
 
-    postMethod(context, createNotifyUserService,
-        {'role':'doctor',
-      'user_id':storageBox.read('doctor_id'),
-      'token':fcmToken
-    }, false, createNotifyRepo);
+    postMethod(
+        context,
+        createNotifyUserService,
+        {
+          'role':'doctor',
+          'user_id':storageBox.read('doctor_id'),
+          'token':fcmToken
+        },
+        false,
+        createNotifyRepo
+    );
   }
   @override
   void initState() {
@@ -306,8 +246,8 @@ class _DashboardState extends State<Dashboard> {
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: AssetImage('assets/blue.png'),
-                                                  fit: BoxFit.fill),
-                                              //  color: Colors.white,
+                                                  fit: BoxFit.fill
+                                              ),
                                               borderRadius:
                                               BorderRadius.circular(20),
                                               boxShadow: [

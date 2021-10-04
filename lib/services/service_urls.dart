@@ -11,6 +11,7 @@ String mediaUrl = 'http://192.168.88.43:8000/';
 // String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 // String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
 String fcmService = 'https://fcm.googleapis.com/fcm/send';
+String agoraService = baseUrl + 'agora-token';
 
 
 
@@ -47,6 +48,7 @@ String specialitiesListService = baseUrl + 'get-list-speciality';
 
 String getAllAppointmentsService = baseUrl + 'get-appointment-request';
 String getDoneAppointmentsService = baseUrl + 'get-appointment-done';
+String changeAppointmentStatusService = baseUrl + 'change-appointment-status';
 
 ///   Doctor profile
 

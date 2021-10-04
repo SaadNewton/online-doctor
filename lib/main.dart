@@ -2,8 +2,10 @@
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
 import 'package:doctoworld_doctor/Routes/routes.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
+import 'package:doctoworld_doctor/call/join_channel_video.dart';
 import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
@@ -24,27 +26,24 @@ import 'Theme/style.dart';
 
 
 Future<void> backgroundHandler(RemoteMessage message) async {
-  print(message.data.toString());
-  print(message.notification.title.toString());
-  print(message.data['routeApp']);
-  String route = message.data['routeApp'];
-  Get.toNamed(route);
+  String route,channelName,channelToken;
+  if(message.data['channel']!=null){
+    Get.find<LoaderController>().updateCallerType(1);
+    channelName=message.data['channel'];
+    channelToken=message.data['channel_token'];
+    Get.find<LoaderController>().agoraModelDefault.channelName = message.data['channel'];
+    Get.find<LoaderController>().agoraModelDefault.token = message.data['channel_token'];
+    Get.find<LoaderController>().updateAgoraModelDefault(Get.find<LoaderController>().agoraModelDefault);
+  }
+  if(message.data['routeApp']!=null){
+    route=message.data['routeApp'];
+    Get.toNamed(route);
 
-  print('route check ' + route.toString());
-  // if (message.data['channel'] != null) {
-  //   channelName = message.data['channel'];
-  //
-  //   // Get.toNamed(route,
-  //   //     arguments: JoinChannelVideo(
-  //   //       channelId: channelName,
-  //   //     ));
-  //
-  // } else {
-  //   Get.toNamed(route);
-  // }
+  }
+
   LocalNotificationService.display(message);
 }
-String channelName;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -69,9 +68,20 @@ class _DoctoWorldDoctorState extends State<DoctoWorldDoctor> {
     // TODO: implement initState
     LocalNotificationService.initialize(context);
     FirebaseMessaging.instance.getInitialMessage().then((message) {
-      String route = message.data['routeApp'];
-      print('route check ' + route.toString());
-      Get.toNamed(route);
+      String route,channelName,channelToken;
+      if(message.data['channel']!=null){
+        Get.find<LoaderController>().updateCallerType(1);
+        channelName=message.data['channel'];
+        channelToken=message.data['channel_token'];
+        Get.find<LoaderController>().agoraModelDefault.channelName = message.data['channel'];
+        Get.find<LoaderController>().agoraModelDefault.token = message.data['channel_token'];
+        Get.find<LoaderController>().updateAgoraModelDefault(Get.find<LoaderController>().agoraModelDefault);
+      }
+      if(message.data['routeApp']!=null){
+        route=message.data['routeApp'];
+        Get.toNamed(route);
+
+      }
 
       // if (message.data['channel'] != null) {
       //   channelName = message.data['channel'];
@@ -90,19 +100,44 @@ class _DoctoWorldDoctorState extends State<DoctoWorldDoctor> {
     FirebaseMessaging.onMessage.listen((message) {
       print('foreground messages----->>');
       print(message.notification.toString());
-      String route = message.data['routeApp'];
+
       if (message.notification != null) {
         print(message.notification.body.toString());
         print(message.notification.title);
       }
-      Get.toNamed(route);
+      String route,channelName,channelToken;
+      if(message.data['channel']!=null){
+        Get.find<LoaderController>().updateCallerType(1);
+        channelName=message.data['channel'];
+        channelToken=message.data['channel_token'];
+        Get.find<LoaderController>().agoraModelDefault.channelName = message.data['channel'];
+        Get.find<LoaderController>().agoraModelDefault.token = message.data['channel_token'];
+        Get.find<LoaderController>().updateAgoraModelDefault(Get.find<LoaderController>().agoraModelDefault);
+
+      }
+      if(message.data['routeApp']!=null){
+        route=message.data['routeApp'];
+        Get.toNamed(route);
+
+      }
       LocalNotificationService.display(message);
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      String route = message.data['routeApp'];
-      print('route check ' + route.toString());
-      Get.toNamed(route);
+      String route,channelName,channelToken;
+      if(message.data['channel']!=null){
+        Get.find<LoaderController>().updateCallerType(1);
+        channelName=message.data['channel'];
+        channelToken=message.data['channel_token'];
+        Get.find<LoaderController>().agoraModelDefault.channelName = message.data['channel'];
+        Get.find<LoaderController>().agoraModelDefault.token = message.data['channel_token'];
+        Get.find<LoaderController>().updateAgoraModelDefault(Get.find<LoaderController>().agoraModelDefault);
+      }
+      if(message.data['routeApp']!=null){
+        route=message.data['routeApp'];
+        Get.toNamed(route);
+
+      }
 
       // if (message.data['channel'] != null) {
       //   channelName = message.data['channel'];
@@ -146,7 +181,8 @@ class _DoctoWorldDoctorState extends State<DoctoWorldDoctor> {
             // home: VerificationUI(),
             home: SplashScreen(),
              routes: {
-              '/allAppointments':(context)=>AllAppointmentScreen()
+              '/allAppointments':(context)=>AllAppointmentScreen(),
+              '/joinVideo':(context)=>JoinChannelVideo(),
              },
              // routes: PageRoutes().routes(),
           );

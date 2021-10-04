@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:doctoworld_doctor/Auth/registration_data/signup_userdata_model.dart';
 import 'package:doctoworld_doctor/Model/add_speciality_model.dart';
+import 'package:doctoworld_doctor/Model/agora_model.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/change_password_model.dart';
 import 'package:doctoworld_doctor/Model/check_status_model.dart';
@@ -41,6 +42,7 @@ ContactUsModel contactUsModel = ContactUsModel();
 ForgetPasswordEmailVerifyModel forgetPasswordEmailVerifyModel = ForgetPasswordEmailVerifyModel();
 ForgetPasswordEmailModel forgetPasswordEmailModel = ForgetPasswordEmailModel();
 ForgetPasswordModel forgetPasswordModel = ForgetPasswordModel();
+
 final TextEditingController nameController = TextEditingController();
 final TextEditingController usernameController = TextEditingController();
 final TextEditingController emailController = TextEditingController();

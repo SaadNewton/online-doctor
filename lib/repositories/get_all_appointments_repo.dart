@@ -5,6 +5,9 @@ import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
+import 'package:doctoworld_doctor/services/get_method_call.dart';
+import 'package:doctoworld_doctor/services/service_urls.dart';
+import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -50,6 +53,39 @@ getDoneAppointmentRepo(
     } else {}
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateDataController(false);
+
+    print('Exception........................');
+    // Get.find<AppController>().changeServerErrorCheck(true);
+  }
+}
+
+
+completeAppointmentRepo(
+    bool responseCheck, Map<String, dynamic> response, BuildContext context) {
+  if (responseCheck) {
+    Get.find<LoaderController>().updateFormController(false);
+    if (response['status'].toString() == 'true') {
+      print('ADDED');
+      Get.snackbar(
+          'Success',
+          'Successfully Done',
+          backgroundColor: Colors.black.withOpacity(0.5),
+          colorText: Colors.white
+      );
+      getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox.read('doctor_id')}, true,
+          getAllLAppointmentRepo);
+      getMethod(
+          context,
+          getDoneAppointmentsService,
+          {'doctor_id': storageBox.read('doctor_id')},
+          true,
+          getDoneAppointmentRepo);
+      Get.find<LoaderController>().updateDataController(true);
+    } else {}
+  } else if (!responseCheck && response == null) {
+    Get.find<LoaderController>().updateFormController(false);
+    Get.find<LoaderController>().updateDataController(false);
+
 
     print('Exception........................');
     // Get.find<AppController>().changeServerErrorCheck(true);

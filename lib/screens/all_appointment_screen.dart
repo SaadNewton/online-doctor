@@ -36,7 +36,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
   @override
   void initState() {
     // TODO: implement initState
-    otherRoleToken=null;
+    Get.find<LoaderController>().otherRoleToken=null;
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Get.find<LoaderController>().updateDataController(true);
@@ -298,9 +298,17 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
                                               ),
                                               onTap: () {
                                                 ///............///
-Get.find<TokenController>().updateTokenController(false);
-                                                getMethod(context, getNotifyTokenService, {'user_id':storageBox.read('doctor_id'),
-                                                  'role':'doctor'}, false, getNotifyTokenRepo);
+                                                Get.find<TokenController>().updateTokenController(false);
+                                                getMethod(
+                                                    context,
+                                                    getNotifyTokenService,
+                                                    {
+                                                      'user_id': getAllAppointmentsModel.data[index].customerId,
+                                                      'role':'customer'
+                                                    },
+                                                    false,
+                                                    getNotifyTokenRepo
+                                                );
                                                 Get.find<LoaderController>()
                                                     .updateFormController(true);
                                                 postMethod(
