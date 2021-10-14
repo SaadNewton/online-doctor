@@ -2,7 +2,6 @@
 import 'dart:developer';
 
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';

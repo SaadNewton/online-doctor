@@ -1,5 +1,6 @@
 //@dart=2.9
 import 'package:doctoworld_doctor/Model/agora_model.dart';
+import 'package:doctoworld_doctor/Model/fetch_chat_model.dart';
 import 'package:get/get.dart';
 
 class LoaderController extends GetxController {
@@ -110,6 +111,16 @@ class LoaderController extends GetxController {
   int callerType = 2;
   updateCallerType(int i){
     callerType = i;
+    update();
+  }
+
+  List<ChatData> messageList = [];
+  updateMessageList(ChatData chatData){
+    messageList.add(chatData);
+    update();
+  }
+  emptyMessageList(){
+    messageList = [];
     update();
   }
 

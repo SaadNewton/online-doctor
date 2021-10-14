@@ -7,6 +7,7 @@ import 'package:doctoworld_doctor/Model/change_password_model.dart';
 import 'package:doctoworld_doctor/Model/check_status_model.dart';
 import 'package:doctoworld_doctor/Model/clinic_store_model.dart';
 import 'package:doctoworld_doctor/Model/education_model.dart';
+import 'package:doctoworld_doctor/Model/fetch_chat_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Model/get_all_doctors_articles.dart';
 import 'package:doctoworld_doctor/Model/get_articles_model.dart';
@@ -70,3 +71,5 @@ var latitude;
 var currentAddress;
 
 GetNotifyTokenModel getNotifyTokenModel=GetNotifyTokenModel();
+
+FetchChatModel fetchChatModel=FetchChatModel();

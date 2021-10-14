@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:doctoworld_doctor/call/join_channel_video.dart';
 import 'package:doctoworld_doctor/repositories/get_notify_token_repo.dart';
 import 'package:doctoworld_doctor/screens/new_appointments.dart';
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/approve_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/user_detail_model.dart';
@@ -24,7 +23,9 @@ method(bool responseCheck, Map<String, dynamic> response, BuildContext context){
     Get.to(JoinChannelVideo());
   }
 }
-
+method1(bool responseCheck, Map<String, dynamic> response, BuildContext context){
+  if(response['success'].toString() == '1'){}
+}
 ///-------- Approve Appointments by doctor
 approveAppointments(
     bool responseCheck, Map<String, dynamic> response, BuildContext context) {
@@ -53,7 +54,7 @@ approveAppointments(
             'to': Get.find<LoaderController>().otherRoleToken,
           },
           false,
-          method);
+          method1);
       // storeDataLocally('user_detail', response);
       // storeDataLocally('session', 'active');
       // storeDataLocally('authToken', userDetailModel.data!.auth!.token);

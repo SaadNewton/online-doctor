@@ -7,6 +7,7 @@ import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
+import 'package:doctoworld_doctor/screens/dashboard_screen.dart';
 import 'package:doctoworld_doctor/screens/education_form.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
 import 'package:doctoworld_doctor/screens/splash.dart';
@@ -183,6 +184,7 @@ class _DoctoWorldDoctorState extends State<DoctoWorldDoctor> {
              routes: {
               '/allAppointments':(context)=>AllAppointmentScreen(),
               '/joinVideo':(context)=>JoinChannelVideo(),
+              '/dashboard':(context)=>Dashboard(),
              },
              // routes: PageRoutes().routes(),
           );

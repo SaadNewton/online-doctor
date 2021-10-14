@@ -2,17 +2,19 @@ import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 
 ///  Base Url
 
-String baseUrl = 'http://192.168.88.43:8000/api/';
-String mediaUrl = 'http://192.168.88.43:8000/';
+// String baseUrl = 'http://192.168.88.44:8000/api/';
+// String mediaUrl = 'http://192.168.88.44:8000/';
 
 // String baseUrl = 'http://192.168.88.77:7000/api/';
 // String mediaUrl = 'http://192.168.88.77:7000/';
 
-// String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
-// String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
+String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
+String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
 String fcmService = 'https://fcm.googleapis.com/fcm/send';
 String agoraService = baseUrl + 'agora-token';
 
+
+String sendMessageService = baseUrl + 'send-message';
 
 
 ///  Doctor login
@@ -108,3 +110,7 @@ String getNotifyTokenService=baseUrl+'get-notify-token-by-user';
 /// create-notify-user
 ///
 String createNotifyUserService=baseUrl+'create-notify-user';
+
+/// fetch-messages
+///
+String fetchChatService=baseUrl+'fetch-messages';

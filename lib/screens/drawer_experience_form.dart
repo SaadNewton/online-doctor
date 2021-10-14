@@ -1,7 +1,6 @@
 // @dart = 2.9
 import 'dart:io';
 import 'package:animation_wrappers/animation_wrappers.dart';
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';

@@ -1,5 +1,4 @@
 //@dart=2.9
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Model/add_speciality_model.dart';
 import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';

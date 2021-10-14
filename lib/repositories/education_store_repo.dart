@@ -1,11 +1,5 @@
 //@dart=2.9
-import 'package:doctoworld_doctor/Auth/Login/UI/login_ui.dart';
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
-import 'package:doctoworld_doctor/Model/education_model.dart';
-import 'package:doctoworld_doctor/Model/sign_up_model.dart';
-import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
-import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/getDoctorProfileRepo.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';

@@ -1394,7 +1394,7 @@ class _DrawerScheduleFormState extends State<DrawerScheduleForm> {
                                             Expanded(
                                               child: Text(
                                                 '${getDoctorProfileModal.data.schedules
-                                                [index].createdAt.toString().substring(0,10)}',
+                                                [index].updatedAt.toString().substring(0,10)}',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .subtitle2

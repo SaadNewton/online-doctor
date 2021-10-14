@@ -1,6 +1,4 @@
-import 'package:doctoworld_doctor/Auth/Login/UI/login_ui.dart';
 import 'package:doctoworld_doctor/Auth/log_in_data/login_ui.dart';
-import 'package:doctoworld_doctor/BottomNavigation/bottom_navigation.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
 import 'package:doctoworld_doctor/controllers/auth_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';

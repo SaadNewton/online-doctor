@@ -1,14 +1,18 @@
 import 'package:animation_wrappers/animation_wrappers.dart';
 import 'package:doctoworld_doctor/Components/custom_button.dart';
+import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Components/entry_field.dart';
 import 'package:doctoworld_doctor/Locale/locale.dart';
+import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/phone_email_check_repo.dart';
 import 'package:doctoworld_doctor/screens/profie_wizard.dart';
+import 'package:doctoworld_doctor/screens/terms_and_conditions.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geocoding/geocoding.dart';
@@ -28,6 +32,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
   var currentPosition;
   bool? obSecureText = true;
   bool? confirmObSecureText = true;
+  bool selected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +223,44 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               },
                             ),
                             SizedBox(height: 20.0),
+
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                IconButton(
+                                  icon: Icon( selected ? Icons.check_box : Icons.check_box_outline_blank, color: Colors.blue,),
+                                  onPressed: () {
+                                    setState(() {
+                                      selected = !selected;
+                                    });
+                                  },
+                                ),
+                                SizedBox(width: 8),
+                                RichText(
+                                  text: TextSpan(
+                                      text: 'I accept the',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 14),
+                                      children: <TextSpan>[
+                                        TextSpan(text: ' Terms and Conditions.',
+                                            style: TextStyle(
+                                                color: Colors.blueAccent, fontSize: 16),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TermsAndConditions()));
+                                              }
+                                        )
+                                      ]
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                           SizedBox(height: 20),
                             CustomButton(
                               onTap: () {
                                 FocusScopeNode currentFocus =
@@ -226,19 +269,36 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                                   currentFocus.unfocus();
                                 }
                                 if (signKey.currentState!.validate()) {
-                                  Get.find<LoaderController>()
-                                      .updateFormController(true);
-                                  postMethod(
-                                      context,
-                                      phoneEmailCheckService,
-                                      {
-                                        'phone': phoneController.text,
-                                        'email': emailController.text,
-                                        'role': 'doctor'
-                                      },
-                                      false,
-                                      phoneEmailCheckRepo
-                                  );
+                                  if(selected == true){
+                                    Get.find<LoaderController>()
+                                        .updateFormController(true);
+                                    postMethod(
+                                        context,
+                                        phoneEmailCheckService,
+                                        {
+                                          'phone': phoneController.text,
+                                          'email': emailController.text,
+                                          'role': 'doctor'
+                                        },
+                                        false,
+                                        phoneEmailCheckRepo
+                                    );
+                                  }else{
+                                    showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return CustomDialogBox(
+                                            title: 'Failed',
+                                            titleColor: customDialogErrorColor,
+                                            descriptions: 'Please Accept Terms And Conditions.',
+                                            text: 'Ok',
+                                            functionCall: () {
+                                              Navigator.pop(context);
+                                            },
+                                            img: 'assets/dialog_error.svg',
+                                          );
+                                        });
+                                  }
                                 }
                               },
                             ),

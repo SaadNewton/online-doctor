@@ -39,6 +39,19 @@ class _LoginUIState extends State<LoginUI> {
   // }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      Get.find<LoaderController>().emptyEducationList();
+      Get.find<LoaderController>().emptyExperienceList();
+      Get.find<LoaderController>().emptySpecialityList();
+      Get.find<LoaderController>().emptyClinicList();
+      Get.find<LoaderController>().emptyScheduleList();
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var size = MediaQuery.of(context).size;

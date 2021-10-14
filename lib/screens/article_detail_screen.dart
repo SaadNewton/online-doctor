@@ -101,12 +101,14 @@ class _ArticleDetailScreenState extends State<ArticleDetailScreen> {
                       ),
                       Row(
                         children: [
-                          Text(
-                            '${widget.getAllDoctorsArticlesData.title}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .subtitle2
-                                .copyWith(fontSize: 20),
+                          Expanded(
+                            child: Text(
+                              '${widget.getAllDoctorsArticlesData.title}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle2
+                                  .copyWith(fontSize: 20),
+                            ),
                           ),
                         ],
                       ),

@@ -1,6 +1,7 @@
 //@dart=2.9
 import 'package:animation_wrappers/Animations/faded_scale_animation.dart';
 import 'package:animation_wrappers/Animations/faded_slide_animation.dart';
+import 'package:doctoworld_doctor/screens/chat_page.dart';
 import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
@@ -337,20 +338,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return CustomDialogBox(
-                                    title: 'INFO!',
-                                    titleColor: customDialogInfoColor,
-                                    descriptions: 'Not available yet.',
-                                    text: 'Ok',
-                                    functionCall: () {
-                                      Navigator.pop(context);
-                                    },
-                                    img: 'assets/dialog_Info.svg',
-                                  );
-                                });                      },
+                            Get.to(ChatScreen(
+                              appointment: widget.appointment,
+                            ));
+
+                            },
                           child: Container(
                             height: 60,
                             color: Theme.of(context).primaryColor,
