@@ -14,6 +14,7 @@ import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:doctoworld_doctor/storage/local_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
@@ -32,6 +33,7 @@ class _DrawerClinicScreenState extends State<DrawerClinicScreen> {
   GlobalKey<FormState> clinicFormKey = GlobalKey();
   final TextEditingController _clinicNameController = TextEditingController();
   final TextEditingController _clinicAddressController = TextEditingController();
+  final TextEditingController _clinicFeeController = TextEditingController();
 
   @override
   void initState() {
@@ -134,6 +136,22 @@ class _DrawerClinicScreenState extends State<DrawerClinicScreen> {
                                   ),
                                   SizedBox(height: 20.0),
 
+                                  ///...............fee................///
+                                  EntryField(
+                                    color: Colors.grey.withOpacity(0.2),
+                                    textInputFormatter: LengthLimitingTextInputFormatter(6),
+                                    textInputType: TextInputType.number,
+                                    controller: _clinicFeeController,
+                                    hint: 'Clinic Fee',
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Field is Required';
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  SizedBox(height: 20.0),
 
                                   CustomButton(
                                     label: 'Submit',
@@ -153,13 +171,15 @@ class _DrawerClinicScreenState extends State<DrawerClinicScreen> {
                                             {
                                               'doctor_id': storageBox.read('doctor_id'),
                                               'name': _clinicNameController.text,
-                                              'address': _clinicAddressController.text
+                                              'address': _clinicAddressController.text,
+                                              'fees': _clinicFeeController.text
                                             },
                                             true,
                                             deleteClinic
                                         );
                                         _clinicNameController.clear();
                                         _clinicAddressController.clear();
+                                        _clinicFeeController.clear();
                                       }
                                     },
                                   ),
@@ -187,12 +207,25 @@ class _DrawerClinicScreenState extends State<DrawerClinicScreen> {
                                     ]
                                 ),
                                 child: ListTile(
-                                  title: Text(
-                                    '${getDoctorProfileModal.data.clinics[index].name}',
-                                    style: TextStyle(
-                                        fontSize: 17,
-                                        color: Colors.black
-                                    ),
+                                  title: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          '${getDoctorProfileModal.data.clinics[index].name}',
+                                          style: TextStyle(
+                                              fontSize: 17,
+                                              color: Colors.black
+                                          ),
+                                        ),
+                                      ),
+                                      Text(
+                                        'Rs. ${getDoctorProfileModal.data.clinics[index].fees}',
+                                        style: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   subtitle: Row(
                                     children: [

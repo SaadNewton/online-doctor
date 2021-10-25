@@ -5,8 +5,8 @@ import 'package:doctoworld_doctor/screens/experience%20_form.dart';
 // String baseUrl = 'http://192.168.88.44:8000/api/';
 // String mediaUrl = 'http://192.168.88.44:8000/';
 
-// String baseUrl = 'http://192.168.88.77:7000/api/';
-// String mediaUrl = 'http://192.168.88.77:7000/';
+// String baseUrl = 'http://192.168.88.46:8000/api/';
+// String mediaUrl = 'http://192.168.88.46:8000/';
 
 String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';

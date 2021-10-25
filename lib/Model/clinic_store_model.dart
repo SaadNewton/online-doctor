@@ -47,6 +47,7 @@ class ClinicStoreModelData {
   String _doctorId;
   String _name;
   String _address;
+  int _fees;
   String _updatedAt;
   String _createdAt;
   int _id;
@@ -54,6 +55,7 @@ class ClinicStoreModelData {
   String get doctorId => _doctorId;
   String get name => _name;
   String get address => _address;
+  int get fees => _fees;
   String get updatedAt => _updatedAt;
   String get createdAt => _createdAt;
   int get id => _id;
@@ -61,13 +63,15 @@ class ClinicStoreModelData {
   ClinicStoreModelData({
       String doctorId, 
       String name, 
-      String address, 
+      String address,
+    int fees,
       String updatedAt, 
       String createdAt, 
       int id}){
     _doctorId = doctorId;
     _name = name;
     _address = address;
+    _fees = fees;
     _updatedAt = updatedAt;
     _createdAt = createdAt;
     _id = id;
@@ -77,6 +81,7 @@ class ClinicStoreModelData {
     _doctorId = json["doctor_id"].toString();
     _name = json["name"];
     _address = json["address"];
+    _fees = int.parse(json["fees"].toString());
     _updatedAt = json["updated_at"];
     _createdAt = json["created_at"];
     _id = json["id"];
@@ -87,6 +92,7 @@ class ClinicStoreModelData {
     map["doctor_id"] = _doctorId;
     map["name"] = _name;
     map["address"] = _address;
+    map["fees"] = _fees;
     map["updated_at"] = _updatedAt;
     map["created_at"] = _createdAt;
     map["id"] = _id;

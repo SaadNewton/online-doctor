@@ -655,6 +655,7 @@ class Clinics {
   int _doctorId;
   String _name;
   String _address;
+  int _fees;
   String _createdAt;
   String _updatedAt;
 
@@ -662,6 +663,7 @@ class Clinics {
   int get doctorId => _doctorId;
   String get name => _name;
   String get address => _address;
+  int get fees =>_fees;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
 
@@ -670,12 +672,14 @@ class Clinics {
     int doctorId,
     String name,
     String address,
+    int fees,
     String createdAt,
     String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _name = name;
     _address = address;
+    _fees = fees;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
   }
@@ -685,6 +689,9 @@ class Clinics {
     _doctorId = json["doctor_id"];
     _name = json["name"];
     _address = json["address"];
+    _fees = json["fees"].toString() == 'null'
+        ?0
+        :int.parse(json["fees"].toString());
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
   }
@@ -695,6 +702,7 @@ class Clinics {
     map["doctor_id"] = _doctorId;
     map["name"] = _name;
     map["address"] = _address;
+    map["fees"] = _fees;
     map["created_at"] = _createdAt;
     map["updated_at"] = _updatedAt;
     return map;
@@ -707,6 +715,7 @@ class Schedules {
   int _id;
   int _doctorId;
   String _slotType;
+  int _fees;
   String _startTime;
   String _endTime;
   String _serialDay;
@@ -721,6 +730,7 @@ class Schedules {
   int get id => _id;
   int get doctorId => _doctorId;
   String get slotType => _slotType;
+  int get fees => _fees;
   String get startTime => _startTime;
   String get endTime => _endTime;
   String get serialDay => _serialDay;
@@ -736,6 +746,7 @@ class Schedules {
     int id,
     int doctorId,
     String slotType,
+    int fees,
     String startTime,
     String endTime,
     String serialDay,
@@ -749,6 +760,7 @@ class Schedules {
     _id = id;
     _doctorId = doctorId;
     _slotType = slotType;
+    _fees = fees;
     _startTime = startTime;
     _endTime = endTime;
     _serialDay = serialDay;
@@ -765,6 +777,7 @@ class Schedules {
     _id = json["id"];
     _doctorId = json["doctor_id"];
     _slotType = json["slot_type"];
+    _fees = json["fees"];
     _startTime = json["start_time"];
     _endTime = json["end_time"];
     _serialDay = json["serial_day"];
@@ -784,6 +797,7 @@ class Schedules {
     map["id"] = _id;
     map["doctor_id"] = _doctorId;
     map["slot_type"] = _slotType;
+    map["fees"] = _fees;
     map["start_time"] = _startTime;
     map["end_time"] = _endTime;
     map["serial_day"] = _serialDay;
@@ -808,6 +822,7 @@ class ClinicModel {
   int _doctorId;
   String _name;
   String _address;
+  int _fees;
   String _createdAt;
   String _updatedAt;
 
@@ -815,6 +830,7 @@ class ClinicModel {
   int get doctorId => _doctorId;
   String get name => _name;
   String get address => _address;
+  int get fees => _fees;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
 
@@ -823,12 +839,14 @@ class ClinicModel {
     int doctorId,
     String name,
     String address,
+    int fees,
     String createdAt,
     String updatedAt}){
     _id = id;
     _doctorId = doctorId;
     _name = name;
     _address = address;
+    _fees = fees;
     _createdAt = createdAt;
     _updatedAt = updatedAt;
   }
@@ -838,6 +856,7 @@ class ClinicModel {
     _doctorId = json["doctor_id"];
     _name = json["name"];
     _address = json["address"];
+    _fees = json["fees"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
   }
@@ -848,6 +867,7 @@ class ClinicModel {
     map["doctor_id"] = _doctorId;
     map["name"] = _name;
     map["address"] = _address;
+    map["fees"] = _fees;
     map["created_at"] = _createdAt;
     map["updated_at"] = _updatedAt;
     return map;

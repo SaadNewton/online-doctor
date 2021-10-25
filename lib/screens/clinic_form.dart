@@ -30,6 +30,7 @@ class _ClinicFormState extends State<ClinicForm> {
   GlobalKey<FormState> clinicKey = GlobalKey();
   final TextEditingController _clinicNameController = TextEditingController();
   final TextEditingController _clinicAddressController = TextEditingController();
+  final TextEditingController _clinicFeeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoaderController>(
@@ -97,6 +98,22 @@ class _ClinicFormState extends State<ClinicForm> {
                               ),
                               SizedBox(height: 20.0),
 
+                              ///...............fee................///
+                              EntryField(
+                                color: Colors.grey.withOpacity(0.2),
+                                textInputFormatter: LengthLimitingTextInputFormatter(6),
+                                textInputType: TextInputType.number,
+                                controller: _clinicFeeController,
+                                hint: 'Clinic Fee',
+                                validator: (value) {
+                                  if (value.isEmpty) {
+                                    return 'Field is Required';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 20.0),
                               CustomButton(
                                 label: 'Submit',
                                 onTap: () {
@@ -116,13 +133,15 @@ class _ClinicFormState extends State<ClinicForm> {
                                         {
                                           'doctor_id': storageBox.read('doctor_id'),
                                           'name': _clinicNameController.text,
-                                          'address': _clinicAddressController.text
+                                          'address': _clinicAddressController.text,
+                                          'fees': _clinicFeeController.text
                                         },
                                         true,
                                         clinicStore
                                     );
                                     _clinicNameController.clear();
                                     _clinicAddressController.clear();
+                                    _clinicFeeController.clear();
                                   }
                                 },
                               ),
@@ -163,6 +182,17 @@ class _ClinicFormState extends State<ClinicForm> {
                                                 alignment: Alignment.center,
                                                 child: Text(
                                                   'Clinic Name',
+                                                  style: TextStyle(
+                                                      fontSize: 11,
+                                                      color: primaryColor),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  'Clinic Fees',
                                                   style: TextStyle(
                                                       fontSize: 11,
                                                       color: primaryColor),
@@ -215,6 +245,10 @@ class _ClinicFormState extends State<ClinicForm> {
                                                             .text =
                                                         loaderController.clinicsList[index]
                                                         ['clinic_address'];
+                                                        _clinicFeeController
+                                                            .text =
+                                                        loaderController.clinicsList[index]
+                                                        ['clinic_fees'].toString();
 
                                                         _scrollController
                                                             .animateTo(
@@ -272,6 +306,25 @@ class _ClinicFormState extends State<ClinicForm> {
                                                                         .center,
                                                                     child: Text(
                                                                       '${loaderController.clinicsList[index]['clinic_name']}',
+                                                                      softWrap:
+                                                                      true,
+                                                                      overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                          11,
+                                                                          color: Colors
+                                                                              .black),
+                                                                    )),
+                                                              ),
+                                                              Expanded(
+                                                                child: Align(
+                                                                    alignment:
+                                                                    Alignment
+                                                                        .center,
+                                                                    child: Text(
+                                                                      '${loaderController.clinicsList[index]['clinic_fees']}',
                                                                       softWrap:
                                                                       true,
                                                                       overflow:

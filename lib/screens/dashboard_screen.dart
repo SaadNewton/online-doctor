@@ -38,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
   }
   String fcmToken;
   updateToken() async {
-
+    await FirebaseMessaging.instance.requestPermission();
     await FirebaseMessaging.instance.getToken().then((value) {
       fcmToken = value;
       storageBox.write('fcmToken', fcmToken);

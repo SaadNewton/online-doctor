@@ -33,7 +33,8 @@ clinicStore(
           {
             'clinic_id':clinicStoreModel.data.id,
             'clinic_name':clinicStoreModel.data.name,
-            'clinic_address':clinicStoreModel.data.address
+            'clinic_address':clinicStoreModel.data.address,
+            'clinic_fees':clinicStoreModel.data.fees
           }
       );
       // clinicsList.add(
