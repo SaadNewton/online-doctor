@@ -1,21 +1,18 @@
-import 'package:doctoworld_doctor/screens/experience%20_form.dart';
-
 ///  Base Url
 
 // String baseUrl = 'http://192.168.88.44:8000/api/';
+String baseUrl = 'https://onlinedoctor.pk/api/';
 // String mediaUrl = 'http://192.168.88.44:8000/';
 
 // String baseUrl = 'http://192.168.88.46:8000/api/';
 // String mediaUrl = 'http://192.168.88.46:8000/';
 
-String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
-String mediaUrl = 'https://onlinedoctor.softwaresbranding.com/';
+// String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
+String mediaUrl = 'https://onlinedoctor.pk/';
 String fcmService = 'https://fcm.googleapis.com/fcm/send';
 String agoraService = baseUrl + 'agora-token';
 
-
 String sendMessageService = baseUrl + 'send-message';
-
 
 ///  Doctor login
 
@@ -82,7 +79,6 @@ String deleteArticlesService = baseUrl + 'article-delete';
 String updateArticlesService = baseUrl + 'article-update';
 String allDoctorsArticlesService = baseUrl + 'get-all-articles';
 
-
 ///  Change Password
 
 String changePasswordService = baseUrl + 'change-password';
@@ -102,15 +98,23 @@ String resetPasswordService = baseUrl + 'reset-password';
 String clinicStoreService = baseUrl + 'clinic-store';
 String clinicDeleteService = baseUrl + 'clinic-delete';
 
-
 /// get-notify-token-by-user
 ///
-String getNotifyTokenService=baseUrl+'get-notify-token-by-user';
+String getNotifyTokenService = baseUrl + 'get-notify-token-by-user';
 
 /// create-notify-user
 ///
-String createNotifyUserService=baseUrl+'create-notify-user';
+String createNotifyUserService = baseUrl + 'create-notify-user';
 
 /// fetch-messages
 ///
-String fetchChatService=baseUrl+'fetch-messages';
+String fetchChatService = baseUrl + 'fetch-messages';
+
+/// Search Medicine List
+String medicineSearchService = baseUrl + 'medicine-filter';
+
+/// Save Prescription Data
+String savePrescriptionDataService = baseUrl + 'save-prescription-data';
+
+/// Save Prescription Data
+String createReportService = baseUrl + 'create-report';

@@ -1,17 +1,17 @@
 //@dart=2.9
 import 'dart:async';
-import 'package:dio/dio.dart' as dio_instance;
+
 import 'package:doctoworld_doctor/Components/custom_drawer.dart';
-import 'package:doctoworld_doctor/repositories/create_notify_repo.dart';
-import 'package:doctoworld_doctor/repositories/getArticlesRepo.dart';
-import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
-import 'package:doctoworld_doctor/screens/article_detail_screen.dart';
-import 'package:doctoworld_doctor/screens/articles_screen.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/check_doctor_status_repo.dart';
+import 'package:doctoworld_doctor/repositories/create_notify_repo.dart';
+import 'package:doctoworld_doctor/repositories/getArticlesRepo.dart';
 import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
+import 'package:doctoworld_doctor/screens/all_appointment_screen.dart';
+import 'package:doctoworld_doctor/screens/article_detail_screen.dart';
+import 'package:doctoworld_doctor/screens/articles_screen.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
@@ -27,8 +27,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-
-
   checkDoctorStatus() {
     if (!Get.find<LoaderController>().checkDoctorStatusLoader) {
       print('aaa');
@@ -36,13 +34,14 @@ class _DashboardState extends State<Dashboard> {
           {'doctor_id': storageBox.read('doctor_id')}, true, doctorStatusRepo);
     }
   }
+
   String fcmToken;
   updateToken() async {
     await FirebaseMessaging.instance.requestPermission();
     await FirebaseMessaging.instance.getToken().then((value) {
       fcmToken = value;
       storageBox.write('fcmToken', fcmToken);
-    }).catchError((onError){
+    }).catchError((onError) {
       print('Error--->>$onError');
     });
     print('Token--->>${fcmToken}');
@@ -51,14 +50,14 @@ class _DashboardState extends State<Dashboard> {
         context,
         createNotifyUserService,
         {
-          'role':'doctor',
-          'user_id':storageBox.read('doctor_id'),
-          'token':fcmToken
+          'role': 'doctor',
+          'user_id': storageBox.read('doctor_id'),
+          'token': fcmToken
         },
         false,
-        createNotifyRepo
-    );
+        createNotifyRepo);
   }
+
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -72,11 +71,7 @@ class _DashboardState extends State<Dashboard> {
         {'doctor_id': storageBox.read('doctor_id')},
         true,
         getAllLAppointmentRepo);
-    getMethod(
-        context,
-        allDoctorsArticlesService,
-        null,
-        false,
+    getMethod(context, allDoctorsArticlesService, null, false,
         getAllDoctorsArticlesRepo);
     super.initState();
     if (!storageBox.hasData('approved')) {
@@ -245,11 +240,11 @@ class _DashboardState extends State<Dashboard> {
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage('assets/blue.png'),
-                                                  fit: BoxFit.fill
-                                              ),
+                                                  image: AssetImage(
+                                                      'assets/blue.png'),
+                                                  fit: BoxFit.fill),
                                               borderRadius:
-                                              BorderRadius.circular(20),
+                                                  BorderRadius.circular(20),
                                               boxShadow: [
                                                 BoxShadow(
                                                     color: Colors.grey
@@ -266,19 +261,18 @@ class _DashboardState extends State<Dashboard> {
                                                 ],
                                               )),
                                           child: Padding(
-                                            padding:
-                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 15, 15, 10),
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .end,
+                                                  MainAxisAlignment.end,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Expanded(
                                                       child: Text(
@@ -287,8 +281,8 @@ class _DashboardState extends State<Dashboard> {
                                                             color: Colors.white,
                                                             fontSize: 22,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ),
                                                     Icon(
@@ -309,6 +303,7 @@ class _DashboardState extends State<Dashboard> {
                               ),
                             ),
                           ),
+
                           ///---articles
                           InkWell(
                             onTap: () {
@@ -330,11 +325,12 @@ class _DashboardState extends State<Dashboard> {
                                           width: double.infinity,
                                           decoration: BoxDecoration(
                                               image: DecorationImage(
-                                                  image: AssetImage('assets/blue.png'),
+                                                  image: AssetImage(
+                                                      'assets/blue.png'),
                                                   fit: BoxFit.fill),
                                               //  color: Colors.white,
                                               borderRadius:
-                                              BorderRadius.circular(20),
+                                                  BorderRadius.circular(20),
                                               boxShadow: [
                                                 BoxShadow(
                                                     color: Colors.grey
@@ -351,19 +347,18 @@ class _DashboardState extends State<Dashboard> {
                                                 ],
                                               )),
                                           child: Padding(
-                                            padding:
-                                            const EdgeInsets.fromLTRB(15, 15, 15, 10),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 15, 15, 10),
                                             child: Column(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .end,
+                                                  MainAxisAlignment.end,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Expanded(
                                                       child: Text(
@@ -372,8 +367,8 @@ class _DashboardState extends State<Dashboard> {
                                                             color: Colors.white,
                                                             fontSize: 22,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w500),
+                                                                FontWeight
+                                                                    .w500),
                                                       ),
                                                     ),
                                                     Icon(
@@ -399,131 +394,182 @@ class _DashboardState extends State<Dashboard> {
                           getAllDoctorsArticles.data == null
                               ? SizedBox()
                               : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 30,left: 15),
-                                    child: Text(
-                                      'All ARTICLES',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight:
-                                          FontWeight
-                                              .w500),
-                                    ),
-                                  ),
-                                  SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Wrap(
-                            children: List.generate(getAllDoctorsArticles.data.length, (index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.fromLTRB(15, 12, 0, 20),
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width*.4,
-                                        height: MediaQuery.of(context).size.height*.3,
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius: BorderRadius.circular(10),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.grey.withOpacity(0.5),
-                                              blurRadius: 9,
-                                              spreadRadius: 3
-                                            )
-                                          ]
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            children: [
-                                              getAllDoctorsArticles.data[index].image == null
-                                                  ? SizedBox(
-                                                height: MediaQuery.of(context).size.height*.1,
-                                              )
-                                                  : Container(
-                                                width: MediaQuery.of(context).size.width*.2,
-                                                height: MediaQuery.of(context).size.height*.1,
-                                                    child: Image.network(
-                                                    '$mediaUrl${getAllDoctorsArticles.data[index].image}',
-                                                width: MediaQuery.of(context).size.width*.2,
-                                              ),
-                                                  ),
-                                              SizedBox(height: 8,),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${getAllDoctorsArticles.data[index].title}',
-                                                      maxLines: 1,
-                                                      softWrap: true,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: Colors.black
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 8,),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${getAllDoctorsArticles.data[index].description}',
-                                                      maxLines: 2,
-                                                     softWrap: true,
-                                                      overflow: TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors.black
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height: 8,),
-                                              Spacer(),
-                                              InkWell(
-                                                onTap: (){
-                                                  Get.to(ArticleDetailScreen(
-                                                    getAllDoctorsArticlesData: getAllDoctorsArticles.data[index],));
-                                                },
-                                                child: Container(
-                                                  height: 30,
-                                                  width: double.infinity,
-                                                  decoration: BoxDecoration(
-                                                    color: primaryColor,
-                                                    borderRadius: BorderRadius.circular(5)
-                                                  ),
-                                                  child: Center(
-                                                    child: Text(
-                                                      'View Details',
-                                                      style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.white
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              )
-                                            ],
-                                          )
-                                        ),
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 30, left: 15),
+                                      child: Text(
+                                        'All ARTICLES',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
                                       ),
-                                    );
-                            }),
-                          ),
-                                  ),
-                                ],
-                              )
+                                    ),
+                                    SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Wrap(
+                                        children: List.generate(
+                                            getAllDoctorsArticles.data.length,
+                                            (index) {
+                                          return Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15, 12, 0, 20),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .4,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  .3,
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.grey
+                                                            .withOpacity(0.5),
+                                                        blurRadius: 9,
+                                                        spreadRadius: 3)
+                                                  ]),
+                                              child: Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      10.0),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      getAllDoctorsArticles
+                                                                  .data[index]
+                                                                  .image ==
+                                                              null
+                                                          ? SizedBox(
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  .1,
+                                                            )
+                                                          : Container(
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  .2,
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  .1,
+                                                              child:
+                                                                  Image.network(
+                                                                '$mediaUrl${getAllDoctorsArticles.data[index].image}',
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    .2,
+                                                              ),
+                                                            ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              '${getAllDoctorsArticles.data[index].title}',
+                                                              maxLines: 1,
+                                                              softWrap: true,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize: 18,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              '${getAllDoctorsArticles.data[index].description}',
+                                                              maxLines: 2,
+                                                              softWrap: true,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              style: TextStyle(
+                                                                  fontSize: 14,
+                                                                  color: Colors
+                                                                      .black),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Spacer(),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          Get.to(
+                                                              ArticleDetailScreen(
+                                                            getAllDoctorsArticlesData:
+                                                                getAllDoctorsArticles
+                                                                        .data[
+                                                                    index],
+                                                          ));
+                                                        },
+                                                        child: Container(
+                                                          height: 30,
+                                                          width:
+                                                              double.infinity,
+                                                          decoration: BoxDecoration(
+                                                              color:
+                                                                  primaryColor,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5)),
+                                                          child: Center(
+                                                            child: Text(
+                                                              'View Details',
+                                                              style: TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  )),
+                                            ),
+                                          );
+                                        }),
+                                      ),
+                                    ),
+                                  ],
+                                )
                         ],
-                      )
-                    ),
+                      )),
             ),
     );
   }

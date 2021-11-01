@@ -1,8 +1,6 @@
 // @dart=2.9
 
-import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
-import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
 import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
@@ -18,7 +16,8 @@ getAllLAppointmentRepo(
     Get.find<LoaderController>().updateDataController(false);
     getAllAppointmentsModel = GetAllAppointmentsModel.fromJson(response);
     if (getAllAppointmentsModel.status == true) {
-      print('get-all_Appointments_data ------>> ${getAllAppointmentsModel.data}');
+      print(
+          'get-all_Appointments_data ------>> ${getAllAppointmentsModel.data}');
     } else {
       // showDialog(
       //     context: context,
@@ -49,7 +48,8 @@ getDoneAppointmentRepo(
     Get.find<LoaderController>().updateDataController(false);
     getDoneAppointmentsModel = GetAllAppointmentsModel.fromJson(response);
     if (getDoneAppointmentsModel.status == true) {
-      print('get-done_Appointments_data ------>> ${getDoneAppointmentsModel.data}');
+      print(
+          'get-done_Appointments_data ------>> ${getDoneAppointmentsModel.data}');
     } else {}
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateDataController(false);
@@ -59,20 +59,19 @@ getDoneAppointmentRepo(
   }
 }
 
-
 completeAppointmentRepo(
     bool responseCheck, Map<String, dynamic> response, BuildContext context) {
   if (responseCheck) {
     Get.find<LoaderController>().updateFormController(false);
     if (response['status'].toString() == 'true') {
       print('ADDED');
-      Get.snackbar(
-          'Success',
-          'Successfully Done',
-          backgroundColor: Colors.black.withOpacity(0.5),
-          colorText: Colors.white
-      );
-      getMethod(context, getAllAppointmentsService, {'doctor_id': storageBox.read('doctor_id')}, true,
+      Get.snackbar('Thank you', 'Appointment completed successfully,',
+          snackPosition: SnackPosition.BOTTOM, backgroundColor: Colors.white);
+      getMethod(
+          context,
+          getAllAppointmentsService,
+          {'doctor_id': storageBox.read('doctor_id')},
+          true,
           getAllLAppointmentRepo);
       getMethod(
           context,
@@ -85,7 +84,6 @@ completeAppointmentRepo(
   } else if (!responseCheck && response == null) {
     Get.find<LoaderController>().updateFormController(false);
     Get.find<LoaderController>().updateDataController(false);
-
 
     print('Exception........................');
     // Get.find<AppController>().changeServerErrorCheck(true);
