@@ -2,13 +2,14 @@
 
 // String baseUrl = 'http://192.168.88.44:8000/api/';
 String baseUrl = 'https://onlinedoctor.pk/api/';
-// String mediaUrl = 'http://192.168.88.44:8000/';
 
 // String baseUrl = 'http://192.168.88.46:8000/api/';
 // String mediaUrl = 'http://192.168.88.46:8000/';
 
 // String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 String mediaUrl = 'https://onlinedoctor.pk/';
+// String mediaUrl = 'http://192.168.88.44:8000/';
+
 String fcmService = 'https://fcm.googleapis.com/fcm/send';
 String agoraService = baseUrl + 'agora-token';
 

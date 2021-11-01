@@ -39,7 +39,16 @@ class _ScheduleFormState extends State<ScheduleForm> {
     'On Site'
   ];
 
-
+  String selectedDay;
+  List<String> daysList = [
+    'Saturday',
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday'
+  ];
 
   // final timeFormat = DateFormat("HH:mm");
   final timeFormat = DateFormat.jm();
@@ -157,19 +166,65 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   ? Column(
                                 children: [
                                   /// serial days
-                                  EntryField(
-                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
-                                    color: Colors.grey.withOpacity(0.2),
-                                    controller: _availableDaysController,
-                                    textInputType: TextInputType.number,
-                                    hint: 'No. of days',
-                                    validator: (value){
-                                      if(value.isEmpty){
-                                        return 'Field is Required';
-                                      }else{
-                                        return null;
-                                      }
-                                    },
+                                  ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButtonFormField<String>(
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 17.0, horizontal: 10.0),
+                                          fillColor: Colors.grey.withOpacity(0.2),
+                                          filled: true,
+                                          hintText: 'Select Day',
+                                          hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17
+                                          ),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4))),
+                                        ),
+                                        // isExpanded: true,
+                                        focusColor: Colors.white,
+                                        // dropdownColor: Colors.grey.withOpacity(0.2),
+                                        // iconSize: 10,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17
+                                        ),
+                                        iconEnabledColor: Colors.black,
+                                        value: selectedDay,
+                                        items: daysList
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style:
+                                                  TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 17
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                        onChanged: (String value) {
+                                          print(value);
+                                          setState(() {
+                                            selectedDay = value;
+                                          });
+                                        },
+                                        validator: (String value) {
+                                          if (value == null) {
+                                            return 'Field is Required';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(height: 20.0),
 
@@ -372,7 +427,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 'doctor_id': storageBox.read('doctor_id'),
                                                 'slot_type': 2,
                                                 'duration': _slotDurationController.text,
-                                                'serial_day': _availableDaysController.text,
+                                                // 'serial_day': _availableDaysController.text,
+                                                'day': selectedDay,
                                                 'start_time': fromTime.substring(0,5).toString(),
                                                 'end_time': toTime.substring(0,5).toString(),
                                                 'type': 'online',
@@ -394,7 +450,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                               'doctor_id': storageBox.read('doctor_id'),
                                               'slot_type': 2,
                                               'duration': _slotDurationController.text,
-                                              'serial_day': _availableDaysController.text,
+                                              // 'serial_day': _availableDaysController.text,
+                                              'day': selectedDay,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
                                               'type': 'online',
@@ -505,19 +562,65 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                   SizedBox(height: 20.0),
 
                                   /// serial days
-                                  EntryField(
-                                    textInputFormatter: LengthLimitingTextInputFormatter(2),
-                                    color: Colors.grey.withOpacity(0.2),
-                                    controller: _availableDaysController,
-                                    textInputType: TextInputType.number,
-                                    hint: 'No. of days',
-                                    validator: (value){
-                                      if(value.isEmpty){
-                                        return 'Field is Required';
-                                      }else{
-                                        return null;
-                                      }
-                                    },
+                                  ButtonTheme(
+                                    alignedDropdown: true,
+                                    child: DropdownButtonHideUnderline(
+                                      child: DropdownButtonFormField<String>(
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 17.0, horizontal: 10.0),
+                                          fillColor: Colors.grey.withOpacity(0.2),
+                                          filled: true,
+                                          hintText: 'Select Day',
+                                          hintStyle: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17
+                                          ),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(4))),
+                                        ),
+                                        // isExpanded: true,
+                                        focusColor: Colors.white,
+                                        // dropdownColor: Colors.grey.withOpacity(0.2),
+                                        // iconSize: 10,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17
+                                        ),
+                                        iconEnabledColor: Colors.black,
+                                        value: selectedDay,
+                                        items: daysList
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(
+                                                  value,
+                                                  style:
+                                                  TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 17
+                                                  ),
+                                                ),
+                                              );
+                                            }).toList(),
+                                        onChanged: (String value) {
+                                          print(value);
+                                          setState(() {
+                                            selectedDay = value;
+                                          });
+                                        },
+                                        validator: (String value) {
+                                          if (value == null) {
+                                            return 'Field is Required';
+                                          } else {
+                                            return null;
+                                          }
+                                        },
+                                      ),
+                                    ),
                                   ),
                                   SizedBox(height: 20.0),
 
@@ -704,7 +807,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                                 'doctor_id': storageBox.read('doctor_id'),
                                                 'slot_type': 2,
                                                 'duration': _slotDurationController.text,
-                                                'serial_day': _availableDaysController.text,
+                                                // 'serial_day': _availableDaysController.text,
+                                                'day': selectedDay,
                                                 'start_time': fromTime.substring(0,5).toString(),
                                                 'end_time': toTime.substring(0,5).toString(),
                                                 'type': 'onsite',
@@ -731,7 +835,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                                               'doctor_id': storageBox.read('doctor_id'),
                                               'slot_type': 2,
                                               'duration': _slotDurationController.text,
-                                              'serial_day': _availableDaysController.text,
+                                              // 'serial_day': _availableDaysController.text,
+                                              'day': selectedDay,
                                               'start_time': fromTime.substring(0,5).toString(),
                                               'end_time': toTime.substring(0,5).toString(),
                                               'type': 'onsite',
@@ -935,37 +1040,37 @@ class _ScheduleFormState extends State<ScheduleForm> {
     );
   }
 
-  String selectedDay;
-  List<DaySelector> daysList = [
-    DaySelector(
-      title: 'Monday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Tuesday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Wednesday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Thursday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Friday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Saturday',
-      selected: false
-    ),
-    DaySelector(
-      title: 'Sunday',
-      selected: false
-    ),
-  ];
+  // String selectedDay;
+  // List<DaySelector> daysList = [
+  //   DaySelector(
+  //     title: 'Monday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Tuesday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Wednesday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Thursday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Friday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Saturday',
+  //     selected: false
+  //   ),
+  //   DaySelector(
+  //     title: 'Sunday',
+  //     selected: false
+  //   ),
+  // ];
 
   Iterable<TimeOfDay> getTimes(TimeOfDay startTime, TimeOfDay endTime, Duration step) sync* {
     var hour = startTime.hour;

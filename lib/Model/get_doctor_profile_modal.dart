@@ -7,15 +7,18 @@ class GetDoctorProfileModal {
   String _message;
 
   GetDoctorProfileModalData get data => _data;
+
   bool get status => _status;
+
   int get success => _success;
+
   String get message => _message;
 
-  GetDoctorProfileModal({
-    GetDoctorProfileModalData data,
-    bool status,
-    int success,
-    String message}){
+  GetDoctorProfileModal(
+      {GetDoctorProfileModalData data,
+      bool status,
+      int success,
+      String message}) {
     _data = data;
     _status = status;
     _success = success;
@@ -23,7 +26,9 @@ class GetDoctorProfileModal {
   }
 
   GetDoctorProfileModal.fromJson(dynamic json) {
-    _data = json["data"] != null ? GetDoctorProfileModalData.fromJson(json["data"]) : null;
+    _data = json["data"] != null
+        ? GetDoctorProfileModalData.fromJson(json["data"])
+        : null;
     _status = json["status"];
     _success = json["success"];
     _message = json["message"];
@@ -39,9 +44,7 @@ class GetDoctorProfileModal {
     map["message"] = _message;
     return map;
   }
-
 }
-
 
 class GetDoctorProfileModalData {
   int _id;
@@ -89,93 +92,135 @@ class GetDoctorProfileModalData {
   List<Appointments> _appointments;
 
   int get id => _id;
+
   String get name => _name;
+
   dynamic get username => _username;
+
   String get email => _email;
+
   String get mobile => _mobile;
+
   int get otpIsVerified => _otpIsVerified;
+
   dynamic get refBy => _refBy;
+
   String get balance => _balance;
+
   String get image => _image;
+
   String get address => _address;
+
   dynamic get lat => _lat;
+
   dynamic get long => _long;
+
   int get sectorId => _sectorId;
+
   int get locationId => _locationId;
+
   String get qualification => _qualification;
+
   int get rating => _rating;
+
   int get status => _status;
+
   int get ev => _ev;
+
   int get sv => _sv;
+
   dynamic get verCode => _verCode;
+
   dynamic get verCodeSendAt => _verCodeSendAt;
+
   int get ts => _ts;
+
   int get tv => _tv;
+
   dynamic get tsc => _tsc;
+
   int get fees => _fees;
+
   int get slotType => _slotType;
+
   String get startTime => _startTime;
+
   String get endTime => _endTime;
+
   int get serialDay => _serialDay;
+
   int get maxSerial => _maxSerial;
+
   int get duration => _duration;
+
   List<String> get serialOrSlot => _serialOrSlot;
+
   String get about => _about;
+
   int get featured => _featured;
+
   List<String> get speciality => _speciality;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
+
   List<Schedules> get schedules => _schedules;
+
   List<Clinics> get clinics => _clinics;
+
   String get imagePath => _imagePath;
+
   List<Education_details> get educationDetails => _educationDetails;
+
   List<Experience_details> get experienceDetails => _experienceDetails;
+
   List<Appointments> get appointments => _appointments;
 
-  GetDoctorProfileModalData({
-    int id,
-    String name,
-    dynamic username,
-    String email,
-    String mobile,
-    int otpIsVerified,
-    dynamic refBy,
-    String balance,
-    String image,
-    String address,
-    dynamic lat,
-    dynamic long,
-    int sectorId,
-    int locationId,
-    String qualification,
-    int rating,
-    int status,
-    int ev,
-    int sv,
-    dynamic verCode,
-    dynamic verCodeSendAt,
-    int ts,
-    int tv,
-    dynamic tsc,
-    int fees,
-    int slotType,
-    String startTime,
-    String endTime,
-    int serialDay,
-    int maxSerial,
-    int duration,
-    List<String> serialOrSlot,
-    String about,
-    int featured,
-    List<String> speciality,
-    String createdAt,
-    String updatedAt,
-    List<Schedules> schedules,
-    List<Clinics> clinics,
-    String imagePath,
-    List<Education_details> educationDetails,
-    List<Experience_details> experienceDetails,
-    List<Appointments> appointments}){
+  GetDoctorProfileModalData(
+      {int id,
+      String name,
+      dynamic username,
+      String email,
+      String mobile,
+      int otpIsVerified,
+      dynamic refBy,
+      String balance,
+      String image,
+      String address,
+      dynamic lat,
+      dynamic long,
+      int sectorId,
+      int locationId,
+      String qualification,
+      int rating,
+      int status,
+      int ev,
+      int sv,
+      dynamic verCode,
+      dynamic verCodeSendAt,
+      int ts,
+      int tv,
+      dynamic tsc,
+      int fees,
+      int slotType,
+      String startTime,
+      String endTime,
+      int serialDay,
+      int maxSerial,
+      int duration,
+      List<String> serialOrSlot,
+      String about,
+      int featured,
+      List<String> speciality,
+      String createdAt,
+      String updatedAt,
+      List<Schedules> schedules,
+      List<Clinics> clinics,
+      String imagePath,
+      List<Education_details> educationDetails,
+      List<Experience_details> experienceDetails,
+      List<Appointments> appointments}) {
     _id = id;
     _name = name;
     _username = username;
@@ -253,10 +298,13 @@ class GetDoctorProfileModalData {
     _serialDay = json["serial_day"];
     _maxSerial = json["max_serial"];
     _duration = json["duration"];
-    _serialOrSlot = json["serial_or_slot"] != null ? json["serial_or_slot"].cast<String>() : [];
+    _serialOrSlot = json["serial_or_slot"] != null
+        ? json["serial_or_slot"].cast<String>()
+        : [];
     _about = json["about"];
     _featured = json["featured"];
-    _speciality = json["speciality"] != null ? json["speciality"].cast<String>() : [];
+    _speciality =
+        json["speciality"] != null ? json["speciality"].cast<String>() : [];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
     if (json["schedules"] != null) {
@@ -339,19 +387,19 @@ class GetDoctorProfileModalData {
     }
     map["image_path"] = _imagePath;
     if (_educationDetails != null) {
-      map["education_details"] = _educationDetails.map((v) => v.toJson()).toList();
+      map["education_details"] =
+          _educationDetails.map((v) => v.toJson()).toList();
     }
     if (_experienceDetails != null) {
-      map["experience_details"] = _experienceDetails.map((v) => v.toJson()).toList();
+      map["experience_details"] =
+          _experienceDetails.map((v) => v.toJson()).toList();
     }
     if (_appointments != null) {
       map["appointments"] = _appointments.map((v) => v.toJson()).toList();
     }
     return map;
   }
-
 }
-
 
 class Appointments {
   int _id;
@@ -381,57 +429,81 @@ class Appointments {
   String _updatedAt;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   dynamic get customerId => _customerId;
+
   dynamic get entryDoctor => _entryDoctor;
+
   dynamic get assistant => _assistant;
+
   dynamic get staff => _staff;
+
   int get admin => _admin;
+
   int get site => _site;
+
   String get name => _name;
+
   String get email => _email;
+
   String get mobile => _mobile;
+
   int get age => _age;
+
   dynamic get disease => _disease;
+
   String get bookingDate => _bookingDate;
+
   String get timeSerial => _timeSerial;
+
   int get pStatus => _pStatus;
+
   dynamic get trx => _trx;
+
   int get isComplete => _isComplete;
+
   int get dStatus => _dStatus;
+
   int get dDoctor => _dDoctor;
+
   dynamic get dAssistant => _dAssistant;
+
   dynamic get dStaff => _dStaff;
+
   int get dAdmin => _dAdmin;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
 
-  Appointments({
-    int id,
-    int doctorId,
-    dynamic customerId,
-    dynamic entryDoctor,
-    dynamic assistant,
-    dynamic staff,
-    int admin,
-    int site,
-    String name,
-    String email,
-    String mobile,
-    int age,
-    dynamic disease,
-    String bookingDate,
-    String timeSerial,
-    int pStatus,
-    dynamic trx,
-    int isComplete,
-    int dStatus,
-    int dDoctor,
-    dynamic dAssistant,
-    dynamic dStaff,
-    int dAdmin,
-    String createdAt,
-    String updatedAt}){
+  Appointments(
+      {int id,
+      int doctorId,
+      dynamic customerId,
+      dynamic entryDoctor,
+      dynamic assistant,
+      dynamic staff,
+      int admin,
+      int site,
+      String name,
+      String email,
+      String mobile,
+      int age,
+      dynamic disease,
+      String bookingDate,
+      String timeSerial,
+      int pStatus,
+      dynamic trx,
+      int isComplete,
+      int dStatus,
+      int dDoctor,
+      dynamic dAssistant,
+      dynamic dStaff,
+      int dAdmin,
+      String createdAt,
+      String updatedAt}) {
     _id = id;
     _doctorId = doctorId;
     _customerId = customerId;
@@ -516,9 +588,7 @@ class Appointments {
     map["updated_at"] = _updatedAt;
     return map;
   }
-
 }
-
 
 class Experience_details {
   int _id;
@@ -531,23 +601,30 @@ class Experience_details {
   String _updatedAt;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   String get imagePath => _imagePath;
+
   String get institution => _institution;
+
   String get discipline => _discipline;
+
   String get period => _period;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
 
-  Experience_details({
-    int id,
-    int doctorId,
-    String imagePath,
-    String institution,
-    String discipline,
-    String period,
-    String createdAt,
-    String updatedAt}){
+  Experience_details(
+      {int id,
+      int doctorId,
+      String imagePath,
+      String institution,
+      String discipline,
+      String period,
+      String createdAt,
+      String updatedAt}) {
     _id = id;
     _doctorId = doctorId;
     _imagePath = imagePath;
@@ -581,9 +658,7 @@ class Experience_details {
     map["updated_at"] = _updatedAt;
     return map;
   }
-
 }
-
 
 class Education_details {
   int _id;
@@ -596,23 +671,30 @@ class Education_details {
   String _updatedAt;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   String get imagePath => _imagePath;
+
   String get institution => _institution;
+
   String get discipline => _discipline;
+
   String get period => _period;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
 
-  Education_details({
-    int id,
-    int doctorId,
-    String imagePath,
-    String institution,
-    String discipline,
-    String period,
-    String createdAt,
-    String updatedAt}){
+  Education_details(
+      {int id,
+      int doctorId,
+      String imagePath,
+      String institution,
+      String discipline,
+      String period,
+      String createdAt,
+      String updatedAt}) {
     _id = id;
     _doctorId = doctorId;
     _imagePath = imagePath;
@@ -646,9 +728,7 @@ class Education_details {
     map["updated_at"] = _updatedAt;
     return map;
   }
-
 }
-
 
 class Clinics {
   int _id;
@@ -660,21 +740,27 @@ class Clinics {
   String _updatedAt;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   String get name => _name;
+
   String get address => _address;
-  int get fees =>_fees;
+
+  int get fees => _fees;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
 
-  Clinics({
-    int id,
-    int doctorId,
-    String name,
-    String address,
-    int fees,
-    String createdAt,
-    String updatedAt}){
+  Clinics(
+      {int id,
+      int doctorId,
+      String name,
+      String address,
+      int fees,
+      String createdAt,
+      String updatedAt}) {
     _id = id;
     _doctorId = doctorId;
     _name = name;
@@ -690,8 +776,8 @@ class Clinics {
     _name = json["name"];
     _address = json["address"];
     _fees = json["fees"].toString() == 'null'
-        ?0
-        :int.parse(json["fees"].toString());
+        ? 0
+        : int.parse(json["fees"].toString());
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
   }
@@ -707,9 +793,7 @@ class Clinics {
     map["updated_at"] = _updatedAt;
     return map;
   }
-
 }
-
 
 class Schedules {
   int _id;
@@ -719,6 +803,7 @@ class Schedules {
   String _startTime;
   String _endTime;
   String _serialDay;
+  String _day;
   String _duration;
   List<String> _serialOrSlot;
   dynamic _clinicId;
@@ -728,35 +813,51 @@ class Schedules {
   ClinicModel _clinic;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   String get slotType => _slotType;
+
   int get fees => _fees;
+
   String get startTime => _startTime;
+
   String get endTime => _endTime;
+
   String get serialDay => _serialDay;
+
+  String get day => _day;
+
   String get duration => _duration;
+
   List<String> get serialOrSlot => _serialOrSlot;
+
   dynamic get clinicId => _clinicId;
+
   String get type => _type;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
+
   ClinicModel get clinic => _clinic;
 
-  Schedules({
-    int id,
-    int doctorId,
-    String slotType,
-    int fees,
-    String startTime,
-    String endTime,
-    String serialDay,
-    String duration,
-    List<String> serialOrSlot,
-    dynamic clinicId,
-    String type,
-    String createdAt,
-    String updatedAt,
-    ClinicModel clinic}){
+  Schedules(
+      {int id,
+      int doctorId,
+      String slotType,
+      int fees,
+      String startTime,
+      String endTime,
+      String serialDay,
+      String day,
+      String duration,
+      List<String> serialOrSlot,
+      dynamic clinicId,
+      String type,
+      String createdAt,
+      String updatedAt,
+      ClinicModel clinic}) {
     _id = id;
     _doctorId = doctorId;
     _slotType = slotType;
@@ -764,6 +865,7 @@ class Schedules {
     _startTime = startTime;
     _endTime = endTime;
     _serialDay = serialDay;
+    _day = day;
     _duration = duration;
     _serialOrSlot = serialOrSlot;
     _clinicId = clinicId;
@@ -777,19 +879,24 @@ class Schedules {
     _id = json["id"];
     _doctorId = json["doctor_id"];
     _slotType = json["slot_type"];
-    _fees = json["fees"];
+    _fees = json["fees"].toString() == 'null'
+        ? 0
+        : int.parse(json["fees"].toString());
     _startTime = json["start_time"];
     _endTime = json["end_time"];
     _serialDay = json["serial_day"];
+    _day = json["day"];
     _duration = json["duration"];
-    _serialOrSlot = json["serial_or_slot"] != null ? json["serial_or_slot"].cast<String>() : [];
+    _serialOrSlot = json["serial_or_slot"] != null
+        ? json["serial_or_slot"].cast<String>()
+        : [];
     _clinicId = json["clinic_id"];
     _type = json["type"];
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
     // _clinic = json["clinic"];
-    _clinic = json["clinic"] != null ? ClinicModel.fromJson(json["clinic"]) : null;
-
+    _clinic =
+        json["clinic"] != null ? ClinicModel.fromJson(json["clinic"]) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -801,6 +908,7 @@ class Schedules {
     map["start_time"] = _startTime;
     map["end_time"] = _endTime;
     map["serial_day"] = _serialDay;
+    map["day"] = _day;
     map["duration"] = _duration;
     map["serial_or_slot"] = _serialOrSlot;
     map["clinic_id"] = _clinicId;
@@ -813,9 +921,7 @@ class Schedules {
     }
     return map;
   }
-
 }
-
 
 class ClinicModel {
   int _id;
@@ -827,21 +933,27 @@ class ClinicModel {
   String _updatedAt;
 
   int get id => _id;
+
   int get doctorId => _doctorId;
+
   String get name => _name;
+
   String get address => _address;
+
   int get fees => _fees;
+
   String get createdAt => _createdAt;
+
   String get updatedAt => _updatedAt;
 
-  ClinicModel({
-    int id,
-    int doctorId,
-    String name,
-    String address,
-    int fees,
-    String createdAt,
-    String updatedAt}){
+  ClinicModel(
+      {int id,
+      int doctorId,
+      String name,
+      String address,
+      int fees,
+      String createdAt,
+      String updatedAt}) {
     _id = id;
     _doctorId = doctorId;
     _name = name;
@@ -856,7 +968,7 @@ class ClinicModel {
     _doctorId = json["doctor_id"];
     _name = json["name"];
     _address = json["address"];
-    _fees = json["fees"];
+    _fees = int.parse(json["fees"].toString());
     _createdAt = json["created_at"];
     _updatedAt = json["updated_at"];
   }
@@ -872,5 +984,4 @@ class ClinicModel {
     map["updated_at"] = _updatedAt;
     return map;
   }
-
 }
