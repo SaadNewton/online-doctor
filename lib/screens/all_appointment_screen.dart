@@ -223,7 +223,7 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
                                                                             .w600),
                                                           ),
                                                           Text(
-                                                            '${getDoneAppointmentsModel.data[index].bookingType}'
+                                                            '${getAllAppointmentsModel.data[index].bookingType}'
                                                                 .toUpperCase(),
                                                             style: Theme.of(
                                                                     context)
