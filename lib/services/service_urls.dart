@@ -4,7 +4,7 @@
 String baseUrl = 'https://onlinedoctor.pk/api/';
 
 // String baseUrl = 'http://192.168.88.46:8000/api/';
-// String mediaUrl = 'http://192.168.88.46:8000/';
+// String mediaUrl = 'http://192.168.88.44:8000/';
 
 // String baseUrl = 'https://onlinedoctor.softwaresbranding.com/api/';
 String mediaUrl = 'https://onlinedoctor.pk/';
@@ -119,3 +119,6 @@ String savePrescriptionDataService = baseUrl + 'save-prescription-data';
 
 /// Save Prescription Data
 String createReportService = baseUrl + 'create-report';
+
+/// Show Prescription Service
+String prescriptionUrlService = baseUrl + 'prescription-url';

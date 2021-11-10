@@ -28,64 +28,70 @@ class LoaderController extends GetxController {
     update();
   }
 
+  bool prescriptionChecker = false;
+  updatePrescriptionChecker(bool value) {
+    checkDoctorStatusLoader = value;
+    update();
+  }
 
   List educationList = [];
-  updateEducationList(Map<String,dynamic> updateValue){
+  updateEducationList(Map<String, dynamic> updateValue) {
     educationList.add(updateValue);
     update();
   }
-  emptyEducationList(){
+
+  emptyEducationList() {
     educationList = [];
     update();
   }
 
-
   List experienceList = [];
-  updateExperienceList(Map<String,dynamic> updateValue){
+  updateExperienceList(Map<String, dynamic> updateValue) {
     experienceList.add(updateValue);
     update();
   }
-  emptyExperienceList(){
+
+  emptyExperienceList() {
     experienceList = [];
     update();
   }
 
-
   List specialityList = [];
-  updateSpecialityList(Map<String,dynamic> updateValue){
+  updateSpecialityList(Map<String, dynamic> updateValue) {
     specialityList.add(updateValue);
     update();
   }
-  emptySpecialityList(){
+
+  emptySpecialityList() {
     specialityList = [];
     update();
   }
 
-
   List scheduleList = [];
-  updateScheduleList(Map<String,dynamic> updateValue){
+  updateScheduleList(Map<String, dynamic> updateValue) {
     scheduleList.add(updateValue);
     update();
   }
-  emptyScheduleList(){
+
+  emptyScheduleList() {
     scheduleList = [];
     update();
   }
 
-
   List clinicsList = [];
-  updateClinicList(Map<String,dynamic> updateValue){
+  updateClinicList(Map<String, dynamic> updateValue) {
     clinicsList.add(updateValue);
     update();
   }
-  emptyClinicList(){
+
+  emptyClinicList() {
     clinicsList = [];
     update();
   }
 
   String clinicType;
   List<String> clinicTypeList = [];
-  updateClinicTypeList(String updateValue){
+  updateClinicTypeList(String updateValue) {
     clinicTypeList.add(updateValue);
     update();
   }
@@ -93,35 +99,36 @@ class LoaderController extends GetxController {
   AgoraModel agoraModel = AgoraModel();
   AgoraModel agoraModelDefault = AgoraModel();
 
-  updateAgoraModel(AgoraModel newAgoraModel){
+  updateAgoraModel(AgoraModel newAgoraModel) {
     agoraModel = newAgoraModel;
     update();
   }
-  updateAgoraModelDefault(AgoraModel newAgoraModel){
+
+  updateAgoraModelDefault(AgoraModel newAgoraModel) {
     agoraModelDefault = newAgoraModel;
     update();
   }
 
   String otherRoleToken;
-  updateOtherRoleToken(String newToken){
+  updateOtherRoleToken(String newToken) {
     newToken = otherRoleToken;
     update();
   }
 
   int callerType = 2;
-  updateCallerType(int i){
+  updateCallerType(int i) {
     callerType = i;
     update();
   }
 
   List<ChatData> messageList = [];
-  updateMessageList(ChatData chatData){
+  updateMessageList(ChatData chatData) {
     messageList.add(chatData);
     update();
   }
-  emptyMessageList(){
+
+  emptyMessageList() {
     messageList = [];
     update();
   }
-
 }

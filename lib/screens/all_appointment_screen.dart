@@ -199,117 +199,119 @@ class _AllAppointmentScreenState extends State<AllAppointmentScreen>
                                                   SizedBox(
                                                     width: 12,
                                                   ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              getAllAppointmentsModel
+                                                                  .data[index]
+                                                                  .name,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .subtitle1
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                            ),
+                                                            Text(
+                                                              '${getAllAppointmentsModel.data[index].bookingType}'
+                                                                  .toUpperCase(),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .subtitle2
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600,
+                                                                      color: Colors
+                                                                          .green),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              'Disease:  ',
+                                                            ),
                                                             getAllAppointmentsModel
-                                                                .data[index]
-                                                                .name,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle1
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                          ),
-                                                          Text(
-                                                            '${getAllAppointmentsModel.data[index].bookingType}'
-                                                                .toUpperCase(),
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle2
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    color: Colors
-                                                                        .green),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            'Disease:  ',
-                                                          ),
-                                                          getAllAppointmentsModel
-                                                                      .data[
-                                                                          index]
-                                                                      .disease ==
-                                                                  null
-                                                              ? SizedBox()
-                                                              : Text(
-                                                                  getAllAppointmentsModel
-                                                                      .data[
-                                                                          index]
-                                                                      .disease,
-                                                                  style: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .subtitle1
-                                                                      .copyWith(
-                                                                          fontWeight:
-                                                                              FontWeight.w600),
-                                                                ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Text('Date:  '),
-                                                          Text(
-                                                            getAllAppointmentsModel
-                                                                .data[index]
-                                                                .bookingDate,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle1
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                        height: 10,
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          Text('Time:  '),
-                                                          Text(
-                                                            getAllAppointmentsModel
-                                                                .data[index]
-                                                                .timeSerial,
-                                                            style: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .subtitle1
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                                        .data[
+                                                                            index]
+                                                                        .disease ==
+                                                                    null
+                                                                ? SizedBox()
+                                                                : Text(
+                                                                    getAllAppointmentsModel
+                                                                        .data[
+                                                                            index]
+                                                                        .disease,
+                                                                    style: Theme.of(
+                                                                            context)
+                                                                        .textTheme
+                                                                        .subtitle1
+                                                                        .copyWith(
+                                                                            fontWeight:
+                                                                                FontWeight.w600),
+                                                                  ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text('Date:  '),
+                                                            Text(
+                                                              getAllAppointmentsModel
+                                                                  .data[index]
+                                                                  .bookingDate,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .subtitle1
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 10,
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Text('Time:  '),
+                                                            Text(
+                                                              getAllAppointmentsModel
+                                                                  .data[index]
+                                                                  .timeSerial,
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .subtitle1
+                                                                  .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w600),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ],
                                               ),

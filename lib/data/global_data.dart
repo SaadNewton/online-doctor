@@ -15,6 +15,7 @@ import 'package:doctoworld_doctor/Model/get_doctor_profile_modal.dart';
 import 'package:doctoworld_doctor/Model/get_medicine_from_search_model.dart';
 import 'package:doctoworld_doctor/Model/get_notify_token_model.dart';
 import 'package:doctoworld_doctor/Model/get_speciality_list_model.dart';
+import 'package:doctoworld_doctor/Model/prescription_url_model.dart';
 import 'package:doctoworld_doctor/Model/remove_appointment_model.dart';
 import 'package:doctoworld_doctor/Model/save_prescription_data_model.dart';
 import 'package:doctoworld_doctor/Model/sign_up_model.dart';
@@ -46,7 +47,7 @@ ForgetPasswordEmailVerifyModel forgetPasswordEmailVerifyModel =
     ForgetPasswordEmailVerifyModel();
 ForgetPasswordEmailModel forgetPasswordEmailModel = ForgetPasswordEmailModel();
 ForgetPasswordModel forgetPasswordModel = ForgetPasswordModel();
-
+PrescriptionUrlModel prescriptionUrlModel = PrescriptionUrlModel();
 SavePrescriptionDataModel savePrescriptionDataModel =
     SavePrescriptionDataModel();
 CreateReportModel createReportModel = CreateReportModel();

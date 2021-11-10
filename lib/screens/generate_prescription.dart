@@ -16,6 +16,7 @@ import 'medicine_search_screen.dart';
 
 int editProductId;
 final TextEditingController medicineNameController = TextEditingController();
+final TextEditingController labNameController = TextEditingController();
 
 class GeneratePrescriptionScreen extends StatefulWidget {
   final Appointments appointment;
@@ -28,6 +29,7 @@ class GeneratePrescriptionScreen extends StatefulWidget {
 class _GeneratePrescriptionScreenState
     extends State<GeneratePrescriptionScreen> {
   List complaintsList = [];
+  List labTestsList = [];
   List prescriptionList = [];
   List<String> frequencyList = [
     '1 Day',
@@ -72,6 +74,7 @@ class _GeneratePrescriptionScreenState
 
   GlobalKey<FormState> complaintsKey = GlobalKey();
   GlobalKey<FormState> prescriptionKey = GlobalKey();
+  GlobalKey<FormState> labTestKey = GlobalKey();
   final TextEditingController complaintController = TextEditingController();
 
   @override
@@ -234,7 +237,7 @@ class _GeneratePrescriptionScreenState
                         children: [
                           SizedBox(height: 10),
                           Text(
-                            'Health Complaint',
+                            'Diagnosis',
                             style: Theme.of(context)
                                 .textTheme
                                 .subtitle2
@@ -608,6 +611,7 @@ class _GeneratePrescriptionScreenState
                                                   'tad': selectedDailyDose,
                                                   'frequency':
                                                       selectedFrequency,
+                                                  'type': 'medicine',
                                                 },
                                                 true,
                                                 savePrescriptionDataRepo);
@@ -749,6 +753,224 @@ class _GeneratePrescriptionScreenState
                           ],
                         ),
                       )),
+
+                  /// Add Lab Test Box
+                  ///
+
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 6,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 10),
+                          Text(
+                            'Add Lab Test',
+                            style: Theme.of(context)
+                                .textTheme
+                                .subtitle2
+                                .copyWith(
+                                    color: Theme.of(context).disabledColor,
+                                    fontSize: 18),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 16.0,
+                                right: 20.0,
+                                left: 20.0,
+                                bottom: 16.0),
+                            child: Column(
+                              children: [
+                                Form(
+                                  key: labTestKey,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Expanded(
+                                        child: EntryField(
+                                          color: Colors.grey.withOpacity(0.2),
+                                          controller: labNameController,
+                                          hint: 'Lab Test',
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Field is Required';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary:
+                                                Theme.of(context).primaryColor,
+                                          ),
+                                          onPressed: () {
+                                            if (labTestKey.currentState
+                                                .validate()) {
+                                              FocusScopeNode currentFocus =
+                                                  FocusScope.of(context);
+                                              if (!currentFocus
+                                                  .hasPrimaryFocus) {
+                                                currentFocus.unfocus();
+                                              }
+                                              loaderController
+                                                  .updateFormController(true);
+                                              postMethod(
+                                                  context,
+                                                  savePrescriptionDataService,
+                                                  {
+                                                    'appointment_id':
+                                                        widget.appointment.id,
+                                                    'item_id': null,
+                                                    'test':
+                                                        labNameController.text,
+                                                    'tad': null,
+                                                    'frequency': null,
+                                                    'type': 'test',
+                                                  },
+                                                  true,
+                                                  savePrescriptionDataRepo);
+                                              setState(() {
+                                                labTestsList.add(
+                                                    labNameController.text);
+                                                labNameController.clear();
+                                              });
+                                            }
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 20.0, bottom: 20.0),
+                                            child: Text('Add'),
+                                          ))
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                labTestsList.length == 0
+                                    ? Container()
+                                    : Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                top: 10, bottom: 16),
+                                            child: Text(
+                                              'Suggested Lab Tests',
+                                            ),
+                                          ),
+                                          Wrap(
+                                            children: List.generate(
+                                                labTestsList.length, (index) {
+                                              return Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 0, 10),
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5),
+                                                      boxShadow: [
+                                                        BoxShadow(
+                                                          color:
+                                                              Colors.grey[200],
+                                                          blurRadius: 5,
+                                                          spreadRadius: 5,
+                                                        )
+                                                      ]),
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Row(
+                                                      children: [
+                                                        Text(
+                                                          '${index + 1}.',
+                                                        ),
+                                                        SizedBox(
+                                                          width: 16,
+                                                        ),
+                                                        Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                              labTestsList[
+                                                                  index],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Expanded(
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .centerRight,
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                setState(() {
+                                                                  labTestsList
+                                                                      .removeAt(
+                                                                          index);
+                                                                });
+                                                              },
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .all(
+                                                                        8.0),
+                                                                child: Icon(
+                                                                  Icons.delete,
+                                                                  color: Colors
+                                                                      .red,
+                                                                  size: 25,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }),
+                                          ),
+                                        ],
+                                      ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
 
                   SizedBox(height: 20),
 

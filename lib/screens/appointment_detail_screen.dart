@@ -4,16 +4,19 @@ import 'package:doctoworld_doctor/Components/custom_dialog.dart';
 import 'package:doctoworld_doctor/Model/get_all_appointments_model.dart';
 import 'package:doctoworld_doctor/Theme/colors.dart';
 import 'package:doctoworld_doctor/controllers/loading_controller.dart';
+import 'package:doctoworld_doctor/data/global_data.dart';
 import 'package:doctoworld_doctor/repositories/agora_repo.dart';
 import 'package:doctoworld_doctor/repositories/approve_appointment_repo.dart';
 import 'package:doctoworld_doctor/repositories/get_all_appointments_repo.dart';
 import 'package:doctoworld_doctor/repositories/get_notify_token_repo.dart';
+import 'package:doctoworld_doctor/repositories/prescription_url_repo.dart';
 import 'package:doctoworld_doctor/screens/chat_page.dart';
 import 'package:doctoworld_doctor/services/get_method_call.dart';
 import 'package:doctoworld_doctor/services/post_method_call.dart';
 import 'package:doctoworld_doctor/services/service_urls.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'generate_prescription.dart';
 
@@ -36,6 +39,8 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
         {'user_id': widget.appointment.customerId, 'role': 'customer'},
         false,
         getNotifyTokenRepo);
+    getMethod(context, prescriptionUrlService,
+        {'appointment_id': widget.appointment.id}, true, prescriptionUrlRepo);
     getMethod(context, agoraService, null, false, getAgoraRepo);
   }
 
@@ -202,7 +207,29 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
               ),
             ),
             widget.appointment.isComplete != 1
-                ? SizedBox()
+                ? widget.appointment.bookingType == 'onsite'
+                    ? SizedBox()
+                    : SizedBox(
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(bottom: 32.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: Theme.of(context).primaryColor,
+                                ),
+                                onPressed: () async {
+                                  await launch(
+                                      "$mediaUrl${prescriptionUrlModel.data[0].prescriptionUrl}");
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 50, vertical: 15),
+                                  child: Text('Show Sent Prescription'),
+                                )),
+                          ),
+                        ),
+                      )
                 : widget.appointment.bookingType == 'onsite'
                     ? Align(
                         alignment: Alignment.bottomCenter,
