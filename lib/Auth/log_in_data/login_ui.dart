@@ -152,6 +152,7 @@ class _LoginUIState extends State<LoginUI> {
                                     },
                                     hint: 'Password',
                                     prefixIcon: Icons.remove_red_eye_outlined,
+                                    suffixIconShow: Icons.remove_red_eye_sharp,
                                     obSecure: true,
                                     suffixIcon: Icons.remove_red_eye_outlined,
                                     color:

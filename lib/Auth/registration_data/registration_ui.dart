@@ -157,6 +157,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               obSecure: obSecureText,
                               prefixIcon: Icons.lock,
                               suffixIcon: Icons.remove_red_eye_outlined,
+                              suffixIconShow: Icons.remove_red_eye_sharp,
                               hint: 'Password',
                               color: Theme.of(context).scaffoldBackgroundColor,
                               validator: (value) {
@@ -177,6 +178,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                               obSecure: confirmObSecureText,
                               prefixIcon: Icons.lock,
                               suffixIcon: Icons.remove_red_eye_outlined,
+                              suffixIconShow: Icons.remove_red_eye_sharp,
                               hint: 'Confirm Password',
                               color: Theme.of(context).scaffoldBackgroundColor,
                               validator: (value) {
@@ -207,6 +209,7 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
                                   },
                                 ),
                                 hintText: 'Location',
+                                hintStyle: TextStyle(color: Colors.grey),
                                 filled: true,
                                 fillColor: Theme.of(context).scaffoldBackgroundColor,
                                 border: OutlineInputBorder(
@@ -374,18 +377,21 @@ class _RegistrationUIOldState extends State<RegistrationUIOld> {
       Placemark place = p[0];
       setState(() {
         currentAddress =
-            '${place.name}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
+            '${place.name}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.administrativeArea}, ${place.country}';
         // var signUpAddressController;
         // if (signUpAddressController.text.isEmpty) {
         //   signUpAddressController.text = currentAddress;
         // }
         print(currentAddress + ' yes');
+        print(place.street.toString());
+        print('locality ${place.locality.toString()}');
+        print('near by ${place.subLocality}');
         print(place.administrativeArea.toString());
         print(place.subAdministrativeArea.toString());
         print(place.thoroughfare.toString());
         print(place.toJson().toString());
         // FocusScope.of(context).unfocus();
-        locationController.text = place.name.toString();
+        locationController.text = currentAddress.toString();
       });
     } catch (e) {
       print(e);

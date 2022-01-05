@@ -12,6 +12,7 @@ class EntryField extends StatefulWidget {
   final bool readOnly;
   final TextAlign textAlign;
   final IconData suffixIcon;
+  final IconData suffixIconShow;
   final TextInputType textInputType;
   final String label;
   final int maxLines;
@@ -38,7 +39,7 @@ class EntryField extends StatefulWidget {
     this.onTap,
     this.suffix,
     this.validator,
-    this.isDense,
+    this.isDense, this.suffixIconShow,
   });
 
   @override
@@ -88,7 +89,7 @@ class _EntryFieldState extends State<EntryField> {
                   // prefixIcon: Icon(widget.prefixIcon,
                   //     color: Theme.of(context).primaryColor),
                   suffixIcon: InkWell(
-                    child: Icon(widget.suffixIcon),
+                    child: obSecureText == true ? Icon(widget.suffixIcon) : Icon(widget.suffixIconShow),
                     onTap: () {
                       if (widget.obSecure) {
                         setState(() {
@@ -98,6 +99,11 @@ class _EntryFieldState extends State<EntryField> {
                     },
                   ),
                   labelText: widget.hint,
+                  hintText: widget.hint,
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  labelStyle: TextStyle(color: Colors.grey),
                   filled: true,
                   fillColor: widget.color ?? Theme.of(context).backgroundColor,
                   border: OutlineInputBorder(
