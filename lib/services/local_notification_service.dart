@@ -24,7 +24,6 @@ class LocalNotificationService{
         android: AndroidNotificationDetails(
             "easyApproach",
             "easyApproach channel",
-            "this is our channel",
             sound: RawResourceAndroidNotificationSound(''),
             playSound: true,
             importance:Importance.max,

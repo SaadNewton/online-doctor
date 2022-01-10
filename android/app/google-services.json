@@ -7,12 +7,73 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:510657153381:android:a957cad76877108558798c",
+        "mobilesdk_app_id": "1:510657153381:android:17f83a650e9c978658798c",
+        "android_client_info": {
+          "package_name": "com.CreCode.OnlineDoctor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510657153381-93e5791gevv2l1f30suppiqjko94282d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.CreCode.OnlineDoctor",
+            "certificate_hash": "f51a6a9904b08d49fdb9e098f4a55bf00ce12cbe"
+          }
+        },
+        {
+          "client_id": "510657153381-tm74nhhpcca21h9c62ugmdk368pigamt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.CreCode.OnlineDoctor",
+            "certificate_hash": "ff9cb467e70c4596c643a5e692784b789aba9f51"
+          }
+        },
+        {
+          "client_id": "510657153381-if08atefq398gjifc5ieotfjfsumlrpt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGY3pop_M0hDyP2yjesjB6F3tlI7F4s-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510657153381-if08atefq398gjifc5ieotfjfsumlrpt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510657153381:android:452fd39ba6cebd2858798c",
         "android_client_info": {
           "package_name": "pk.online_doctor.doctor"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "510657153381-hjn8mogs71ftraf6p37spjgcmabc2bl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pk.online_doctor.doctor",
+            "certificate_hash": "a65fb9e6c2aac7f3fa498f7fb05ee249d0cf308a"
+          }
+        },
+        {
+          "client_id": "510657153381-us1dtra3lqik4lnu2gic158tv1hjo3nh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "pk.online_doctor.doctor",
+            "certificate_hash": "09067d73de22668a6d4b8e0e14fe7c3771d9d1b1"
+          }
+        },
         {
           "client_id": "510657153381-if08atefq398gjifc5ieotfjfsumlrpt.apps.googleusercontent.com",
           "client_type": 3

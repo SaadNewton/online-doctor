@@ -33,8 +33,7 @@ postMethod(
 
   if(apiUrl == fcmService){
     setCustomHeader(dio, 'Content-Type', 'application/json');
-    setCustomHeader(dio, 'Authorization', 'key=AAAAP9EQh1k:APA91bGVtLnlorWNnVgzRIcy1SVxuhhamHL7nSTJbQ3bWZeXRWOHMCZMw4q_XLyLt82j'
-        '0WqqDU-R6jITJq9hpqIn-l3u0IseUX_NR-UYYWJ4wvgYJiWG42HGpxGOI4lpr3desi1_YnWC');
+    setCustomHeader(dio, 'Authorization', 'key=AAAAduWJyWU:APA91bHVCY3iYxyYWn5P2OokjDdJYQFCm2vCs5y7_X9z8Rsqsgzg_yqZC8MvPZTjfcKBqe1R4tkyqY6uZdwVq9Z-8UR0XKZtkxpiADRbdXa6wxB7UzColblr9JSgfH4qL5AF8VkGxa_a');
 
   }
   try {
